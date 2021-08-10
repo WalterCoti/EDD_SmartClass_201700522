@@ -1,0 +1,34 @@
+# depslib dependency file v1.0
+1628226379 source:c:\users\gameover\desktop\edd\fase1\proyf1\fase1\src\estudiante.cpp
+	"Estudiante.h"
+
+1628226379 c:\users\gameover\desktop\edd\fase1\proyf1\fase1\include\estudiante.h
+
+1628225601 source:c:\users\gameover\desktop\edd\fase1\proyf1\fase1\src\listadoble.cpp
+	"listadoble.h"
+
+1628225601 c:\users\gameover\desktop\edd\fase1\proyf1\fase1\include\listadoble.h
+
+1628226170 source:c:\users\gameover\desktop\edd\fase1\proyf1\fase1\src\listdoblecircular.cpp
+	"listdoblecircular.h"
+
+1628226149 c:\users\gameover\desktop\edd\fase1\proyf1\fase1\include\listdoblecircular.h
+
+1628319826 source:c:\users\gameover\desktop\edd\fase1\proyf1\fase1\main.cpp
+	<iostream>
+
+1628226379 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
+	"Estudiante.h"
+
+1628226379 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\estudiante.h
+
+1628225601 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\listadoble.cpp
+	"listadoble.h"
+
+1628225601 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listadoble.h
+
+1628226170 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\listdoblecircular.cpp
+	"listdoblecircular.h"
+
+1628226149 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listdoblecircular.h
+
