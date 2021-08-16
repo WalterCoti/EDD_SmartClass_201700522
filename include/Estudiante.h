@@ -1,7 +1,8 @@
 #ifndef ESTUDIANTE_H
 #define ESTUDIANTE_H
-
-
+#include <iostream>
+#include <string>
+using namespace std;
 class Estudiante
 {
     public:

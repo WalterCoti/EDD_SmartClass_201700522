@@ -17,18 +17,65 @@
 1628319826 source:c:\users\gameover\desktop\edd\fase1\proyf1\fase1\main.cpp
 	<iostream>
 
-1628226379 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
+1628800172 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
 	"Estudiante.h"
 
-1628226379 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\estudiante.h
+1628800162 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\estudiante.h
+	<iostream>
+	<string>
 
 1628225601 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\listadoble.cpp
 	"listadoble.h"
 
-1628225601 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listadoble.h
+1628654186 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listadoble.h
 
 1628226170 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\listdoblecircular.cpp
 	"listdoblecircular.h"
 
 1628226149 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listdoblecircular.h
+
+1629101712 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\main.cpp
+	<iostream>
+	"readfile.h"
+
+1629053121 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\nodod.cpp
+	"NodoD.h"
+
+1629051199 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\nodod.h
+
+1628628929 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\nodosi.cpp
+	"NodoSi.h"
+
+1629012662 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\nodosi.h
+
+1628799934 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\fecha.cpp
+	"Fecha.h"
+
+1628666254 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\fecha.h
+
+1629004469 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\tarea.cpp
+	"Tarea.h"
+	"Fecha.h"
+
+1629004397 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\tarea.h
+	"Fecha.h"
+	<iostream>
+	<string>
+
+1629022181 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\readfile.h
+	<string>
+	<fstream>
+
+1629101605 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
+	"readfile.h"
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+	"windows.h"
+
+1629107108 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\listdoble.cpp
+	"ListDoble.h"
+
+1629107084 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listdoble.h
 

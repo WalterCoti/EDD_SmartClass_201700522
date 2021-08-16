@@ -9,7 +9,7 @@ Estudiante::Estudiante(int carnet_,string dpi_, string name_, string carrera_, s
     email = email_;
     pass = pass_;
     credit = credit_;
-    edad = edad_
+    edad = edad_;
 
 }
 //setters

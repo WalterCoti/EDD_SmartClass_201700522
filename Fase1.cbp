@@ -35,12 +35,24 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/Estudiante.h" />
+		<Unit filename="include/Fecha.h" />
+		<Unit filename="include/ListDC.h" />
+		<Unit filename="include/ListDoble.h" />
+		<Unit filename="include/NodoD.h" />
+		<Unit filename="include/NodoSi.h" />
+		<Unit filename="include/Tarea.h" />
 		<Unit filename="include/listadoble.h" />
-		<Unit filename="include/listdoblecircular.h" />
+		<Unit filename="include/readfile.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Estudiante.cpp" />
+		<Unit filename="src/Fecha.cpp" />
+		<Unit filename="src/ListDC.cpp" />
+		<Unit filename="src/ListDoble.cpp" />
+		<Unit filename="src/NodoD.cpp" />
+		<Unit filename="src/NodoSi.cpp" />
+		<Unit filename="src/Tarea.cpp" />
 		<Unit filename="src/listadoble.cpp" />
-		<Unit filename="src/listdoblecircular.cpp" />
+		<Unit filename="src/readfile.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

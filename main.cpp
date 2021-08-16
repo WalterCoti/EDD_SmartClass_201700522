@@ -1,4 +1,6 @@
 #include <iostream>
+#include "readfile.h";
+
 
 using namespace std;
 
@@ -9,7 +11,8 @@ void menuReport();
 void menuTareas();
 
 void menuPrincipal(){
-   int opc = 0;
+    string pathfile;
+    int opc = 0;
     cout << "---------- MENU PRINCIPAL ----------" << endl;
     cout << "|                                  |" << endl;
     cout << "|   1 -> Carga de Usuarios         |" << endl;
@@ -24,11 +27,15 @@ void menuPrincipal(){
 
     switch(opc){
         case 1:
-            cout <<"opcion 2" << endl;
+            cout <<"Escriba la ruta del archivo" << endl;
+            cin >> pathfile;
+//            getline(cin,pathfile);
+            readfiles(pathfile);
 
             break;
         case 2:
-            cout <<"opcion 2" << endl;
+            cout <<"Escriba la ruta del archivo" << endl;
+
             break;
         case 3:
             addManual();
@@ -155,6 +162,7 @@ int opcrep = 0;
 
 int main()
 {
+
     menuPrincipal();
     return 0;
 }
