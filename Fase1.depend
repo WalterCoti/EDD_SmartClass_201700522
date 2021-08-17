@@ -17,8 +17,9 @@
 1628319826 source:c:\users\gameover\desktop\edd\fase1\proyf1\fase1\main.cpp
 	<iostream>
 
-1628800172 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
+1629186133 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
 	"Estudiante.h"
+	<ctype.h>
 
 1628800162 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\estudiante.h
 	<iostream>
@@ -34,14 +35,15 @@
 
 1628226149 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listdoblecircular.h
 
-1629101712 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\main.cpp
+1629198231 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\main.cpp
 	<iostream>
+	<Windows.h>
 	"readfile.h"
 
-1629053121 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\nodod.cpp
+1629177448 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\nodod.cpp
 	"NodoD.h"
 
-1629051199 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\nodod.h
+1629107605 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\nodod.h
 
 1628628929 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\nodosi.cpp
 	"NodoSi.h"
@@ -62,11 +64,11 @@
 	<iostream>
 	<string>
 
-1629022181 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\readfile.h
+1629197095 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\readfile.h
 	<string>
 	<fstream>
 
-1629101605 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
+1629197120 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
 	"readfile.h"
 	<string>
 	<fstream>
@@ -78,4 +80,12 @@
 	"ListDoble.h"
 
 1629107084 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listdoble.h
+
+1629177559 source:d:\segundo semestre\edd\lab\fase1\proyf1\fase1\src\listdc.cpp
+	"ListDC.h"
+	"Estudiante.h"
+
+1629177353 d:\segundo semestre\edd\lab\fase1\proyf1\fase1\include\listdc.h
+	"Estudiante.h"
+	"NodoD.h"
 

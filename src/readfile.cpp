@@ -7,21 +7,15 @@
 
 using namespace std;
 
-string readfiles(string path_){
-    ifstream  fileop;
+void readfiles(string path_){
     string text = "";
+    ifstream fileOp(path_);
 
-    fileop.open(path_, ios::in);
-
-    if(!fileop.fail()){
-            getline(fileop , text);
-        while(!fileop.eof()){
-            istringstream div(text);
-            cout <<text<< endl;
-        }
-
-    fileop.close();
-    }else cout << "Error al leer el archivo" << endl;
-
-    return text;
+    if(!fileOp.is_open()){
+        cout << "ERROR: Archivo no pudo ser abierto" << endl;
+    }
+    while(fileOp.good()){
+        getline(fileOp, text,'\n');
+        cout <<text<< endl;
+    }
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Windows.h>
 #include "readfile.h";
 
 
@@ -11,14 +12,17 @@ void menuReport();
 void menuTareas();
 
 void menuPrincipal(){
-    string pathfile;
+    bool salir = false;
+    string pathfile = "";
     int opc = 0;
+    while(!salir){
     cout << "---------- MENU PRINCIPAL ----------" << endl;
     cout << "|                                  |" << endl;
     cout << "|   1 -> Carga de Usuarios         |" << endl;
     cout << "|   2 -> Carga de Tareas           |" << endl;
     cout << "|   3 -> Ingreso Manual            |" << endl;
     cout << "|   4 -> Reportes                  |" << endl;
+    cout << "|   5 -> Salir                     |" << endl;
     cout << "|                                  |" << endl;
     cout << "------------- FIN MENU -------------" << endl;
     cout << "----Ingresar el numero de opcion----" << endl;
@@ -29,7 +33,7 @@ void menuPrincipal(){
         case 1:
             cout <<"Escriba la ruta del archivo" << endl;
             cin >> pathfile;
-//            getline(cin,pathfile);
+            //getline(cin,pathfile);
             readfiles(pathfile);
 
             break;
@@ -43,9 +47,12 @@ void menuPrincipal(){
         case 4:
             menuReport();
             break;
+        case 5:
+            salir = true;
+            break;
         default:cout <<"seleccione una opcion valida" << endl;
     }
-
+    }
 }
 
 void addManual(){
@@ -143,6 +150,7 @@ int opcrep = 0;
     cout << "|                                 |" << endl;
     cout << "|   1 -> Lista Usuarios           |" << endl;
     cout << "|   2 -> Linealizacion Tareas     |" << endl;
+    cout << "|   3 -> Regresar                 |" << endl;
     cout << "|                                 |" << endl;
     cout << "------------- FIN MENU ------------" << endl;
     cout << "-Ingresar el numero de opcion-" << endl;
@@ -162,8 +170,10 @@ int opcrep = 0;
 
 int main()
 {
+    SetConsoleOutputCP( CP_UTF8 );
+        menuPrincipal();
 
-    menuPrincipal();
+
     return 0;
 }
 

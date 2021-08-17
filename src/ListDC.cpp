@@ -7,20 +7,21 @@ ListDC::ListDC()
     this->size = 0;
 }
 
-bool ListDC::isEmptyLCD(){
+bool ListDC::isEmptyLCD()
+{
     if(this->head == NULL){
-        return true
+        return true;
     }
     return false;
 }
 
 void ListDC::addEstudent(Estudiante *estudiante_){
     NodoD *newNodo = new NodoD(estudiante_);
-    if(isEmpty()){
+    if(isEmptyLCD()){
         this->head = newNodo;
         this->end = newNodo;
-        newNodo->setnext(head)
-        newNodo->setprevious(end)
+        newNodo->setnext(head);
+        newNodo->setprevious(end);
     } else {
         this->end->setnext(newNodo);
         newNodo->setprevious(end);
@@ -28,8 +29,47 @@ void ListDC::addEstudent(Estudiante *estudiante_){
         newNodo->setnext(head);
         this->end = newNodo;
     }
+    this->size++;
 }
 
-void ListDC::updateEstudent(string carnet_){
+void ListDC::updateStudent(string dpistudent_,int opc_)
+{
+
+
+}
+
+void ListDC::deletStudent(string dpistudent_){
+    NodoD *actual  = this->head;
+    NodoD *anterior = NULL;
+    bool nodoDel = false;
+    if(!isEmptyLCD()){
+        cout << "Lista vacia" << endl;
+    }else{
+        do{
+            if(actual->getEstudiante()->getdpi() == dpistudent_){
+
+                if(actual == this->head){
+                    this->head = this->head->getnext();
+                    this->head->setprevious(this->end);
+                    this->end->setnext(this->head);
+                }else if(actual == this->end){
+                    this->end = anterior;
+                    this->end->setnext(this->head);
+                    this->head->setprevious(this->end);
+                }else{
+                    anterior->setnext(actual->getnext());
+                    actual->getnext()->setprevious(anterior);
+                }
+                nodoDel = true;
+            }
+            anterior = actual;
+            actual = actual->getnext();
+
+        }while(actual != this->head && nodoDel != true);
+
+        if(!nodoDel){
+            cout << " Usuario no registrado";
+        }
+    }
 
 }

@@ -25,7 +25,7 @@ void NodoD::setnext(NodoD *next_)
     this->next = next_;
 }
 
-void NodoD::setprevius(NodoD *previous_)
+void NodoD::setprevious(NodoD *previous_)
 {
     this->previous = previous_;
 }
@@ -37,7 +37,7 @@ void NodoD::setestudiante(Estudiante *estudiante_)
 
 NodoD *NodoD::getnext()
 {
-    return this->previus;
+    return this->next;
 }
 NodoD *NodoD::getprevious()
 {

@@ -10,8 +10,8 @@ class ListDC
         ListDC();
         void addEstudent(Estudiante *estudiante_);
         bool isEmptyLCD();
-        void deleteEstudent(string carnet_);
-        void updateEstudent(string carnet_);
+        void deletStudent(string dpistudent_);
+        void updateStudent(string dpistudent_, int opc_);
         void graphListEstudent();
 
     private:

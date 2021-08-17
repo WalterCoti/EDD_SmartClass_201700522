@@ -1,5 +1,5 @@
 #include "Estudiante.h"
-
+#include <ctype.h>
 Estudiante::Estudiante(int carnet_,string dpi_, string name_, string carrera_, string email_, string pass_, int credit_, int edad_)
 {
     carnet = carnet_;
@@ -45,9 +45,16 @@ int Estudiante::getcarnet(){
     return this->carnet;
 }
 
-string Estudiante::getname(){
+string Estudiante::getdpi()
+{
+    return this->dpi;
+}
+
+string Estudiante::getname()
+{
     return this->name;
 }
+
 string Estudiante::getcarrera(){
     return this->carrera;
 }
@@ -63,6 +70,7 @@ string Estudiante::getpass(){
 int Estudiante::getcredit(){
     return this->credit;
 }
+
 int Estudiante::getedad(){
     return this->edad;
 }
