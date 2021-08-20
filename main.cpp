@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Windows.h>
 #include "readfile.h";
-
+#include "LogicGen.h"
 
 using namespace std;
 
@@ -10,6 +10,7 @@ void menuPrincipal();
 void menuUser();
 void menuReport();
 void menuTareas();
+void menuAddDatosU();
 
 void menuPrincipal(){
     bool salir = false;
@@ -97,7 +98,7 @@ int opcus = 0;
     cin >> opcus;
     switch(opcus){
         case 1:
-            cout <<"opcion ingresar" << endl;;
+            menuAddDatosU();
             break;
         case 2:
             cout <<"opcion Modificar" << endl;
@@ -113,6 +114,34 @@ int opcus = 0;
     }
 }
 
+void menuAddDatosU(){
+    string carnetU,dpiU,nameU,carreraU,emailU,passU;
+    int creditU, edadU;
+    cout << "Ingresar No. Carnet" << endl;
+    cin.ignore();
+    getline(cin,carnetU);
+    cout << "Ingresar No. DPI" << endl;
+
+    getline(cin,dpiU);
+    cout << "Ingresar Nombre" << endl;
+
+    getline(cin,nameU);
+    cout << "Ingresar Carrera" << endl;
+
+    getline(cin,carreraU);
+    cout << "Ingresar Correo" << endl;
+
+    getline(cin,emailU);
+    cout << "Ingresar Contraseña" << endl;
+
+    getline(cin,passU);
+    cout << "Ingresar No. Creditos" << endl;
+    cin>> creditU;
+    cout << "Ingresar Edad" << endl;
+    cin >> edadU;
+    valStudent(carnetU,dpiU,nameU,carreraU,emailU,passU,creditU,edadU);
+
+}
 void menuTareas(){
 int opcus = 0;
     cout << "-------- MENU TAREAS ---------" << endl;
@@ -171,9 +200,7 @@ int opcrep = 0;
 int main()
 {
     SetConsoleOutputCP( CP_UTF8 );
-        menuPrincipal();
-
-
+    menuPrincipal();
     return 0;
 }
 

@@ -47,7 +47,7 @@ void ListDC::deletStudent(string dpistudent_){
     }else{
         do{
             if(actual->getEstudiante()->getdpi() == dpistudent_){
-
+                //obtener datos del que elimino xD
                 if(actual == this->head){
                     this->head = this->head->getnext();
                     this->head->setprevious(this->end);
@@ -72,4 +72,14 @@ void ListDC::deletStudent(string dpistudent_){
         }
     }
 
+}
+
+
+void ListDC::printlist()
+{
+ NodoD *tmp = this->head;
+ do{
+    cout << tmp->getEstudiante()->getname() << endl;
+    tmp->setnext(tmp->getnext());
+ }while(tmp != this->head);
 }

@@ -1,6 +1,7 @@
 #include "Estudiante.h"
 #include <ctype.h>
-Estudiante::Estudiante(int carnet_,string dpi_, string name_, string carrera_, string email_, string pass_, int credit_, int edad_)
+
+Estudiante::Estudiante(string carnet_,string dpi_, string name_, string carrera_, string email_, string pass_, int credit_, int edad_)
 {
     carnet = carnet_;
     dpi = dpi_;
@@ -13,7 +14,7 @@ Estudiante::Estudiante(int carnet_,string dpi_, string name_, string carrera_, s
 
 }
 //setters
-void Estudiante::setcarnet(int carnet_){
+void Estudiante::setcarnet(string carnet_){
     this->carnet =carnet_;
 }
 
@@ -41,7 +42,7 @@ void Estudiante::setedad(int edad_){
 }
 
 //getters
-int Estudiante::getcarnet(){
+string Estudiante::getcarnet(){
     return this->carnet;
 }
 

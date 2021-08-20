@@ -7,9 +7,9 @@ class Estudiante
 {
     public:
         Estudiante();
-        Estudiante(int carnet_,string dpi_, string name_, string carrera_, string email_, string pass_, int credit_, int edad_ );
+        Estudiante(string carnet_,string dpi_, string name_, string carrera_, string email_, string pass_, int credit_, int edad_ );
     //setters
-    void setcarnet(int carnet_);
+    void setcarnet(string carnet_);
     void setdpi(string dpi_);
     void setname(string name_);
     void setcarrera(string carrera_);
@@ -19,7 +19,7 @@ class Estudiante
     void setedad(int edad_);
 
     //getters
-    int getcarnet();
+    string getcarnet();
     string getdpi();
     string getname();
     string getcarrera();
@@ -29,7 +29,7 @@ class Estudiante
     int getedad();
 
     private:
-        int carnet;
+        string carnet;
         string dpi;
         string name;
         string carrera;

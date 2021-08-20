@@ -1,6 +1,7 @@
 #ifndef FECHA_H
 #define FECHA_H
-
+#include <string>
+using namespace std;
 
 class Fecha
 {
@@ -11,6 +12,7 @@ class Fecha
         int getdia();
         int getmes();
         int getanio();
+        string getnewFormat();
 
         //getters
         void setdia(int dia_);
