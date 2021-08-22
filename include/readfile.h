@@ -5,7 +5,8 @@
 
 using namespace std;
 
-void readfiles(string path_);
+void readfileStudent(string path_);
+void readfileTarea(string path_);
 
 
 #endif // READFILE_H

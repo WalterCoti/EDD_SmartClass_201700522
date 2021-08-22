@@ -9,8 +9,8 @@ class NodoCola
 {
     public:
         NodoCola();
-
-    protected:
+        NodoCola(int idError_, string descript_, string tipo_,Estudiante *estudiante_,NodoCola *next_);
+        NodoCola(int idError_, string descript_, string tipo_, Tarea *tarea_,NodoCola *next_);
 
     private:
         int idError;
@@ -18,6 +18,7 @@ class NodoCola
         string tipo;
         Estudiante *estudiante;
         Tarea *tarea;
+        NodoCola *next;
 };
 
 #endif // NODOCOLA_H

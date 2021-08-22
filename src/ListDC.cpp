@@ -15,6 +15,24 @@ bool ListDC::isEmptyLCD()
     return false;
 }
 
+bool ListDC::existEst(string dpi_){
+    NodoD *tmp = new NodoD();
+    tmp = this->head;
+    if(this->head != NULL){
+        do{
+            if(tmp->getEstudiante()->getdpi() == dpi_){
+                return true;
+            }
+            cout << tmp->getEstudiante()->getname() << endl;
+            tmp = tmp->getnext();
+        }while(tmp != this->head);
+    } else{
+    cout << "\n La lista  Vacia" << endl;
+    }
+    return false;
+}
+
+
 void ListDC::addEstudent(Estudiante *estudiante_){
     NodoD *newNodo = new NodoD(estudiante_);
     if(isEmptyLCD()){
@@ -42,7 +60,7 @@ void ListDC::deletStudent(string dpistudent_){
     NodoD *actual  = this->head;
     NodoD *anterior = NULL;
     bool nodoDel = false;
-    if(!isEmptyLCD()){
+    if(isEmptyLCD()){
         cout << "Lista vacia" << endl;
     }else{
         do{
@@ -77,9 +95,14 @@ void ListDC::deletStudent(string dpistudent_){
 
 void ListDC::printlist()
 {
- NodoD *tmp = this->head;
+ NodoD *tmp = new NodoD();
+tmp = this->head;
+ if(this->head != NULL){
  do{
     cout << tmp->getEstudiante()->getname() << endl;
-    tmp->setnext(tmp->getnext());
+    tmp = tmp->getnext();
  }while(tmp != this->head);
+ } else{
+    cout << "\n La lista  Vacia" << endl;
+ }
 }

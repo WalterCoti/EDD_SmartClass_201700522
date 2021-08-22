@@ -1,16 +1,19 @@
 #include "readfile.h"
 #include <string>
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include "windows.h"
+#include "LogicGen.h"
 #include <regex>
 
 using namespace std;
 
-void readfiles(string path_){
+void readfileStudent(string path_){
     string text = "";
     string head = "";
+    string carnet,dpi,name,carrera,email,pass,credit, edad;
     ifstream fileOp(path_);
 
     if(!fileOp.is_open()){
@@ -18,7 +21,37 @@ void readfiles(string path_){
     }
     getline(fileOp, head,'\n');
     while(fileOp.good()){
-        getline(fileOp, text,'\n');
-        cout <<text<< endl;
+        getline(fileOp,carnet,',');
+        getline(fileOp,dpi,',');
+        getline(fileOp,name,',');
+        getline(fileOp,carrera,',');
+        getline(fileOp,pass,',');
+        getline(fileOp,credit,',');
+        getline(fileOp,edad,',');
+        getline(fileOp,email,'\n');
+        valStudent(carnet,dpi,name,carrera,email,pass,stoi(credit),stoi(edad));
+    }
+}
+
+void readfileTarea(string path_){
+    string text = "";
+    string head = "";
+    string carnet,dpi,name,carrera,email,pass,credit, edad;
+    ifstream fileOp(path_);
+
+    if(!fileOp.is_open()){
+        cout << "ERROR: Archivo no pudo ser abierto" << endl;
+    }
+    getline(fileOp, head,'\n');
+    while(fileOp.good()){
+        getline(fileOp,carnet,',');
+        getline(fileOp,dpi,',');
+        getline(fileOp,name,',');
+        getline(fileOp,carrera,',');
+        getline(fileOp,pass,',');
+        getline(fileOp,credit,',');
+        getline(fileOp,edad,',');
+        getline(fileOp,email,'\n');
+        valStudent(carnet,dpi,name,carrera,email,pass,stoi(credit),stoi(edad));
     }
 }

@@ -32,37 +32,37 @@ void valStudent(string carnet_,string dpi_,string nombre_, string carrera_,strin
 {
     string report = "";
 
-    cout<<carnet_ << endl;
-    cout<<dpi_ << endl;
-    cout<<nombre_ << endl;
-    cout<<carrera_ << endl;
-    cout<<email_ << endl;
-    cout<<pass_ << endl;
-    cout<<creditos_ << endl;
-    cout<<edad_ << endl;
-
     if(!iscarnet(carnet_))
     {
         report += " -Error de carnet";
-        cout<<"Error carnet" << endl;
+        cout<<"- Error carnet: " << carnet_ << endl;
     };
     if(!isdpi(dpi_))
     {
         report += " -Error de dpi";
-         cout<<"Error dpi" << endl;
+         cout<<"- Error dpi: " << dpi_ << endl;
     };
     if(!isemail(email_))
     {
         report += " -Error de correo";
-         cout<<"Error correo" << endl;
+         cout<<"- Error correo: " << email_  << endl;
     };
     if(iscarnet(carnet_) && isdpi(dpi_) && isemail(email_)){
         Estudiante *nEstudiante = new Estudiante(carnet_,dpi_,nombre_,carrera_,email_,pass_,creditos_, edad_);
         nwList->addEstudent(nEstudiante);
-         cout<<"Pasa aqui mero" << endl;
     }else{
-        cout<<"Llego aqui y fallo" << endl;
+
+        cout<<"Datos agregados  a la cola de errores" << endl;
     }
 
 
 }
+
+void delStudent(string dpi_){
+    nwList->deletStudent(dpi_);
+    nwList->printlist();
+}
+
+void updateStudent(string dato,int valor){
+}
+

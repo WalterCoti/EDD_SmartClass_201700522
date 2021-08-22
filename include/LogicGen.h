@@ -8,6 +8,7 @@ void valStudent(string carnet_,string dpi_,string nombre_, string carrera_,strin
 bool isemail(string email_);
 bool isdpi(string numdpi_);
 bool iscarnet(string carnet_);
+void delStudent(string dpi_);
 
 
 #endif

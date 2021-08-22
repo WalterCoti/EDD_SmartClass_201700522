@@ -33,14 +33,17 @@ void menuPrincipal(){
     switch(opc){
         case 1:
             cout <<"Escriba la ruta del archivo" << endl;
-            cin >> pathfile;
-            //getline(cin,pathfile);
-            readfiles(pathfile);
-
+            //cin >> pathfile;
+            cin.ignore();
+            getline(cin,pathfile);
+            readfileStudent(pathfile);
+            pathfile = "";
             break;
         case 2:
             cout <<"Escriba la ruta del archivo" << endl;
-
+            getline(cin,pathfile);
+            readfileTarea(pathfile);
+            pathfile = "";
             break;
         case 3:
             addManual();
@@ -84,6 +87,7 @@ void addManual(){
 }
 
 void menuUser(){
+    string dpidel;
 int opcus = 0;
     cout << "------- MENU USUARIOS --------" << endl;
     cout << "|                            |" << endl;
@@ -104,7 +108,10 @@ int opcus = 0;
             cout <<"opcion Modificar" << endl;
             break;
         case 3:
-            cout << "opcion eliminar" << endl;
+            cout <<"Ingresar el DPI del usuario a eliminar:" << endl;
+            cin.ignore();
+            getline(cin,dpidel);
+            delStudent(dpidel);
             break;
         case 4:
             addManual();
@@ -113,6 +120,7 @@ int opcus = 0;
         default:cout <<"seleccione una opcion valida" << endl;
     }
 }
+
 
 void menuAddDatosU(){
     string carnetU,dpiU,nameU,carreraU,emailU,passU;
@@ -142,6 +150,67 @@ void menuAddDatosU(){
     valStudent(carnetU,dpiU,nameU,carreraU,emailU,passU,creditU,edadU);
 
 }
+
+void menuUpdateU(){
+int opcUsC = 0;
+string carnetNew,dpiNew,NameNew,carreraNew,emailNew,passNew,edadNew,creditNew;
+
+    cout << "---- MENU EDITAR USUARIO ----" << endl;
+    cout << "|                           |" << endl;
+    cout << "|   1 -> Carnet             |" << endl;
+    cout << "|   2 -> DPI                |" << endl;
+    cout << "|   3 -> NOMBRE             |" << endl;
+    cout << "|   4 -> CARRERA            |" << endl;
+    cout << "|   5 -> CORREO             |" << endl;
+    cout << "|   6 -> PASSWORD           |" << endl;
+    cout << "|   7 -> CREDITOS           |" << endl;
+    cout << "|   8 -> EDAD               |" << endl;
+    cout << "|                           |" << endl;
+    cout << "--------- FIN MENU ----------" << endl;
+    cout << "-Ingresar el numero de opcion-" << endl;
+
+    cin >> opcUsC;
+    switch(opcUsC){
+        case 1:
+            cout <<"Ingresar el Carnet Nuevo :" << endl;
+            cin.ignore();
+            getline(cin,carnetNew);
+            break;
+        case 2:
+            cout <<"Ingresar el DPI Nuevo :" << endl;
+            getline(cin,dpiNew);
+            break;
+        case 3:
+            cout <<"Ingresar el Nombre Nuevo :" << endl;
+            getline(cin,NameNew);
+            break;
+        case 4:
+            cout <<"Ingresar la Carrera Nueva :" << endl;
+            getline(cin,carreraNew);
+            break;
+        case 5:
+            cout <<"Ingresar el Correo Nuevo :" << endl;
+            getline(cin,emailNew);
+            break;
+        case 6:
+            cout <<"Ingresar la Contraseña Nueva :" << endl;
+            getline(cin,passNew);
+            break;
+        case 7:
+            cout <<"Ingresar el No. de Creditos :" << endl;
+            getline(cin,creditNew);
+            break;
+        case 8:
+            cout <<"Ingresar Edad :" << endl;
+            getline(cin,edadNew);
+            break;
+
+        default:cout <<"seleccione una opcion valida" << endl;
+
+    }
+
+}
+
 void menuTareas(){
 int opcus = 0;
     cout << "-------- MENU TAREAS ---------" << endl;
