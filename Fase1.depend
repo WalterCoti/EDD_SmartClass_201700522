@@ -112,79 +112,84 @@
 	"Estudiante.h"
 	"Tarea.h"
 
-1629501081 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\main.cpp
+1629761883 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\main.cpp
 	<iostream>
 	<Windows.h>
 	"readfile.h"
 	"LogicGen.h"
+	"NodoCola.h"
 
-1629414123 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\readfile.h
+1629668452 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\readfile.h
 	<string>
 	<fstream>
 
-1629501131 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\logicgen.h
+1629761554 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\logicgen.h
 	"Estudiante.h"
 	"ListDC.h"
 
-1629358448 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\estudiante.h
+1629358450 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\estudiante.h
 	<iostream>
 	<string>
 
-1629362400 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\listdc.h
+1629759926 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\listdc.h
 	"Estudiante.h"
 	"NodoD.h"
 
-1629107605 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\nodod.h
+1629107606 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\nodod.h
 
-1629358438 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
+1629358440 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
 	"Estudiante.h"
 	<ctype.h>
 
-1629358619 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\fecha.cpp
+1629358620 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\fecha.cpp
 	"Fecha.h"
 	<string>
 
-1629358295 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\fecha.h
+1629358296 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\fecha.h
 	<string>
 
-1629501379 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\listdc.cpp
+1629772115 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\listdc.cpp
 	"ListDC.h"
 	"Estudiante.h"
+	<fstream>
+	<windows.h>
 
-1629107108 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\listdoble.cpp
+1629107110 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\listdoble.cpp
 	"ListDoble.h"
 
-1629107084 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\listdoble.h
+1629107086 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\listdoble.h
 
-1629532967 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\logicgen.cpp
+1629762114 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\logicgen.cpp
 	"LogicGen.h"
 	"Estudiante.h"
 	"ListDC.h"
 	"windows.h"
+	"NodoCola.h"
+	"ColaErr.h"
 	<regex>
 
-1629443639 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\nodocola.cpp
+1629742593 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\nodocola.cpp
 	"NodoCola.h"
 
-1629454649 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\nodocola.h
+1629739692 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\nodocola.h
 	<string>
 	"Estudiante.h"
 	"Tarea.h"
 
-1629004397 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\tarea.h
+1629004398 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\tarea.h
 	"Fecha.h"
 	<iostream>
 	<string>
 
-1629177448 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\nodod.cpp
+1629177450 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\nodod.cpp
 	"NodoD.h"
 
-1628628929 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\nodosi.cpp
+1628628930 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\nodosi.cpp
 	"NodoSi.h"
 
-1629012662 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\nodosi.h
+1629012664 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\nodosi.h
 
-1629533572 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
+1629668274 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
 	"readfile.h"
 	<string>
 	<fstream>
@@ -194,7 +199,7 @@
 	"LogicGen.h"
 	<regex>
 
-1629004469 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\tarea.cpp
+1629004470 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\tarea.cpp
 	"Tarea.h"
 	"Fecha.h"
 
@@ -283,4 +288,10 @@
 	<Windows.h>
 	"readfile.h"
 	"LogicGen.h"
+
+1629760429 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\colaerr.cpp
+	"ColaErr.h"
+
+1629694128 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\colaerr.h
+	"NodoCola.h"
 

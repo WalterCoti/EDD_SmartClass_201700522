@@ -1,8 +1,8 @@
 #include <iostream>
 #include <Windows.h>
-#include "readfile.h";
+#include "readfile.h"
 #include "LogicGen.h"
-
+#include "NodoCola.h"
 using namespace std;
 
 void addManual();
@@ -120,7 +120,6 @@ int opcus = 0;
         default:cout <<"seleccione una opcion valida" << endl;
     }
 }
-
 
 void menuAddDatosU(){
     string carnetU,dpiU,nameU,carreraU,emailU,passU;
@@ -256,6 +255,7 @@ int opcrep = 0;
     cin >> opcrep;
     switch(opcrep){
         case 1:cout <<"opcion ingresar" << endl;;
+            printStu();
             break;
         case 2: cout <<"opcion Modificar" << endl;
             break;

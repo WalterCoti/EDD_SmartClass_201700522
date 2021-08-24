@@ -2,9 +2,12 @@
 #include "Estudiante.h"
 #include "ListDC.h"
 #include "windows.h"
+#include "NodoCola.h"
+#include "ColaErr.h"
 #include <regex>
 
-ListDC *nwList = new ListDC();
+ListDC *nwListDC = new ListDC();
+ColaErr *nwColaErr = new ColaErr();
 
 bool isemail(string email_){
     //cout <<"email que llega -> " << email_ << endl;
@@ -30,6 +33,7 @@ bool iscarnet(string numcarnet_)
 
 void valStudent(string carnet_,string dpi_,string nombre_, string carrera_,string email_,string pass_, int creditos_,int edad_)
 {
+    int Nerror = 1;
     string report = "";
 
     if(!iscarnet(carnet_))
@@ -49,20 +53,29 @@ void valStudent(string carnet_,string dpi_,string nombre_, string carrera_,strin
     };
     if(iscarnet(carnet_) && isdpi(dpi_) && isemail(email_)){
         Estudiante *nEstudiante = new Estudiante(carnet_,dpi_,nombre_,carrera_,email_,pass_,creditos_, edad_);
-        nwList->addEstudent(nEstudiante);
-    }else{
+        nwListDC->addEstudent(nEstudiante);
 
-        cout<<"Datos agregados  a la cola de errores" << endl;
+       // nwListDC->printlist();
+    }else{
+        //Estudiante *nEstudiante = new Estudiante(carnet_,dpi_,nombre_,carrera_,email_,pass_,creditos_, edad_);
+         //cout<<"crea el estudiante "<< endl;
+        //NodoCola *newNodo = new NodoCola(Nerror,report,"Estudiante", nEstudiante ,NULL);
+       // cout<<"crea el nodo "<< endl;
+       // nwColaErr->encolar(newNodo);
+       // cout<<"encola el nodo "<< endl;
     }
 
 
 }
 
 void delStudent(string dpi_){
-    nwList->deletStudent(dpi_);
-    nwList->printlist();
+    nwListDC->deletStudent(dpi_);
+
 }
 
 void updateStudent(string dato,int valor){
 }
 
+void printStu(){
+   nwListDC->graphListDC();
+}

@@ -14,7 +14,7 @@ class ListDC
         void deletStudent(string dpistudent_);
         void updateStudent(string dpistudent_, int opc_);
         void printlist();
-        void graphListEstudent();
+        void graphListDC();
 
 
     private:

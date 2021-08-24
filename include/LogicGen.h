@@ -9,6 +9,7 @@ bool isemail(string email_);
 bool isdpi(string numdpi_);
 bool iscarnet(string carnet_);
 void delStudent(string dpi_);
+void printStu();
 
 
 #endif

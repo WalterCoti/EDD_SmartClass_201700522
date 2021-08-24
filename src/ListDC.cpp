@@ -1,5 +1,7 @@
 #include "ListDC.h"
 #include "Estudiante.h"
+#include <fstream>
+#include <windows.h>
 ListDC::ListDC()
 {
     this->head = NULL;
@@ -95,14 +97,65 @@ void ListDC::deletStudent(string dpistudent_){
 
 void ListDC::printlist()
 {
- NodoD *tmp = new NodoD();
-tmp = this->head;
+ NodoD *tmp = this->head;
  if(this->head != NULL){
  do{
-    cout << tmp->getEstudiante()->getname() << endl;
+    cout << "- " << tmp->getEstudiante()->getname() << endl;
     tmp = tmp->getnext();
  }while(tmp != this->head);
  } else{
     cout << "\n La lista  Vacia" << endl;
  }
 }
+
+void ListDC::graphListDC(){
+    NodoD *aux = this->head;
+    string n_data = "";
+    string e_data = "";
+    string graph = "digraph List {\nrankdir=LR;\nnode [shape = record, color=blue , style=filled, fillcolor=skyblue];\n";
+    string n_actual;
+    string n_sig;
+    string n_anterior;
+    do{
+    //cout << aux->getEstudiante()->getname() << endl;
+     n_actual = aux->getEstudiante()->getcarnet();
+     n_sig =    aux->getnext()->getEstudiante()->getcarnet();
+     n_anterior = aux->getprevious()->getEstudiante()->getcarnet();
+     n_data +=  n_actual + "[label=\"Carnet : " + aux->getEstudiante()->getcarnet() + "\\n\" \n"
+                         + "+ \" DPI:   "+ aux->getEstudiante()->getdpi() + "\\n\" \n"
+                         + "+ \" Nombre:  "+ aux->getEstudiante()->getname() + "\\n\" \n"
+                         + "+ \" Correo:  "+ aux->getEstudiante()->getemail() + "\\n\" \n"
+                         + "+ \" Password:  "+ aux->getEstudiante()->getpass() + "\\n\" \n"
+                         + "+ \" Creditos:  "+ to_string(aux->getEstudiante()->getcredit()) + "\\n\" \n"
+                         + "+ \" Edad:  "+ to_string(aux->getEstudiante()->getedad()) + "\"]; \n";
+     e_data += n_actual+ "->" + n_sig + ";\n";
+     e_data += n_actual+ "->" + n_anterior + ";\n";
+    counter++;
+    aux = aux->getnext();
+    }while(aux != this->head);
+
+    graph += n_data;
+    graph += e_data;
+    graph += "\n}";
+    //-------------------------------------
+    try{
+        //Esta variable debe ser modificada para agregar su path de creacion de la Grafica
+        string path = "D:\\";
+        ofstream file;
+        file.open(path + "Graph.dot",std::ios::out);
+        if(file.fail()){
+            exit(1);
+        }
+        file<<graph;
+        file.close();
+        string command = "dot -Tpng " + path + "Graph.dot -o  " + path + "Graph.png";
+        system(command.c_str());
+        cout<<"Grafica generada con exito"<<endl;
+    }catch(exception e){
+        cout<<"Fallo detectado"<<endl;
+    }
+    //-------------------------------------
+
+    delete aux;
+}
+

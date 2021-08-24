@@ -34,6 +34,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/ColaErr.h" />
 		<Unit filename="include/Estudiante.h" />
 		<Unit filename="include/Fecha.h" />
 		<Unit filename="include/ListDC.h" />
@@ -45,6 +46,7 @@
 		<Unit filename="include/Tarea.h" />
 		<Unit filename="include/readfile.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/ColaErr.cpp" />
 		<Unit filename="src/Estudiante.cpp" />
 		<Unit filename="src/Fecha.cpp" />
 		<Unit filename="src/ListDC.cpp" />
