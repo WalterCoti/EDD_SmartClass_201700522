@@ -112,19 +112,20 @@
 	"Estudiante.h"
 	"Tarea.h"
 
-1629863159 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\main.cpp
+1629913896 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\main.cpp
 	<iostream>
 	<Windows.h>
 	"readfile.h"
 	"LogicGen.h"
 	"NodoCola.h"
 	"ColaErr.h"
+	<regex>
 
 1629668452 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\readfile.h
 	<string>
 	<fstream>
 
-1629859580 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\logicgen.h
+1629912198 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\logicgen.h
 	"Estudiante.h"
 	"ListDC.h"
 
@@ -149,23 +150,27 @@
 1629808940 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\fecha.h
 	<string>
 
-1629852337 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\listdc.cpp
+1629918460 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\listdc.cpp
 	"ListDC.h"
 	"Estudiante.h"
 	<fstream>
 	<windows.h>
+	<iostream>
+	<string>
+	<sstream>
 
-1629852490 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\listdoble.cpp
+1629917493 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\listdoble.cpp
 	"ListDoble.h"
 
 1629852413 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\listdoble.h
 	"NodoDoble.h"
 
-1629864583 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\logicgen.cpp
+1629918072 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\logicgen.cpp
 	<iostream>
 	"LogicGen.h"
 	"Estudiante.h"
 	"ListDC.h"
+	"ListDoble.h"
 	"windows.h"
 	"NodoCola.h"
 	"NodoDoble.h"
@@ -195,7 +200,7 @@
 
 1629012664 d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\include\nodosi.h
 
-1629838792 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
+1629905977 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
 	"readfile.h"
 	<string>
 	<fstream>
@@ -209,11 +214,11 @@
 	"Tarea.h"
 	"Fecha.h"
 
-1629358438 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
+1629358440 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\estudiante.cpp
 	"Estudiante.h"
 	<ctype.h>
 
-1629358448 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\estudiante.h
+1629358450 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\estudiante.h
 	<iostream>
 	<string>
 
@@ -221,38 +226,44 @@
 	"Fecha.h"
 	<string>
 
-1629358295 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\fecha.h
+1629808942 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\fecha.h
 	<string>
 
-1629501379 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\listdc.cpp
+1629930405 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\listdc.cpp
 	"ListDC.h"
 	"Estudiante.h"
+	<fstream>
+	<windows.h>
+	<iostream>
+	<string>
+	<sstream>
 
-1629362400 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\listdc.h
+1629841804 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\listdc.h
 	"Estudiante.h"
 	"NodoD.h"
 
-1629107605 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\nodod.h
+1629107606 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\nodod.h
 
-1629107108 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\listdoble.cpp
+1629924656 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\listdoble.cpp
 	"ListDoble.h"
 
-1629107084 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\listdoble.h
+1629852414 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\listdoble.h
+	"NodoDoble.h"
 
-1629443639 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\nodocola.cpp
+1629859426 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\nodocola.cpp
 	"NodoCola.h"
 
-1629592070 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\nodocola.h
+1629859406 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\nodocola.h
 	<string>
 	"Estudiante.h"
 	"Tarea.h"
 
-1629004397 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\tarea.h
+1629812070 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\tarea.h
 	"Fecha.h"
 	<iostream>
 	<string>
 
-1629177448 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\nodod.cpp
+1629177450 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\nodod.cpp
 	"NodoD.h"
 
 1628628929 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\nodosi.cpp
@@ -260,7 +271,7 @@
 
 1629012662 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\nodosi.h
 
-1629668272 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
+1629918570 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\readfile.cpp
 	"readfile.h"
 	<string>
 	<fstream>
@@ -270,30 +281,40 @@
 	"LogicGen.h"
 	<regex>
 
-1629668451 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\readfile.h
+1629668452 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\readfile.h
 	<string>
 	<fstream>
 
-1629501131 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\logicgen.h
+1629912200 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\logicgen.h
 	"Estudiante.h"
 	"ListDC.h"
 
-1629004469 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\tarea.cpp
+1629812122 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\tarea.cpp
 	"Tarea.h"
 	"Fecha.h"
 
-1629576937 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\logicgen.cpp
+1629930697 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\logicgen.cpp
+	<iostream>
 	"LogicGen.h"
 	"Estudiante.h"
 	"ListDC.h"
+	"ListDoble.h"
 	"windows.h"
+	"NodoCola.h"
+	"NodoDoble.h"
+	"ColaErr.h"
+	"Tarea.h"
 	<regex>
+	<istream>
 
-1629576994 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\main.cpp
+1629928192 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\main.cpp
 	<iostream>
 	<Windows.h>
 	"readfile.h"
 	"LogicGen.h"
+	"NodoCola.h"
+	"ColaErr.h"
+	<regex>
 
 1629867422 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\colaerr.cpp
 	"ColaErr.h"
@@ -311,5 +332,18 @@
 	"Tarea.h"
 
 1629856471 source:d:\segundo_semestre\edd\lab\fase1\proyf1\fase1\src\nododoble.cpp
+	"NodoDoble.h"
+
+1629866616 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\colaerr.h
+	"NodoCola.h"
+
+1629867424 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\colaerr.cpp
+	"ColaErr.h"
+	<fstream>
+
+1629856364 c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\include\nododoble.h
+	"Tarea.h"
+
+1629856472 source:c:\users\gameover\desktop\edd\lab\fase1\proyf1\fase1\src\nododoble.cpp
 	"NodoDoble.h"
 

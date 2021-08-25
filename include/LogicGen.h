@@ -17,7 +17,8 @@ bool existStu(string carnet_);
 
 bool isValDate(string date_);
 string dameDate(string date, int type);
-
+void prtListLine();
+void linealizar();
 //-------------------------Cola----------------
 void getgraphCola();
 

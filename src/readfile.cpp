@@ -51,8 +51,10 @@ void readfileTarea(string path_){
         getline(fileOp,carnet,',');
         getline(fileOp,Nombre,',');
         getline(fileOp,descripcion,',');
+        getline(fileOp,materia,',');
         getline(fileOp,fechatar,',');
         getline(fileOp,estado,'\n');
-       // valStudent(carnet,dpi,name,carrera,email,pass,stoi(credit),stoi(edad));
+        //cout<<"Fecha obtenida antes de:"<< fechatar;
+        valTarea(stoi(mes),stoi(dia),stoi(hora) ,carnet,Nombre,descripcion,materia,fechatar,estado);
     }
 }

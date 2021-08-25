@@ -2,6 +2,10 @@
 #include "Estudiante.h"
 #include <fstream>
 #include <windows.h>
+#include <iostream>
+#include <string>
+#include <sstream>
+
 ListDC::ListDC()
 {
     this->head = NULL;
@@ -18,20 +22,18 @@ bool ListDC::isEmptyLCD()
     return false;
 }
 
-bool ListDC::existEst(string dpi_){
-    NodoD *tmp = new NodoD();
-    tmp = this->head;
-    if(this->head != NULL){
+bool ListDC::existEst(string carnet_){
+    NodoD *tmp = this->head;
+    if(this->head == NULL){
+        return false;
+    }else{
         do{
-            if(tmp->getEstudiante()->getcarnet() == dpi_){
+            if(tmp->getEstudiante()->getcarnet() == carnet_){
                 return true;
             }
             tmp = tmp->getnext();
         }while(tmp != this->head);
-    } else{
-    cout << "\n La lista  Vacia" << endl;
     }
-    return false;
 }
 
 
@@ -50,6 +52,7 @@ void ListDC::addEstudent(Estudiante *estudiante_){
         this->end = newNodo;
     }
     this->size++;
+
 }
 
 void ListDC::updateStudent(string dpistudent_,int opc_)
@@ -66,7 +69,7 @@ void ListDC::deletStudent(string dpistudent_){
         cout << "Lista vacia" << endl;
     }else{
         do{
-            if(actual->getEstudiante()->getdpi() == dpistudent_){
+            if(actual->getEstudiante()->getcarnet() == dpistudent_){
                 //obtener datos del que elimino xD
                 if(actual == this->head){
                     this->head = this->head->getnext();
@@ -91,7 +94,8 @@ void ListDC::deletStudent(string dpistudent_){
             cout << " Usuario no registrado";
         }
     }
-
+    delete actual;
+    delete anterior;
 }
 
 
@@ -148,14 +152,14 @@ void ListDC::graphListDC(){
         }
         file<<graph;
         file.close();
-        string command = "dot -Tpng " + path + "Estudiantes"+to_string(this->nfile) +".dot -o  " + path + "Estudiantes"+to_string(this->nfile)+".png";
+        string command = "dot -Tpng " + path + "Estudiantes"+to_string(this->nfile) +".dot -o  " + path + "Estudiantes" + to_string(this->nfile)+".png";
         system(command.c_str());
         cout<<"Grafica generada con exito"<<endl;
+        this->nfile++;
     }catch(exception e){
         cout<<"Fallo detectado"<<endl;
     }
     //-------------------------------------
-    this->nfile++;
     delete aux;
 }
 

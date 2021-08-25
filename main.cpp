@@ -4,6 +4,7 @@
 #include "LogicGen.h"
 #include "NodoCola.h"
 #include "ColaErr.h"
+#include <regex>
 using namespace std;
 
 void addManual();
@@ -43,8 +44,10 @@ void menuPrincipal(){
             break;
         case 2:
             cout <<"Escriba la ruta del archivo" << endl;
+            cin.ignore();
             getline(cin,pathfile);
             readfileTarea(pathfile);
+            cout<<pathfile<<endl;
             pathfile = "";
             break;
         case 3:
@@ -281,11 +284,12 @@ string date;
 
     cin >> opcrep;
     switch(opcrep){
-        case 1:cout <<"opcion ingresar" << endl;;
+        case 1:
             printStu();
             break;
-        case 2: cout <<"opcion Modificar" << endl;
-
+        case 2:
+            linealizar();
+            prtListLine();
             break;
         case 3:
             menuPrincipal();
@@ -306,12 +310,11 @@ string date;
     }
 }
 
-
 int main()
 {
+    initMatrix();
     SetConsoleOutputCP( CP_UTF8 );
     menuPrincipal();
-    initMatrix();
     return 0;
 }
 

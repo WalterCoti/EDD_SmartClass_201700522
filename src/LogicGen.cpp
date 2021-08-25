@@ -2,6 +2,7 @@
 #include "LogicGen.h"
 #include "Estudiante.h"
 #include "ListDC.h"
+#include "ListDoble.h"
 #include "windows.h"
 #include "NodoCola.h"
 #include "NodoDoble.h"
@@ -14,6 +15,7 @@ using namespace std;
 //-------------------------------INICIALIZACION DE VARIABLES---------------
 ListDC *nwListDC = new ListDC();
 ColaErr *nwColaErr = new ColaErr();
+ListDoble *nwListLine = new ListDoble();
 int contador=0;
 int Nerror = 1;
 
@@ -91,7 +93,6 @@ void valStudent(string carnet_,string dpi_,string nombre_, string carrera_,strin
 
 void delStudent(string dpi_){
     nwListDC->deletStudent(dpi_);
-
 }
 
 void updateStudent(string dato,int valor){
@@ -103,11 +104,11 @@ void printStu(){
 
 
 //--------------------------------------------TAREAS-----------------------------------------------------------
+
 bool isValDate(string fecha_){
-    const regex pattern("([12]\\d{3}/(0?[7-9]|1[0-1])/(0[1-9]|[12]\\d|3[0]))");
+    const regex pattern("([12]\\d{3}/(0[7-9]|1[01])/(0[1-9]|[12]\\d|3[0]))");
     return regex_match(fecha_,pattern);
 }
-
 
 string dameDate(string fecha_, int type_){
     string anio, mes, dia;
@@ -129,37 +130,82 @@ string dameDate(string fecha_, int type_){
 }
 
 
+
 void valTarea(int mes_, int dia_,int hora_, string carnetU_,string nombre_,string descripcion_, string materia_, string fecha_,  string estado_){
     string descripError = "";
     bool exist = nwListDC->existEst(carnetU_);
     bool valFormat = isValDate(fecha_);
+    bool vhora = true;
+    bool vmes = true;
+    bool vdia = true;
 
-
-    if(valFormat){
+    if(!exist){
+        cout<<"Error Estudiante No Registrado  "<<endl;
+         descripError += "- Estudiante No Registrado";
+    }
+    if(!valFormat){
+        cout<<"Error de Formato fecha: " << fecha_ <<endl;
         descripError += "- Herror en el Formato de fecha";
     }
     if( hora_ < 8 && hora_ > 16){
-        descripError += "- Herror en el rando de Horas";
+        vhora = false;
+        descripError += "- Herror en el rango de Horas";
     }
     if( dia_ <= 0 && dia_ >= 31){
-        descripError += "- Herror en el rando de Dias";
+        descripError += "- Herror en el rango de Dias";
+        vdia = false;
     }
     if( mes_ < 7 && mes_ > 11){
-        descripError += "- Herror en el rando de Meses";
+        descripError += "- Herror en el rango de Meses";
+        vmes = false;
     }
-    if(exist && valFormat ){
-
+    if(exist && valFormat && vhora && vmes && vdia){
         Tarea *nwTarea = new Tarea(contador,carnetU_, nombre_,descripcion_, materia_,fecha_, hora_,estado_);
         NodoDoble *nwNodoT = new NodoDoble(nwTarea);
-        matrix[mes_][dia_][hora_] = nwNodoT;
-        contador++;
-    }
+        //cout<< "mes "<<to_string(mes_-7)<< "dia "<<to_string(dia_-1)<< "mes "<<to_string(hora_-8)<< endl;
 
+        matrix[mes_-7][dia_-1][hora_ - 8] = nwNodoT;
+
+        contador++;
+        delete nwTarea;
+    }else{
+        Tarea *nwTarea = new Tarea(contador,carnetU_, nombre_,descripcion_, materia_,fecha_, hora_,estado_);
+        NodoCola *nwError = new NodoCola(Nerror,descripError,"TAREA",nwTarea);
+        nwColaErr->encolar(nwError);
+        Nerror++;
+        delete nwTarea;
+    }
+}
+
+void linealizar(){
+    for(int m = 0; m<5; m++){           // m mes
+        for(int d = 0; d<30; d++){      // d dia
+            for(int h = 0; h<9; h++){   // h hora
+
+                NodoDoble *tmpNod = matrix[m][d][h];
+
+                int indice = h+9*(d+30*m);
+                if (tmpNod == NULL)
+                {
+                    cout<< "nodo vacio"<<endl;
+                    NodoDoble *vacio = new NodoDoble();
+                    vacio->setid(indice);
+                    nwListLine->addNodo(vacio);
+                    delete vacio;
+                }else{
+                    cout<< "nodo lleno"<<endl;
+                    tmpNod->setid(indice);
+                    nwListLine->addNodo(tmpNod);
+                }
+                delete tmpNod;
+            }
+        }
+    }
 }
 
 
-void linealizar(){
-
+void prtListLine(){
+    nwListLine->getgraphList();
 }
 
 //------------------------------COLA DE ERRORES--------------------
@@ -173,7 +219,13 @@ nwColaErr->graficar();
 
 
 
-
+/* cout<<to_string(mes_)<<endl;
+    cout<<to_string(dia_)<<endl;
+cout<<carnetU_<<endl;
+cout<<nombre_<<endl;
+cout<<descripcion_<<endl;
+cout<<fecha_<<endl;
+cout<<estado_<<endl;*/
 
 
 
