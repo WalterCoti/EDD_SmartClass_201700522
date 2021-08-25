@@ -3,6 +3,7 @@
 #include "readfile.h"
 #include "LogicGen.h"
 #include "NodoCola.h"
+#include "ColaErr.h"
 using namespace std;
 
 void addManual();
@@ -11,6 +12,7 @@ void menuUser();
 void menuReport();
 void menuTareas();
 void menuAddDatosU();
+void menuAddTarea();
 
 void menuPrincipal(){
     bool salir = false;
@@ -147,7 +149,6 @@ void menuAddDatosU(){
     cout << "Ingresar Edad" << endl;
     cin >> edadU;
     valStudent(carnetU,dpiU,nameU,carreraU,emailU,passU,creditU,edadU);
-
 }
 
 void menuUpdateU(){
@@ -241,13 +242,39 @@ int opcus = 0;
     }
 }
 
+void menuAddTarea(){
+    string carnet,nombre, descripcion,materia,fecha,hora, estado;
+
+    cout << "Ingresar Carnet (Existente): " << endl;
+    getline(cin,carnet);
+     cout << "Ingresar Nombre de la Tarea: " << endl;
+    getline(cin,nombre);
+    cout << "Ingresar Descripcion:" << endl;
+    getline(cin,descripcion);
+    cout << "Ingresar Materia:" << endl;
+    getline(cin,materia);
+    cout << "Ingresar No. Fecha formato YYYY/MM/DD:" << endl;
+    getline(cin,fecha);
+    cout << "Ingresar Hora:" << endl;
+    getline(cin,hora);
+    cout << "Ingresar Edad:" << endl;
+    getline(cin,estado);
+
+    //valTarea(carnet,nombre,descripcion,materia,fecha,hora,estado);
+}
+
 void menuReport(){
 int opcrep = 0;
+string date;
     cout << "---------- MENU REPORTES ----------" << endl;
     cout << "|                                 |" << endl;
-    cout << "|   1 -> Lista Usuarios           |" << endl;
+    cout << "|   1 -> Lista Estudiantes        |" << endl;
     cout << "|   2 -> Linealizacion Tareas     |" << endl;
-    cout << "|   3 -> Regresar                 |" << endl;
+    cout << "|   3 -> Busqueda Estructura Lin  |" << endl;
+    cout << "|   4 -> Busqueda de posicion     |" << endl;
+    cout << "|   5 -> Cola de Errores          |" << endl;
+    cout << "|   6 -> Codigo Salida            |" << endl;
+    cout << "|   7 -> Salir/Regresar           |" << endl;
     cout << "|                                 |" << endl;
     cout << "------------- FIN MENU ------------" << endl;
     cout << "-Ingresar el numero de opcion-" << endl;
@@ -258,8 +285,22 @@ int opcrep = 0;
             printStu();
             break;
         case 2: cout <<"opcion Modificar" << endl;
+
             break;
-        case 3:  menuPrincipal();
+        case 3:
+            menuPrincipal();
+            break;
+        case 4:
+            menuPrincipal();
+            break;
+        case 5:
+            getgraphCola();
+            break;
+        case 6:
+            menuPrincipal();
+            break;
+        case 7:
+            menuPrincipal();
             break;
         default:cout <<"seleccione una opcion valida" << endl;
     }
@@ -270,6 +311,7 @@ int main()
 {
     SetConsoleOutputCP( CP_UTF8 );
     menuPrincipal();
+    initMatrix();
     return 0;
 }
 

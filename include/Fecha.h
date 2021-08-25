@@ -7,23 +7,22 @@ class Fecha
 {
     public:
         //constructor
-        Fecha(int dia_,int mes_, int anio_);
+        Fecha();
+        Fecha(string dia_,string mes_, string anio_);
         //setters
-        int getdia();
-        int getmes();
-        int getanio();
+        string getdia();
+        string getmes();
+        string getanio();
         string getnewFormat();
 
         //getters
-        void setdia(int dia_);
-        void setmes(int mes_);
-        void setanio(int anio_);
+        void setdia(string dia_);
+        void setmes(string mes_);
+        void setanio(string anio_);
 
 
     private:
-        int dia;
-        int mes;
-        int anio;
+        string dia,mes,anio;
 };
 
 #endif // FECHA_H

@@ -9,23 +9,22 @@ NodoCola::NodoCola(){
     this->tarea = NULL;
     this->next = NULL;
 }
-NodoCola::NodoCola(int idError_, string descript_, string tipo_,Estudiante *estudiante_,NodoCola *next_){
+NodoCola::NodoCola(int idError_, string descript_, string tipo_,Estudiante *estudiante_){
     this->idError = idError_;
     this->descripcion = descript_;
     this->tipo = tipo_;
     this->estudiante = estudiante_;
     this->tarea = NULL;
-    this->next = next_;
-
+    this->next = NULL;
 }
 
-NodoCola::NodoCola(int idError_, string descript_, string tipo_, Tarea *tarea_,NodoCola *next_){
+NodoCola::NodoCola(int idError_, string descript_, string tipo_, Tarea *tarea_){
     this->idError = idError_;
     this->descripcion = descript_;
     this->tipo = tipo_;
     this->estudiante = NULL;
     this->tarea = tarea_;
-    this->next = next_;
+    this->next = NULL;
 }
 
 void NodoCola::setnext(NodoCola *next_){

@@ -1,37 +1,41 @@
 #include "Fecha.h"
 #include <string>
 using namespace std;
-Fecha::Fecha(int dia_,int mes_, int anio_){
+Fecha::Fecha(string dia_,string mes_, string anio_){
         this->dia = dia_;
         this->mes = mes_;
         this->anio = anio_;
 }
+Fecha::Fecha(){
+    this->dia = nullptr;
+    this->mes = nullptr;
+    this->anio = nullptr;
+}
 
         //getters
-int Fecha::getdia(){
+string Fecha::getdia(){
     return this->dia;
 }
-int Fecha::getmes(){
+string Fecha::getmes(){
     return  this->mes;
 }
-int Fecha::getanio(){
+string Fecha::getanio(){
     return this->anio;
 }
 
 string Fecha::getnewFormat(){
-    string newdate = to_string(this->dia) + "/" + to_string(this->mes) + "/" + to_string(this->anio);
+    string newdate = this->dia + "/" + this->mes + "/" + this->anio;
     return  newdate;
 }
 
-
         //setters
-void Fecha::setdia(int dia_){
+void Fecha::setdia(string dia_){
     this->dia = dia_;
 }
-void Fecha::setmes(int mes_){
+void Fecha::setmes(string mes_){
     this->mes = mes_;
 }
-void Fecha::setanio(int anio_){
+void Fecha::setanio(string anio_){
     this->anio = anio_;
 }
 

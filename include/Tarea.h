@@ -8,35 +8,32 @@ using namespace std;
 class Tarea
 {
     public:
-        Tarea(int idtarea_, int carn_tar, string name_t_, string descript_, string materia_, Fecha *fecha_, int hora_);
-
+        Tarea(int idtarea_, string carn_tar, string name_t_, string descript_, string materia_, string fecha_, int hora_, string estado_);
         //setters
         void setidtarea(int idtarea_);
-        void setcarnet(int carn_tar_);
+        void setcarnet(string carn_tar_);
         void setnamet(string name_t);
         void setdescri(string descript_);
         void setmateria(string materia_);
-        void setfecha(Fecha *fecha_);
+        void setfecha(string fecha_);
         void sethora(int hora_);
+        void setestado(string estado_);
 
         //getters
         int getidtarea();
-        int getcarnet();
+        string getcarnet();
         string getname_t();
         string getdescript();
         string getmateria();
-        Fecha *getfechatar();
+        string getfechatar();
         int gethora();
+        string getestado();
 
 
 
     private:
         int idtarea;
-        int carn_tar;
-        string name_t;
-        string descript;
-        string materia;
-        Fecha *fechatar;
+        string carn_tar,name_t,descript,materia,estado,fechatar;
         int hora;
 
 };

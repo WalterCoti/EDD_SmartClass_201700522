@@ -21,6 +21,7 @@ class ListDC
         NodoD *head;
         NodoD *end;
         int size;
+        int nfile;
 
 };
 

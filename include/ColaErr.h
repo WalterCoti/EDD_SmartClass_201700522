@@ -10,6 +10,7 @@ class ColaErr
         void encolar(NodoCola *newError);
         void descolar();
         void graficar();
+        int getnFile();
         bool isEmpty();
 
     protected:
@@ -17,6 +18,8 @@ class ColaErr
     private:
         NodoCola *head;
         NodoCola *end;
+        int nfile,tamanio;
+
 };
 
 #endif // COLAERR_H

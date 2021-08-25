@@ -7,6 +7,7 @@ ListDC::ListDC()
     this->head = NULL;
     this->end = NULL;
     this->size = 0;
+    this->nfile = 0;
 }
 
 bool ListDC::isEmptyLCD()
@@ -22,10 +23,9 @@ bool ListDC::existEst(string dpi_){
     tmp = this->head;
     if(this->head != NULL){
         do{
-            if(tmp->getEstudiante()->getdpi() == dpi_){
+            if(tmp->getEstudiante()->getcarnet() == dpi_){
                 return true;
             }
-            cout << tmp->getEstudiante()->getname() << endl;
             tmp = tmp->getnext();
         }while(tmp != this->head);
     } else{
@@ -130,7 +130,7 @@ void ListDC::graphListDC(){
                          + "+ \" Edad:  "+ to_string(aux->getEstudiante()->getedad()) + "\"]; \n";
      e_data += n_actual+ "->" + n_sig + ";\n";
      e_data += n_actual+ "->" + n_anterior + ";\n";
-    counter++;
+
     aux = aux->getnext();
     }while(aux != this->head);
 
@@ -140,22 +140,22 @@ void ListDC::graphListDC(){
     //-------------------------------------
     try{
         //Esta variable debe ser modificada para agregar su path de creacion de la Grafica
-        string path = "D:\\";
+        string path = "D:\\Resultados\\";
         ofstream file;
-        file.open(path + "Graph.dot",std::ios::out);
+        file.open(path + "Estudiantes" + to_string(this->nfile) + ".dot",std::ios::out);
         if(file.fail()){
             exit(1);
         }
         file<<graph;
         file.close();
-        string command = "dot -Tpng " + path + "Graph.dot -o  " + path + "Graph.png";
+        string command = "dot -Tpng " + path + "Estudiantes"+to_string(this->nfile) +".dot -o  " + path + "Estudiantes"+to_string(this->nfile)+".png";
         system(command.c_str());
         cout<<"Grafica generada con exito"<<endl;
     }catch(exception e){
         cout<<"Fallo detectado"<<endl;
     }
     //-------------------------------------
-
+    this->nfile++;
     delete aux;
 }
 

@@ -9,8 +9,8 @@ class NodoCola
 {
     public:
         NodoCola();
-        NodoCola(int idError_, string descript_, string tipo_,Estudiante *estudiante_,NodoCola *next_);
-        NodoCola(int idError_, string descript_, string tipo_, Tarea *tarea_,NodoCola *next_);
+        NodoCola(int idError_, string descript_, string tipo_,Estudiante *estudiante_);
+        NodoCola(int idError_, string descript_, string tipo_, Tarea *tarea_);
 
         void setnext(NodoCola *next_);
         void setidError(int id_);

@@ -10,6 +10,7 @@ class NodoMatrix
     protected:
 
     private:
+
 };
 
 #endif // NODOMATRIX_H
