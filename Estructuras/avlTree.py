@@ -1,9 +1,6 @@
 import time
-
-from ListYear import  ListYear
-import os
+from Estructuras.ListYear import ListYear
 from os import system
-from os import path
 from datetime import datetime
 
 class NodoStd:
@@ -21,6 +18,12 @@ class NodoStd:
         self.Nder = None
         self.Tamanio = 0
 
+    def getlistyear(self):
+        return  self.yearlist
+
+    def setyear_list(self,year_):
+        self.yearlist.addYear(year_)
+
 
 class AVLTree:
     def __init__(self):
@@ -32,6 +35,7 @@ class AVLTree:
         return -1
 
     def insert(self, Stdcarnet_, StdNodpi_, Stdnombre_, Stdcarrera_, Stdemail_, Stdpassw_, Stdcredit_, Stdedad_):
+
         self.raiz = self.insertar_inter(Stdcarnet_, StdNodpi_, Stdnombre_, Stdcarrera_, Stdemail_, Stdpassw_, Stdcredit_, Stdedad_, self.raiz)
 
     def insertar_inter(self, ncarnet_, dpi_, nombre_, carrera_, correo_, passw_, credit_, edad_, raiz_):
@@ -86,15 +90,6 @@ class AVLTree:
         nodo.Nder = self.RI(nodo.Nder)
         return self.RD(nodo)
 
-    def inOrden(self):
-        self.in_OrdenInter(self.raiz)
-
-    def in_OrdenInter(self,raiz_):
-        if raiz_ is not None:
-            self.in_OrdenInter(raiz_.Nizq)
-            print(str(raiz_.carnet))
-            self.in_OrdenInter(raiz_.Nder)
-
     def delete(self,ncarnet):
         try:
             self.raiz = self.delete_Nodo(ncarnet,self.raiz)
@@ -102,26 +97,43 @@ class AVLTree:
             print("error inesperado")
 
     def delete_Nodo(self, ncarnet_,nodo):
+        rev = ncarnet_
+        aver = nodo.carnet
         if nodo is None:
             return nodo
         if ncarnet_ == nodo.carnet:
             if nodo.Nizq is not None and nodo.Nder is not None:
                 aux = self.maximo(nodo.Nizq)
                 nodo.carnet = aux.carnet
-                nodo.Nizq = self.delete_Nodo(nodo.carnet,nodo.Nizq)
+                # nodo.dpi = aux.dpi
+                # nodo.nombre = aux.nombre_
+                # nodo.carrera = aux.carrera_
+                # nodo.correo = aux.correo_
+                # nodo.passw = aux.passw_
+                # nodo.credito = aux.credit_
+                # nodo.edad = aux.edad_
+                # nodo.yearlist = aux.yearlist
+                # nodo.Tamanio = aux.Tamanio
+
+               # tmp = nodo
+              #  nodo = aux
+               # nodo.Nder = tmp.Nder
+                #nodo.Nizq = self.delete_Nodo(aux.carnet,tmp.Nizq)
+                tmp = aux
+                nodo.Nizq = self.delete_Nodo(nodo.carnet, nodo.Nizq)
+
             elif nodo.Nizq is None and nodo.Nder is None:
                 return None
-            elif nodo.Nizq is None:
+            elif nodo.Nizq is None and nodo.Nder is not None:
                 nodo = nodo.Nder
-            elif nodo.Nder is None:
+            elif nodo.Nder is None and nodo.Nizq is not None:
                 nodo = nodo.Nizq
         elif ncarnet_ < nodo.carnet:
             nodo.Nizq = self.delete_Nodo(ncarnet_,nodo.Nizq)
         elif ncarnet_ > nodo.carnet:
             nodo.Nder = self.delete_Nodo(ncarnet_, nodo.Nder)
-
-        nodo = self.balancear(nodo,ncarnet_)
         nodo.Tamanio = max(self.height(nodo.Nder),self.height(nodo.Nizq)) + 1
+        nodo = self.balancear(nodo, ncarnet_)
         return nodo
 
     def balancear(self,raiz_,ncarnet_):
@@ -148,16 +160,17 @@ class AVLTree:
     def recorrer_arbol(self,nodo,listNodos_):
         if nodo is not None:
             if nodo.Nizq is None and nodo.Nder is not None:
-                listNodos_.append([nodo.carnet, None , nodo.Nder.carnet])
-            elif nodo.Nder is None and nodo.Nizq is not None:
-                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, None])
-            elif nodo.Nder is None and nodo.Nizq is  None:
-                pass
-            else:
-                listNodos_.append([nodo.carnet,nodo.Nizq.carnet,nodo.Nder.carnet])
+                listNodos_.append([nodo.carnet, None , nodo.Nder.carnet,nodo.carnet,nodo.nombre,nodo.carrera])
                 self.recorrer_arbol(nodo.Nder, listNodos_)
-                self.recorrer_arbol(nodo.Nizq,listNodos_)
-
+            elif nodo.Nder is None and nodo.Nizq is not None:
+                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, None,nodo.carnet,nodo.nombre,nodo.carrera])
+                self.recorrer_arbol(nodo.Nizq, listNodos_)
+            elif nodo.Nder is None and nodo.Nizq is  None:
+                listNodos_.append([nodo.carnet, None, None,nodo.carnet,nodo.nombre,nodo.carrera])
+            else:
+                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, nodo.Nder.carnet, nodo.carnet, nodo.nombre, nodo.carrera])
+                self.recorrer_arbol(nodo.Nizq, listNodos_)
+                self.recorrer_arbol(nodo.Nder, listNodos_)
 
     def generarGraph(self):
         timenow = datetime.now().time()
@@ -165,28 +178,26 @@ class AVLTree:
         self.graphAVL(nameFile)
 
     #generar archivo.dot
-    def graphAVL(self,name):
+    def graphAVL(self,nombre):
         listNod = []
-
-        nombre = name
         file = open(nombre + "-avl.dot", "w")
         file.write("digraph d {\n")
-        file.write("\tnode [shape = circle];\n")
+        file.write("\tnode [shape = record, style=rounded];\n")
         self.recorrer_arbol(self.raiz,listNod)
         for nodo in listNod:
-           # file.write(str(nodo) +"[label=\"" + str(nodo) + "\"]; \n")
+            file.write(str(nodo[0]) +"[label=\"" + str(nodo[3]) +" \\n " + str(nodo[4]) +" \\n " + str(nodo[5]) + "\"]; \n")
             if nodo[1] is None and nodo[2] is not None:
                 file.write(str(nodo[0]) + "->"+ str(nodo[2])+";\n")
             elif nodo[1] is not None and nodo[2] is None:
                 file.write(str(nodo[0]) + "->" + str(nodo[1])+";\n")
+            elif nodo[1] is  None and nodo[2] is None:
+                pass
             else:
                 file.write(str(nodo[0]) + "->" + str(nodo[1])+";\n")
                 file.write(str(nodo[0]) + "->" + str(nodo[2])+";\n")
 
         file.write("}")
         file.close()
-      #  ruta = path.dirname(path.abspath(__file__))
-      #  system(ruta)
         try:
             time.sleep(1)
             executecmd = "dot -Tpng " + nombre + "-avl.dot -o " + nombre + "-avl.png"
@@ -194,36 +205,58 @@ class AVLTree:
             system("start " + nombre + "-avl.png ")
         except:
             print("Error al abrir la imagen")
-nwAVL = AVLTree()
-# nwAVL.insert(220170052,"25489652145124","awebasdfo","sqwe",'ghjk@gmail.com',"pass1",225,21)
-# nwAVL.insert(201700552,"254892545245124","awasdfebo","asdf XD",'hjkl@gmail.com',"pass545",211,45)
-# nwAVL.insert(201700666,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-# nwAVL.insert(201845214,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
-# nwAVL.insert(201500001,"254812542145124","awwertebo","dfgh XD",'wqert@gmail.com',"pa858",155,23)
-# nwAVL.insert(201912342,"25489652145124","awebasdfo","sqwe",'ghjk@gmail.com',"pass1",225,21)
-# nwAVL.insert(201201245,"254892545245124","awasdfebo","asdf XD",'hjkl@gmail.com',"pass545",211,45)
-# nwAVL.insert(201896230,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-# nwAVL.insert(201021545,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
-# nwAVL.insert(201124522,"254812542145124","awwertebo","dfgh XD",'wqert@gmail.com',"pa858",155,23)
-nwAVL.insert(1,"25489652145124","awebasdfo","sqwe",'ghjk@gmail.com',"pass1",225,21)
-nwAVL.insert(2,"254892545245124","awasdfebo","asdf XD",'hjkl@gmail.com',"pass545",211,45)
-nwAVL.insert(3,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-nwAVL.insert(4,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
-nwAVL.insert(5,"254812542145124","awwertebo","dfgh XD",'wqert@gmail.com',"pa858",155,23)
-nwAVL.insert(6,"25489652145124","awebasdfo","sqwe",'ghjk@gmail.com',"pass1",225,21)
-nwAVL.insert(7,"254892545245124","awasdfebo","asdf XD",'hjkl@gmail.com',"pass545",211,45)
-nwAVL.insert(8,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-nwAVL.insert(9,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
-nwAVL.insert(10,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-nwAVL.insert(11,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
-nwAVL.insert(12,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-nwAVL.generarGraph()
-nwAVL.delete(8)
-nwAVL.generarGraph()
-nwAVL.delete(4)
-nwAVL.generarGraph()
-nwAVL.delete(10)
-nwAVL.generarGraph()
-nwAVL.insert(8,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-nwAVL.generarGraph()
+
+    def getStudentNode(self,raiz_,carnet_):
+        if raiz_ is None:
+            return None
+        elif raiz_.carnet == carnet_:
+            return raiz_
+        elif raiz_.carnet < carnet_:
+            self.getStudentNode(raiz_.Nder, carnet_)
+        else:
+            return self.getStudentNode(raiz_.Nizq,carnet_)
+        return None
+
+    def add_year_in_list(self,carnet_,year_):
+        nodo = self.getStudentNode(self.raiz,carnet_)
+        if nodo is not None:
+            nodo.setyear_list(year_)
+        else:
+            print("el estudiante no se encuentra registrado")
+
+
+
+
+# nwAVL = AVLTree()
+# nwAVL.insert(202100001,"25489652145124","awebasdfo","sqwe",'ghjk@gmail.com',"pass1",225,21)
+# nwAVL.insert(202100002,"254892545245124","awasdfebo","asdf XD",'hjkl@gmail.com',"pass545",211,45)
+# nwAVL.insert(202100003,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
+# nwAVL.insert(202100004,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
+# nwAVL.insert(202100005,"254812542145124","awwertebo","dfgh XD",'wqert@gmail.com',"pa858",155,23)
+# nwAVL.insert(202100006,"25489652145124","awebasdfo","sqwe",'ghjk@gmail.com',"pass1",225,21)
+# nwAVL.insert(202100007,"254892545245124","awasdfebo","asdf XD",'hjkl@gmail.com',"pass545",211,45)
+# nwAVL.insert(202100008,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
+# nwAVL.insert(202100009,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
+# nwAVL.insert(202100010,"254812542145124","awwertebo","dfgh XD",'wqert@gmail.com',"pa858",155,23)
+# nwAVL.insert(1,"25489652145001","name1","carrera1",'ghjk@gmail.com',"pass1",225,21)
+# nwAVL.insert(2,"254892545245002","name2","carrera2",'hjkl@gmail.com',"pass545",211,45)
+# nwAVL.insert(3,"258487582145003","name3","carrera3",'bnm,@gmail.com',"pas4512",245,22)
+# nwAVL.insert(4,"254897845545004","name4","carrera4",'cvbn@gmail.com',"pa12045",150,30)
+# nwAVL.insert(5,"254812542145005","name5","carrera5",'ghjk@gmail.com',"pass1",225,21)
+# nwAVL.insert(6,"254812542145006","name6","carrera6",'ghjk@gmail.com',"pass1",225,21)
+# nwAVL.insert(7,"254892545245007","name7","carrera7",'hjkl@gmail.com',"pass545",211,45)
+# nwAVL.insert(8,"258487582145008","name8","carrera8",'bnm,@gmail.com',"pas4512",245,22)
+# nwAVL.insert(9,"254897845545009","name9","carrera9",'cvbn@gmail.com',"pa12045",150,30)
+# nwAVL.insert(10,"258487582145010","name10","carrera10",'bnm,@gmail.com',"pas4512",245,22)
+# nwAVL.insert(11,"254897845545011","name11","carrera11",'cvbn@gmail.com',"pa12045",150,30)
+# nwAVL.insert(12,"258487582145012","name12","carrera12",'bnm,@gmail.com',"pas4512",245,22)
+# nwAVL.generarGraph()
+# nwAVL.delete(8)
+# nwAVL.generarGraph()
+# nwAVL.delete(4)
+# nwAVL.generarGraph()
+# nwAVL.delete(10)
+# nwAVL.generarGraph()
+# nwAVL.add_year_in_list(4,2015)
+
 # nwAVL.inOrden()

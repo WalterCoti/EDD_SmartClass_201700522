@@ -1,42 +1,36 @@
-import ply.lex as lex
-import re
-lexer = lex.lex(reflags=re.IGNORECASE)
-
-
 reserved = {
-    'Elements': 'TELEMENTS',
-    'element': 'TELEMENT',
-    'type': 'TTYPE',
-    'item': 'TITEM',
-    'Carnet': 'TCARNET',
-    'DPI': 'TDPI',
-    'Nombre': 'TNOMBRE',
-    'Carrera': 'TCARRERA',
-    'Password': 'TPASSWORD',
-    'Creditos': 'TCREDITOS',
-    'Edad': 'TEDAD',
-    'Descripcion': 'TDESCRIPCION',
-    'Materia': 'TMATERIA',
-    'Fecha': 'TFECHA',
-    'Hora': 'THORA',
-    'Estado': 'TESTADO',
-}
+    'Elements' : 'TELEMENTS',
+    'element' : 'TELEMENT',
+    'type' : 'TTYPE',
+    'item' : 'TITEM',
+    'Carnet' : 'TCARNET',
+    'DPI' : 'TDPI',
+    'Nombre' : 'TNOMBRE',
+    'Carrera' : 'TCARRERA',
+    'Password' : 'TPASSWORD',
+    'Creditos' : 'TCREDITOS',
+    'Edad' : 'TEDAD',
+    'Descripcion' : 'TDESCRIPCION',
+    'Materia' : 'TMATERIA',
+    'Fecha' : 'TFECHA',
+    'Hora' : 'THORA',
+    'Estado' : 'TESTADO',
+    'Correo' : 'TCORREO'
+ }
 
 tokens = [
-             'LQUESTION', 'RQUESTION', 'DOLAR', 'ID', 'EQUALS', 'QUOTATION_MARKS', 'NUMBER', 'NORMSTRING', 'DATE',
-             'HOUR'
-         ] + list(reserved.values())
+    'LQUESTION' ,'RQUESTION','DOLAR', 'ID', 'EQUALS', 'QUOTATION_MARKS', 'NUMBER','NORMSTRING', 'DATE', 'HOUR'
+] + list(reserved.values())
 
-# Tokens
-t_LQUESTION = r'\¿'
-t_RQUESTION = r'\?'
-t_DOLAR = r'\$'
-t_EQUALS = r'='
+t_LQUESTION  = r'\¿'
+t_RQUESTION  = r'\?'
+t_DOLAR  = r'\$'
+t_EQUALS  = r'='
 t_QUOTATION_MARKS = r'\"'
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'ID')  # Check for reserved words
+    t.type = reserved.get(t.value, 'ID')
     return t
 
 def t_NUMBER(t):
@@ -51,7 +45,6 @@ def t_NUMBER(t):
 
 def t_NORMSTRING(t):
     r'\"(\\.|[^"\\])*\"'
-    print("String: '%s'" % t.value)
     return t
 
 def t_Date(t):
@@ -61,16 +54,6 @@ def t_Date(t):
 def t_HORA(t):
     r'(?=(?:\b[01]\d|2[0-3]):[0-5]\d\b)'
     return t
-# def t_NAME(t):
-#     r'[a-zA-Z_][a-zA-Z0-9_]*'
-#     try:
-#         t.value = t.value
-#     except ValueError:
-#         print("problemas de identificador %d", t.value)
-#         t.value = 0
-#     return t
-
-# Ignored characters
 t_ignore = ' \t\r\n'
 
 def t_newline(t):
@@ -81,6 +64,6 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-# Build the lexer
-
-
+import ply.lex as lex
+import re
+lexer = lex.lex(reflags=re.IGNORECASE)

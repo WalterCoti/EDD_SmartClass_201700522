@@ -1,3 +1,7 @@
+import time
+from os import system
+from datetime import datetime
+
 class NodoMes:
     def __init__(self,mes_):
         self.mes = mes_
@@ -54,7 +58,31 @@ class ListMes:
         self.size += 1
 
     def graficar(self):
-        pass
+        timenow = datetime.now().time()
+        nameFile = str(timenow.hour) + "-" + str(timenow.minute) + "-" + str(timenow.second)
+        self.graphAVL(nameFile)
+
+    def graphmes(self,nombre):
+        file = open(nombre + "-lstMes.dot", "w")
+        file.write("digraph d {\n")
+        file.write("\tnode [shape = record, style=rounded];\n")
+        tmp = self.head
+        # while tmp.sig is not None:
+
+            # file.write(str(tmp.mes) + "[label=\" Mes:" + str(nodo[3]) + " \\n " + str(nodo[4]) + " \\n " + str(nodo[5]) + "\"]; \n")
+            #
+            #     file.write(str(tmp.carnet) + "->" + str(tmp.sig.carnet) + ";\n")
+            #     file.write(str(tmp.carnet) + "->" + str(tmp.ant.carnet) + ";\n")
+
+        file.write("}")
+        file.close()
+        try:
+            time.sleep(1)
+            executecmd = "dot -Tpng " + nombre + "-lstMes.dot -o " + nombre + "-lstMes.png"
+            system(executecmd)
+            system("start " + nombre + "-lstMes.png ")
+        except:
+            print("Error al abrir la imagen")
 
     def imprimir(self):
         list = []
@@ -70,17 +98,17 @@ class ListMes:
         print(str(self.head.mes))
         print(list)
 
-
-listmn = ListMes()
-listmn.addmes(8)
-listmn.addmes(4)
-listmn.addmes(6)
-listmn.addmes(8)
-listmn.addmes(3)
-listmn.addmes(5)
-listmn.addmes(12)
-listmn.addmes(7)
-listmn.addmes(9)
-listmn.addmes(1)
-listmn.addmes(2)
-listmn.imprimir()
+#
+# listmn = ListMes()
+# listmn.addmes(8)
+# listmn.addmes(4)
+# listmn.addmes(6)
+# listmn.addmes(8)
+# listmn.addmes(3)
+# listmn.addmes(5)
+# listmn.addmes(12)
+# listmn.addmes(7)
+# listmn.addmes(9)
+# listmn.addmes(1)
+# listmn.addmes(2)
+# listmn.imprimir()

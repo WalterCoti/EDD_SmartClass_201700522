@@ -1,3 +1,7 @@
+from Estructuras.ListMes import ListMes
+# from Estructuras.ListSemest import ListSemestre
+# import Estructuras.ListSemest
+
 class NodoYear:
     def __init__(self, year_):
         self.year = year_

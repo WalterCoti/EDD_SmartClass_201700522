@@ -1,0 +1,105 @@
+digraph Sparce_Matrix {
+
+    node [shape=box]
+
+    /* este es el nodo principal y lo pones en el grupo 0 para que se muestre como el origen de un todo */
+    Mt[ label = "H\\D", style = filled, fillcolor = firebrick1, group = 0 color=red];
+
+    /* esto no se elimina, es para evitar el posicionamiento a lo loco */
+    e0[ shape = point, width = 0 ];
+    e1[ shape = point, width = 0 ];
+
+
+    
+    /* estos son los padres de cada fila, mira que es grupo 0 */ 
+    U0 [label = "2" style = filled, fillcolor = grey, group = 0 ];
+    U1 [label = "3"      style = filled, fillcolor = grey, group = 0 ];
+    U2 [label = "4"      style = filled, fillcolor = grey, group = 0 ];
+    U4 [label = "6"      style = filled, fillcolor = grey, group = 0 ];
+
+    //relaciones
+    U0 -> U1;
+    U1 -> U0;
+    U1 -> U2;
+    U2 -> U1;
+    U2 -> U4;
+    U4 -> U2;
+ 
+
+    
+    /* aca el grupo cambia por ser las cabeceras de las columnas */
+    A0 [label = "1"     style = filled, fillcolor = green, color=green, group = 2 ];
+    A1 [label = "3"     style = filled, fillcolor = green, color=green, group = 3 ];
+    A2 [label = "4"     style = filled, fillcolor = green, color=green, group = 4 ];
+    A3 [label = "6"     style = filled, fillcolor = green, color=green, group = 5 ];
+    A4 [label = "7"     style = filled, fillcolor = green, color=green, group = 6 ];
+
+    //relaciones
+    A0 -> A1;
+    A1 -> A0;
+    A1 -> A2;
+    A2 -> A1;
+    A2 -> A3;
+    A3 -> A2;
+    A3 -> A4;
+    A4 -> A3;
+
+    Mt -> U0;   //cabeza filas
+    Mt -> A0;   //cabeza columnas
+
+    { rank = same; Mt; A0; A1; A2; A3; A4; }//para que aparezacan en la misma direccion
+
+    
+    /* los nodos del centro, acuerdate de los grupos */
+    N0_L0 [label = "2", group = 2 ];
+    N1_L0 [label = "1", group = 4 ];
+    N2_L0 [label = "4", group = 5 ];
+
+   
+    N0_L2 [label = "5", group = 4 ];
+    N1_L2 [label = "4", group = 5 ];
+
+    
+    N0_L4 [label = "1", group = 4 ];
+    N1_L4 [label = "1", group = 5 ];
+    N2_L4 [label = "1", group = 6 ];
+
+
+    //relaciones y ranks, no olvides que deben ir en la misma direccion    
+
+    U0 -> N0_L0;
+    A0 -> N0_L0;
+    N0_L0 -> N1_L0;
+    N1_L0 -> N0_L0;
+    A2 -> N1_L0;
+    N1_L0 -> N2_L0;
+    N2_L0 -> N1_L0;
+    A3 -> N2_L0;
+    A4->N2_L4
+
+    { rank = same; U0; N0_L0;N1_L0;N2_L0; }
+    
+
+    U2 -> N0_L2;
+    N0_L2 ->N1_L0;
+    N1_L0 ->N0_L2;
+    N0_L2 -> N1_L2;
+    N1_L2 -> N0_L2;
+    N1_L2 ->N2_L0;
+    N2_L0 ->N1_L2;
+
+    { rank = same; U2; N0_L2;N1_L2; }
+    
+
+    U4 -> N0_L4;
+    N0_L4 -> N0_L2;
+    N0_L2 -> N0_L4;
+    N0_L4 -> N1_L4;
+    N1_L4 -> N0_L4;
+    N1_L4 -> N1_L2;
+    N1_L2 -> N1_L4;
+    N1_L4 -> N2_L4;
+    N2_L4 -> N1_L4;
+
+    { rank = same; U4; N0_L4;N1_L4;N2_L4; }
+}
