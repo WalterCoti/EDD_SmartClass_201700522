@@ -10,7 +10,7 @@ class NodoTask:
         self.estado  = estado_
         self.sig = None
 
-class lisTask:
+class List_Task:
     def __init__(self):
         self.head = None
         self.size = 0

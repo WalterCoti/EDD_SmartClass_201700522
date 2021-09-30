@@ -25,7 +25,6 @@ def masiveStudent():
     tipo_Carga = infofile['tipo']
     pathFile = infofile['path']
     nwpath = pathFile.replace('\\', '\\\\')
-    print("a ver que pedo" + nwpath)
     if tipo_Carga == "estudiante":
         main.openfile(nwpath)
         return jsonify(notificacion="si pasa aqui")
