@@ -1,4 +1,4 @@
-from Estructuras.ListMes import ListMes
+# from Estructuras.ListMes import ListMes
 # from Estructuras.ListSemest import ListSemestre
 # import Estructuras.ListSemest
 
@@ -43,18 +43,14 @@ class ListYear:
         pass
 
     def imprimir(self):
-        list = []
         tmp = self.head
         if self.head is None:
             print("lista vacia")
-        elif self.size == 1:
-            list.append(str(self.head.year) + "-> null")
-        while tmp.sig is not None:
-            list.append(str(tmp.year) + " -> " + str(tmp.sig.year))
-            tmp = tmp.sig
-        list.append(str(tmp.year) + " ->  null")
-
-        print(list)
+        else:
+            while tmp is not None:
+                if tmp.sig is not None:
+                    print(str(tmp.year) + " -> " + str(tmp.sig.year))
+                tmp = tmp.sig
 
 
 # sptm = ListYear()

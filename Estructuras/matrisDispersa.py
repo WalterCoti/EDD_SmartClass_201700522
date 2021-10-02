@@ -2,9 +2,10 @@ import time
 from datetime import datetime
 from os import system
 from ListTask import List_Task
+from NodoTask import NodoTask
 
 class nodo:
-    def __init__(self, valor_, posx_=0, posy_=0):
+    def __init__(self, valor_=0, posx_=0, posy_=0):
         self.valor = valor_
         self.lstTareas = None
         self.pos_x = posx_
@@ -60,34 +61,61 @@ class matriz:
         self.lstDias = lista()
         self.lstHoras = lista()
 
-    def insertar(self, valor, pos_x, pos_y):
+    def existeNod(self,posx_,posy_):
+        tmp = self.lstDias.head
+        while tmp is not None:
+            if tmp.valor == posx_:
+                auxH = tmp.N_abajo
+                while auxH is not None:
+                    if auxH.pos_y == posy_ and auxH.pos_x == posx_:
+                        return auxH
+                    auxH = auxH.N_abajo
+            tmp = tmp.sig
+        return None
+
+
+    def addlistTask(self):
+        nwlistTask = List_Task()
+        return nwlistTask
+
+    def insert_Task(self,nodoT,pos_x,pos_y):
+        nodo = self.existeNod(pos_x,pos_y)
+        if nodo is not None:
+            nodo.lstTareas.addTask(nodoT)
+        else:
+            self.insert_Nodo(nodoT, pos_x, pos_y)
+
+    def insert_Nodo(self, nodoTask_, pos_x, pos_y):
         M_dia = self.lstDias.search(pos_x)
         M_hora = self.lstHoras.search(pos_y)
 
         if M_dia is None and M_hora is None:
-            self.Caso1(valor, pos_x, pos_y)
+            self.Caso1(nodoTask_, pos_x, pos_y)
         elif M_dia is None and M_hora is not None:
-            self.Caso2(valor, pos_x, pos_y)
+            self.Caso2(nodoTask_, pos_x, pos_y)
         elif M_dia is not None and M_hora is None:
-            self.Caso3(valor, pos_x, pos_y)
+            self.Caso3(nodoTask_, pos_x, pos_y)
         else:
-            self.Caso4(valor, pos_x, pos_y)
+            self.Caso4(nodoTask_, pos_x, pos_y)
 
-    def Caso1(self, valor, pos_x, pos_y):
+    def Caso1(self, nTask_, pos_x, pos_y):
         self.lstDias.add_cabecera(pos_x)
         self.lstHoras.add_cabecera(pos_y)
 
         M_dia = self.lstDias.search(pos_x)
         M_hora = self.lstHoras.search(pos_y)
 
-        nuevo = nodo(valor, pos_x, pos_y)
+        nuevo = nodo(0, pos_x, pos_y)
+        if nuevo.lstTareas is None:
+            nuevo.lstTareas = self.addlistTask()
+            nuevo.lstTareas.addTask(nTask_)
         M_dia.N_abajo = nuevo
         nuevo.N_arriba = M_dia
 
         M_hora.N_der = nuevo
         nuevo.N_izq = M_hora
 
-    def Caso2(self, valor, pos_x, pos_y):
+    def Caso2(self, nTask_, pos_x, pos_y):
         self.lstDias.add_cabecera(pos_x)
 
         M_dia = self.lstDias.search(pos_x)
@@ -95,11 +123,14 @@ class matriz:
 
         agregado = False
 
-        nuevo = nodo(valor, pos_x, pos_y)
+        nuevo = nodo(0, pos_x, pos_y)
+        if nuevo.lstTareas is None:
+            nuevo.lstTareas = self.addlistTask()
+            nuevo.lstTareas.addTask(nTask_)
         aux = M_hora.N_der
         cabecera = 0
 
-        while (aux != None):
+        while aux is not None:
             cabecera = aux.pos_x
             if cabecera < pos_x:
                 aux = aux.N_der
@@ -120,7 +151,7 @@ class matriz:
         M_dia.N_abajo = nuevo
         nuevo.N_arriba = M_dia
 
-    def Caso3(self, valor, pos_x, pos_y):
+    def Caso3(self, nTask_, pos_x, pos_y):
         self.lstHoras.add_cabecera(pos_y)
 
         M_dia = self.lstDias.search(pos_x)
@@ -128,11 +159,14 @@ class matriz:
 
         agregado = False
 
-        nuevo = nodo(valor, pos_x, pos_y)
+        nuevo = nodo(0, pos_x, pos_y)
+        if nuevo.lstTareas is None:
+            nuevo.lstTareas = self.addlistTask()
+            nuevo.lstTareas.addTask(nTask_)
         aux = M_dia.N_abajo
         cabecera = 0
 
-        while (aux != None):
+        while aux is not None:
             cabecera = aux.pos_y
             if cabecera < pos_y:
                 aux = aux.N_abajo
@@ -143,9 +177,9 @@ class matriz:
                 aux.N_arriba = nuevo
                 agregado = True
                 break
-        if agregado == False:
+        if agregado is False:
             aux = M_dia.N_abajo
-            while (aux.N_abajo != None):
+            while aux.N_abajo is not None:
                 aux = aux.N_abajo
             nuevo.N_arriba = aux
             aux.N_abajo = nuevo
@@ -153,16 +187,19 @@ class matriz:
         M_hora.N_der = nuevo
         nuevo.N_izq = M_hora
 
-    def Caso4(self, valor, pos_x, pos_y):
+    def Caso4(self, nTask_, pos_x, pos_y):
         M_dia = self.lstDias.search(pos_x)
         M_hora = self.lstHoras.search(pos_y)
 
-        nuevo = nodo(valor, pos_x, pos_y)
+        nuevo = nodo(0, pos_x, pos_y)
+        if nuevo.lstTareas is None:
+            nuevo.lstTareas = self.addlistTask()
+            nuevo.lstTareas.addTask(nTask_)
 
         agregado = False
         aux = M_dia.N_abajo
 
-        while (aux != None):
+        while aux is not None:
             cabecera = aux.pos_y
             if cabecera < pos_y:
                 aux = aux.N_abajo
@@ -175,7 +212,7 @@ class matriz:
                 break
         if agregado == False:
             aux = M_dia.N_abajo
-            while (aux.N_abajo != None):
+            while aux.N_abajo is not None:
                 aux = aux.N_abajo
             nuevo.N_arriba = aux
             aux.N_abajo = nuevo
@@ -183,7 +220,7 @@ class matriz:
         aux = M_hora.N_der
         cabecera = 0
 
-        while (aux != None):
+        while aux is not None:
             cabecera = aux.pos_x
             if cabecera < pos_x:
                 aux = aux.N_der
@@ -196,7 +233,7 @@ class matriz:
                 break
         if agregado == False:
             aux = M_hora.N_der
-            while (aux.N_der != None):
+            while aux.N_der is not None:
                 aux = aux.N_der
             nuevo.N_izq = aux
             aux.N_der = nuevo
@@ -251,7 +288,7 @@ class matriz:
             auxD = tmpD.N_abajo
             #recorren cada columna y graficar punteros a nodos
             while auxD is not None:
-                file.write("\t" + str(hash(auxD)) + "[label = \"" + str(auxD.valor) + "\" , group = " + str(tmpD.valor) + " ];\n")
+                file.write("\t" + str(hash(auxD)) + "[label = \"" + str(auxD.lstTareas.size) + "\" , group = " + str(tmpD.valor) + " ];\n")
                 if auxD.N_der is not None:
                     file.write("\t" + str(hash(auxD)) + " -> " + str(hash(auxD.N_der)) + "\n")
                 if auxD.N_izq is not None:
@@ -280,17 +317,23 @@ class matriz:
             system("start " + nombre + "-matrix.png ")
         except:
             print("Error al abrir la imagen")
-
 #
 # matriz = matriz()
 #
-# matriz.insertar(11,1,1)
-# matriz.insertar(13,2, 2)
-# matriz.insertar(17,3, 3)
-# matriz.insertar(18,4, 4)
-# matriz.insertar(12,5, 5)
-# matriz.insertar(16,3, 2)
-# matriz.insertar(14,2, 3)
-# matriz.insertar(15,3, 10)
-# matriz.insertar(19,4, 5)
+# nNodo = NodoTask(1345,"Prueba1","prueba descripcion 1","Materia 1","12/5/2021","8:00","Finalizado")
+# nNodo1 = NodoTask(2345,"Prueba2","prueba descripcion 2","Materia 2","12/5/2021","8:00","Finalizado")
+# nNodo2 = NodoTask(4567,"Prueba3","prueba descripcion 3","Materia 3","12/5/2021","8:00","Finalizado")
+# nNodo3 = NodoTask(6789,"Prueba4","prueba descripcion 4","Materia 4","12/5/2021","8:00","Finalizado")
+# nNodo4 = NodoTask(4568,"Prueba5","prueba descripcion 5","Materia 5","12/5/2021","8:00","Finalizado")
+# nNodo5 = NodoTask(24845,"Prueba6","prueba descripcion 6","Materia 6","12/5/2021","8:00","Finalizado")
+# matriz.insert_Task(nNodo,1,1)
+# matriz.insert_Task(nNodo1,2, 2)
+# matriz.insert_Task(nNodo2,2, 2)
+# matriz.insert_Task(nNodo2,3, 3)
+# matriz.insert_Task(nNodo3,4, 4)
+# matriz.insert_Task(nNodo4,5, 5)
+# matriz.insert_Task(nNodo2,3, 2)
+# matriz.insert_Task(nNodo1,3, 2)
+# matriz.insert_Task(nNodo4,3, 2)
+# matriz.insert_Task(nNodo2,3, 2)
 # matriz.graficarMatriz()

@@ -13,28 +13,14 @@ def openfile(pathFile_):
         realizarCarga()
     except:
         print("Error al leer el archivo")
+
 def realizarCarga():
     nlst = user_list.getList()
     while nlst is not None:
         currentAVL.insert(nlst.Carnet,nlst.DPI,nlst.Nombre,nlst.Carrera,nlst.Correo,nlst.Password,nlst.Creditos,nlst.Edad)
         nlst = nlst.Next
+    tasklst = task_list.getList()
+    while tasklst is not None:
 
+        tasklst = tasklst.Next
     currentAVL.generarGraph()
-
-# openfile("D:\\Segundo_Semestre\\EDD\\Lab\\Fase2\\cargamasiva.txt")
-    # nTarea
-    #     def __init__(self):
-    #         self.type = ""
-    #         self.Carnet = ""
-    #         self.DPI = ""
-    #         self.Nombre = ""
-    #         self.Carrera = ""
-    #         self.Password = ""
-    #         self.Creditos = 0
-    #         self.Edad = 0
-    #         self.Correo = ""
-    #         self.Descripcion = ""
-    #         self.Materia = ""
-    #         self.Fecha = ""
-    #         self.Hora = ""
-    #         self.Estado = ""

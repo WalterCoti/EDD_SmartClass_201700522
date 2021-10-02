@@ -224,39 +224,8 @@ class AVLTree:
         else:
             print("el estudiante no se encuentra registrado")
 
+    def add_Mes(self,carnet_,mes):
+        pass
 
-
-
-# nwAVL = AVLTree()
-# nwAVL.insert(202100001,"25489652145124","awebasdfo","sqwe",'ghjk@gmail.com',"pass1",225,21)
-# nwAVL.insert(202100002,"254892545245124","awasdfebo","asdf XD",'hjkl@gmail.com',"pass545",211,45)
-# nwAVL.insert(202100003,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-# nwAVL.insert(202100004,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
-# nwAVL.insert(202100005,"254812542145124","awwertebo","dfgh XD",'wqert@gmail.com',"pa858",155,23)
-# nwAVL.insert(202100006,"25489652145124","awebasdfo","sqwe",'ghjk@gmail.com',"pass1",225,21)
-# nwAVL.insert(202100007,"254892545245124","awasdfebo","asdf XD",'hjkl@gmail.com',"pass545",211,45)
-# nwAVL.insert(202100008,"258487582145124","aweasdfbo","zxcv XD",'bnm,@gmail.com',"pas4512",245,22)
-# nwAVL.insert(202100009,"254897845545124","awefdghbo","erty XD",'cvbn@gmail.com',"pa12045",150,30)
-# nwAVL.insert(202100010,"254812542145124","awwertebo","dfgh XD",'wqert@gmail.com',"pa858",155,23)
-# nwAVL.insert(1,"25489652145001","name1","carrera1",'ghjk@gmail.com',"pass1",225,21)
-# nwAVL.insert(2,"254892545245002","name2","carrera2",'hjkl@gmail.com',"pass545",211,45)
-# nwAVL.insert(3,"258487582145003","name3","carrera3",'bnm,@gmail.com',"pas4512",245,22)
-# nwAVL.insert(4,"254897845545004","name4","carrera4",'cvbn@gmail.com',"pa12045",150,30)
-# nwAVL.insert(5,"254812542145005","name5","carrera5",'ghjk@gmail.com',"pass1",225,21)
-# nwAVL.insert(6,"254812542145006","name6","carrera6",'ghjk@gmail.com',"pass1",225,21)
-# nwAVL.insert(7,"254892545245007","name7","carrera7",'hjkl@gmail.com',"pass545",211,45)
-# nwAVL.insert(8,"258487582145008","name8","carrera8",'bnm,@gmail.com',"pas4512",245,22)
-# nwAVL.insert(9,"254897845545009","name9","carrera9",'cvbn@gmail.com',"pa12045",150,30)
-# nwAVL.insert(10,"258487582145010","name10","carrera10",'bnm,@gmail.com',"pas4512",245,22)
-# nwAVL.insert(11,"254897845545011","name11","carrera11",'cvbn@gmail.com',"pa12045",150,30)
-# nwAVL.insert(12,"258487582145012","name12","carrera12",'bnm,@gmail.com',"pas4512",245,22)
-# nwAVL.generarGraph()
-# nwAVL.delete(8)
-# nwAVL.generarGraph()
-# nwAVL.delete(4)
-# nwAVL.generarGraph()
-# nwAVL.delete(10)
-# nwAVL.generarGraph()
-# nwAVL.add_year_in_list(4,2015)
-
-# nwAVL.inOrden()
+    def add_task(self):
+        pass

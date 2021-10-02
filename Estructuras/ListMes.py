@@ -1,6 +1,8 @@
 import time
 from os import system
 from datetime import datetime
+from Estructuras.NodoTask import NodoTask
+from Estructuras.matrisDispersa import matriz
 
 class NodoMes:
     def __init__(self,mes_):
@@ -9,11 +11,18 @@ class NodoMes:
         self.sig = None
         self.ant = None
 
-
 class ListMes:
     def __init__(self):
         self.size = 0
         self.head = None
+
+    def getMes(self,mes_):
+        tmp = self.head
+        while tmp is not None:
+            if tmp.mes == mes_:
+                return tmp
+            tmp = tmp.sig
+        return None
 
     def existemes(self,mes_):
         tmp = self.head
@@ -23,8 +32,18 @@ class ListMes:
             tmp = tmp.sig
         return False
 
-    def addmes(self,mes_):
+    def add_task_mes(self, nodoTask, posx, posy,mes_):
+        tmpN = self.getMes(mes_)
+        if tmpN is not None:
+            tmpN.tareas.inset_Task(nodoTask)
+        else:
+            self.addmes(mes_, nodoTask, posx, posy)
+
+    def addmes(self, mes_, nodoTask, posx, posy):
         nwNodo = NodoMes(mes_)
+        nwMatriz = matriz()
+        nwNodo.tareas = nwMatriz
+        nwNodo.tareas.insert_Task( nodoTask, posx, posy)
         if self.head is None:
             self.head = nwNodo
         elif self.existemes(mes_):
@@ -57,50 +76,33 @@ class ListMes:
         print(str(self.head.mes))
         self.size += 1
 
-    def graficar(self):
-        timenow = datetime.now().time()
-        nameFile = str(timenow.hour) + "-" + str(timenow.minute) + "-" + str(timenow.second)
-        self.graphAVL(nameFile)
 
-    def graphmes(self,nombre):
-        file = open(nombre + "-lstMes.dot", "w")
-        file.write("digraph d {\n")
-        file.write("\tnode [shape = record, style=rounded];\n")
-        tmp = self.head
-        # while tmp.sig is not None:
+    def deletemes(self,mes_):
+        pass
 
-            # file.write(str(tmp.mes) + "[label=\" Mes:" + str(nodo[3]) + " \\n " + str(nodo[4]) + " \\n " + str(nodo[5]) + "\"]; \n")
-            #
-            #     file.write(str(tmp.carnet) + "->" + str(tmp.sig.carnet) + ";\n")
-            #     file.write(str(tmp.carnet) + "->" + str(tmp.ant.carnet) + ";\n")
-
-        file.write("}")
-        file.close()
-        try:
-            time.sleep(1)
-            executecmd = "dot -Tpng " + nombre + "-lstMes.dot -o " + nombre + "-lstMes.png"
-            system(executecmd)
-            system("start " + nombre + "-lstMes.png ")
-        except:
-            print("Error al abrir la imagen")
+    def updatemes(self,mes_):
+        pass
 
     def imprimir(self):
-        list = []
         tmp = self.head
         if self.head is None:
             print("lista vacia")
-        elif self.size == 1:
-            list.append(str(self.head.mes) + "-> null")
-        while tmp.sig is not None:
-            list.append(str(tmp.mes) + " -> " + str(tmp.sig.mes))
-            tmp = tmp.sig
+        else:
+            while tmp is not None:
+                # print(str(tmp.mes) + " -> " + str(tmp.sig.mes))
+                if tmp.ant is not None:
+                    print(str(tmp.mes) + " -> " + str(tmp.ant.mes))
+                tmp = tmp.sig
         list.append(str(tmp.mes) + " ->  null")
         print(str(self.head.mes))
-        print(list)
 
+# nNodo = NodoTask(1345,"Prueba1","prueba descripcion 1","Materia 1","12/5/2021","8:00","Finalizado")
 #
 # listmn = ListMes()
-# listmn.addmes(8)
+# listmn.add_task_mes(nNodo,3,5,4)
+print("hola mundo")
+# nNodo2 = NodoTask(13446,"Prueba3","prueba descripcion 1","Materia 1","12/5/2021","8:00","Finalizado")
+
 # listmn.addmes(4)
 # listmn.addmes(6)
 # listmn.addmes(8)
