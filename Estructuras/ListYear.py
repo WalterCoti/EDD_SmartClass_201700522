@@ -1,6 +1,5 @@
-# from Estructuras.ListMes import ListMes
-# from Estructuras.ListSemest import ListSemestre
-# import Estructuras.ListSemest
+from Estructuras.ListMes import ListMes
+from Estructuras.ListSemest import ListSemestre
 
 class NodoYear:
     def __init__(self, year_):
@@ -14,16 +13,27 @@ class ListYear:
         self.size = 0
         self.head = None
 
-    def existeyear(self,year_):
-        tmp = self.head
-        while tmp is not None:
-            if tmp.year == year_:
-                return True
-            tmp = tmp.sig
-        return False
+    def getYear(self,year_):
+        ntmp = self.head
+        while ntmp:
+            if ntmp.year == year_:
+                return ntmp
+            ntmp = ntmp.sig
+        return None
 
-    def addYear(self, year_):
+    def add_task_year(self,NodoTask,year_, mes_, dia_, hora_):
+        tmpNodo = self.getYear(year_)
+        if tmpNodo is not None:
+            tmpNodo.mes.add_task_mes(NodoTask,mes_, dia_, hora_)
+        else:
+            self.addYear(NodoTask, year_, mes_, dia_, hora_)
+
+        #reparar
+
+    def addYear(self,NodoTask, year_, mes_, dia_, hora_):
         nw_nodo = NodoYear(year_)
+        nw_nodo.mes = ListMes()
+        nw_nodo.mes.add_task_mes(NodoTask, mes_, dia_, hora_)
         if self.head is None or self.head.year > nw_nodo.year:
             nw_nodo.sig = self.head
             self.head = nw_nodo
@@ -35,13 +45,6 @@ class ListYear:
             tmp.sig = nw_nodo
         self.size += 1
 
-    def buscar(self, year_):
-        tmpN = NodoYear(year_)
-
-
-    def graficar(self):
-        pass
-
     def imprimir(self):
         tmp = self.head
         if self.head is None:
@@ -51,13 +54,3 @@ class ListYear:
                 if tmp.sig is not None:
                     print(str(tmp.year) + " -> " + str(tmp.sig.year))
                 tmp = tmp.sig
-
-
-# sptm = ListYear()
-# sptm.addYear(1995)
-# sptm.addYear(1999)
-# sptm.addYear(1996)
-# sptm.addYear(1993)
-# sptm.addYear(2021)
-# sptm.addYear(1500)
-# sptm.imprimir()

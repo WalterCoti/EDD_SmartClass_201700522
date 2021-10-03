@@ -1,0 +1,5 @@
+digraph d {
+rankdir = LR
+	 node [style="rounded,filled" shape=rectangle fillcolor = darkgray , color=white];
+	130063106012[label="Carne: 4567 \n Nombre: Prueba3 \n Descripcion: prueba descripcion 3 \n Materia: Materia 3 \n Fecha: 12/5/2021\n Hora: 8:00\n Estado: Finalizado"]; 
+}

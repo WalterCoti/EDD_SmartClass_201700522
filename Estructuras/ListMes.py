@@ -18,7 +18,7 @@ class ListMes:
 
     def getMes(self,mes_):
         tmp = self.head
-        while tmp is not None:
+        while tmp:
             if tmp.mes == mes_:
                 return tmp
             tmp = tmp.sig
@@ -31,19 +31,20 @@ class ListMes:
                 return True
             tmp = tmp.sig
         return False
+                            #add_task_mes(nodotarea, mes, dia, hora)
 
-    def add_task_mes(self, nodoTask, posx, posy,mes_):
+    def add_task_mes(self, nodoTask,mes_, dia_, hora_):
         tmpN = self.getMes(mes_)
         if tmpN is not None:
-            tmpN.tareas.inset_Task(nodoTask)
+            tmpN.tareas.insert_Task(nodoTask,dia_, hora_)
         else:
-            self.addmes(mes_, nodoTask, posx, posy)
+            self.addmes(nodoTask, mes_, dia_, hora_)
 
-    def addmes(self, mes_, nodoTask, posx, posy):
+    def addmes(self, nodoTask, mes_, dia_, hora_):
         nwNodo = NodoMes(mes_)
         nwMatriz = matriz()
         nwNodo.tareas = nwMatriz
-        nwNodo.tareas.insert_Task( nodoTask, posx, posy)
+        nwNodo.tareas.insert_Task( nodoTask, dia_, hora_)
         if self.head is None:
             self.head = nwNodo
         elif self.existemes(mes_):
@@ -59,10 +60,14 @@ class ListMes:
                     self.head.ant = nwNodo
                     self.head = nwNodo
                 else:
-                    nwNodo.sig = tmp.sig
-                    nwNodo.ant = tmp
-                    tmp.sig.ant = nwNodo
-                    tmp.sig = nwNodo
+                    if tmp.sig is None:
+                        tmp.sig = nwNodo
+                        nwNodo.ant = tmp
+                    else:
+                        nwNodo.sig = tmp.sig
+                        nwNodo.ant = tmp
+                        tmp.sig.ant = nwNodo
+                        tmp.sig = nwNodo
             elif tmp.sig is None:
                 tmp.sig = nwNodo
                 nwNodo.ant = tmp
@@ -71,17 +76,8 @@ class ListMes:
                 nwNodo.ant = tmp
                 tmp.sig.ant = nwNodo
                 tmp.sig = nwNodo
-
-
-        print(str(self.head.mes))
         self.size += 1
 
-
-    def deletemes(self,mes_):
-        pass
-
-    def updatemes(self,mes_):
-        pass
 
     def imprimir(self):
         tmp = self.head
@@ -93,16 +89,25 @@ class ListMes:
                 if tmp.ant is not None:
                     print(str(tmp.mes) + " -> " + str(tmp.ant.mes))
                 tmp = tmp.sig
-        list.append(str(tmp.mes) + " ->  null")
-        print(str(self.head.mes))
+            print(str(tmp.mes) + " ->  null")
 
 # nNodo = NodoTask(1345,"Prueba1","prueba descripcion 1","Materia 1","12/5/2021","8:00","Finalizado")
 #
+#
+# nNodo = NodoTask(1345,"Prueba1","prueba descripcion 1","Materia 1","12/5/2021","8:00","Finalizado")
+# nNodo1 = NodoTask(2345,"Prueba2","prueba descripcion 2","Materia 2","12/5/2021","8:00","Finalizado")
+# nNodo2 = NodoTask(4567,"Prueba3","prueba descripcion 3","Materia 3","12/5/2021","8:00","Finalizado")
+# nNodo3 = NodoTask(6789,"Prueba4","prueba descripcion 4","Materia 4","12/5/2021","8:00","Finalizado")
+# nNodo4 = NodoTask(4568,"Prueba5","prueba descripcion 5","Materia 5","12/5/2021","8:00","Finalizado")
+# nNodo5 = NodoTask(24845,"Prueba6","prueba descripcion 6","Materia 6","12/5/2021","8:00","Finalizado")
+#
 # listmn = ListMes()
 # listmn.add_task_mes(nNodo,3,5,4)
-print("hola mundo")
-# nNodo2 = NodoTask(13446,"Prueba3","prueba descripcion 1","Materia 1","12/5/2021","8:00","Finalizado")
-
+# listmn.add_task_mes(nNodo2,6,5,4)
+# listmn.add_task_mes(nNodo3,8,5,4)
+# listmn.add_task_mes(nNodo4,4,5,4)
+# listmn.add_task_mes(nNodo5,3,7,4)
+# listmn.imprimir()
 # listmn.addmes(4)
 # listmn.addmes(6)
 # listmn.addmes(8)

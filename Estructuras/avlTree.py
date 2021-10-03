@@ -18,13 +18,6 @@ class NodoStd:
         self.Nder = None
         self.Tamanio = 0
 
-    def getlistyear(self):
-        return  self.yearlist
-
-    def setyear_list(self,year_):
-        self.yearlist.addYear(year_)
-
-
 class AVLTree:
     def __init__(self):
         self.raiz = None
@@ -212,20 +205,15 @@ class AVLTree:
         elif raiz_.carnet == carnet_:
             return raiz_
         elif raiz_.carnet < carnet_:
-            self.getStudentNode(raiz_.Nder, carnet_)
+           return self.getStudentNode(raiz_.Nder, carnet_)
         else:
             return self.getStudentNode(raiz_.Nizq,carnet_)
         return None
 
-    def add_year_in_list(self,carnet_,year_):
+    def add_task_listyear(self,carnet_, NodoTask, year_, mes_, dia_, hora_):
         nodo = self.getStudentNode(self.raiz,carnet_)
         if nodo is not None:
-            nodo.setyear_list(year_)
+            nodo.yearlist.add_task_year(NodoTask, year_, mes_, dia_, hora_)
         else:
-            print("el estudiante no se encuentra registrado")
+            print("el estudiante no se encuentra registrado "  + str(carnet_))
 
-    def add_Mes(self,carnet_,mes):
-        pass
-
-    def add_task(self):
-        pass

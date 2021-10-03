@@ -1,8 +1,8 @@
 import time
 from datetime import datetime
 from os import system
-from ListTask import List_Task
-from NodoTask import NodoTask
+from Estructuras.ListTask import List_Task
+from Estructuras.NodoTask import NodoTask
 
 class nodo:
     def __init__(self, valor_=0, posx_=0, posy_=0):
@@ -61,7 +61,7 @@ class matriz:
         self.lstDias = lista()
         self.lstHoras = lista()
 
-    def existeNod(self,posx_,posy_):
+    def existeNod(self,posx_,posy_):        #Get info nodo
         tmp = self.lstDias.head
         while tmp is not None:
             if tmp.valor == posx_:
@@ -73,14 +73,13 @@ class matriz:
             tmp = tmp.sig
         return None
 
-
     def addlistTask(self):
-        nwlistTask = List_Task()
-        return nwlistTask
+        nwListTask = List_Task()
+        return nwListTask
 
     def insert_Task(self,nodoT,pos_x,pos_y):
         nodo = self.existeNod(pos_x,pos_y)
-        if nodo is not None:
+        if nodo:
             nodo.lstTareas.addTask(nodoT)
         else:
             self.insert_Nodo(nodoT, pos_x, pos_y)
@@ -263,7 +262,6 @@ class matriz:
 
         # generar archivo.dota
 
-
     def graph_Mat(self, nombre):
         listNod = []
         file = open(nombre + "-matrix.dot", "w")
@@ -317,23 +315,27 @@ class matriz:
             system("start " + nombre + "-matrix.png ")
         except:
             print("Error al abrir la imagen")
-#
+
+
+
 # matriz = matriz()
-#
-# nNodo = NodoTask(1345,"Prueba1","prueba descripcion 1","Materia 1","12/5/2021","8:00","Finalizado")
-# nNodo1 = NodoTask(2345,"Prueba2","prueba descripcion 2","Materia 2","12/5/2021","8:00","Finalizado")
-# nNodo2 = NodoTask(4567,"Prueba3","prueba descripcion 3","Materia 3","12/5/2021","8:00","Finalizado")
-# nNodo3 = NodoTask(6789,"Prueba4","prueba descripcion 4","Materia 4","12/5/2021","8:00","Finalizado")
-# nNodo4 = NodoTask(4568,"Prueba5","prueba descripcion 5","Materia 5","12/5/2021","8:00","Finalizado")
-# nNodo5 = NodoTask(24845,"Prueba6","prueba descripcion 6","Materia 6","12/5/2021","8:00","Finalizado")
+# #
+# nNodo = NodoTask(1,"Prueba1","prueba descripcion 1","Materia 1","12/5/2021","8:00","Finalizado")
+# nNodo1 = NodoTask(2,"Prueba2","prueba descripcion 2","Materia 2","12/5/2021","8:00","Finalizado")
+# nNodo2 = NodoTask(3,"Prueba3","prueba descripcion 3","Materia 3","12/5/2021","8:00","Finalizado")
+# nNodo3 = NodoTask(4,"Prueba4","prueba descripcion 4","Materia 4","12/5/2021","8:00","Finalizado")
+# nNodo4 = NodoTask(5,"Prueba5","prueba descripcion 5","Materia 5","12/5/2021","8:00","Finalizado")
+# nNodo5 = NodoTask(6,"Prueba6","prueba descripcion 6","Materia 6","12/5/2021","8:00","Finalizado")
 # matriz.insert_Task(nNodo,1,1)
 # matriz.insert_Task(nNodo1,2, 2)
 # matriz.insert_Task(nNodo2,2, 2)
 # matriz.insert_Task(nNodo2,3, 3)
 # matriz.insert_Task(nNodo3,4, 4)
 # matriz.insert_Task(nNodo4,5, 5)
-# matriz.insert_Task(nNodo2,3, 2)
+# matriz.insert_Task(nNodo,3, 2)
 # matriz.insert_Task(nNodo1,3, 2)
-# matriz.insert_Task(nNodo4,3, 2)
 # matriz.insert_Task(nNodo2,3, 2)
+# matriz.insert_Task(nNodo3,3, 2)
 # matriz.graficarMatriz()
+# list = matriz.existeNod(3,2)
+# list.lstTareas.graficar()
