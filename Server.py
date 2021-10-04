@@ -16,7 +16,7 @@ def masiveStudent():
     nwpath = pathFile.replace('\\', '\\\\')
     if tipo_Carga == "estudiante":
         main.openfile(nwpath)
-        return jsonify(notificacion="si pasa aqui")
+        return jsonify(notificacion="Datos Cargados a memoria")
     elif tipo_Carga == "recordatorio":
         return jsonify({"notification":"Tipo de carga recordatorio"})
     elif tipo_Carga == "curso":
@@ -87,7 +87,7 @@ def info_Recordatorio():
 @app.route('/recordatorios', methods=['DELETE'])
 def delete_Recordatorio():
     delTask = request.get_json(force=True)
-    main.info_Task(delTask['Carnet'], delTask['Fecha'], delTask['Hora'], delTask['Posicion'])
+    main.delete_Task(delTask['Carnet'], delTask['Fecha'], delTask['Hora'], delTask['Posicion'])
     return jsonify(Eliminado="Recordatorio Eliminado")
 
 #----------------------------------------------CARGA MASIVA CURSOS----------------------------------------------

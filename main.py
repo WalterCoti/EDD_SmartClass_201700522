@@ -67,7 +67,7 @@ def verStudent(carnet_):
 # ------------------------CRUD TAREAS --------------------------------
 def create_Task(carnet_,nombre_,descripcion_,materia_ , fecha_, hora_, estado_):
     nwNodo = NodoTask(carnet_,nombre_,descripcion_,materia_ , fecha_, hora_, estado_)
-    currentAVL.add_task_listyear(carnet_,nwNodo,getDatoFecha(fecha_,"y"),getDatoFecha(fecha_,"m"),getDatoFecha(fecha_,"d"),hora_)
+    currentAVL.add_task_listyear(carnet_,nwNodo,getDatoFecha(fecha_,"y"),getDatoFecha(fecha_,"m"),getDatoFecha(fecha_,"d"),getHora(hora_))
 
 def info_Task(carnet_,fecha_, hora_,posicion_):
     estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
@@ -76,7 +76,7 @@ def info_Task(carnet_,fecha_, hora_,posicion_):
         if year:
             mes = year.mes.getMes(getDatoFecha(fecha_,"m"))
             if mes:
-                nodoMatrix = mes.tareas.existeNod(getDatoFecha(fecha_,"d"), hora_)
+                nodoMatrix = mes.tareas.existeNod(getDatoFecha(fecha_,"d"), getHora(hora_))
                 if nodoMatrix:
                     lstTask = nodoMatrix.lstTareas
                     return lstTask.getinfo(posicion_)
@@ -90,7 +90,7 @@ def update_Task(carnet_,nombre_,descripcion_,materia_ , fecha_, hora_, estado_,p
         if year:
             mes = year.mes.getMes(getDatoFecha(fecha_,"m"))
             if mes:
-                nodoMatrix = mes.tareas.existeNod(getDatoFecha(fecha_,"d"), hora_)
+                nodoMatrix = mes.tareas.existeNod(getDatoFecha(fecha_,"d"), getHora(hora_))
                 if nodoMatrix:
                     lstTask = nodoMatrix.lstTareas
                     lstTask.updateTask(nwNodo,posicion_)
@@ -108,7 +108,7 @@ def delete_Task(carnet_,fecha_, hora_,posicion_):
         if year:
             mes = year.mes.getMes(getDatoFecha(fecha_, "m"))
             if mes:
-                nodoMatrix = mes.tareas.existeNod(getDatoFecha(fecha_, "d"), hora_)
+                nodoMatrix = mes.tareas.existeNod(getDatoFecha(fecha_, "d"), getHora(hora_))
                 if nodoMatrix:
                     lstTask = nodoMatrix.lstTareas
                     lstTask.deleteTask(posicion_)

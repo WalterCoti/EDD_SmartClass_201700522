@@ -58,8 +58,8 @@ class Rama:
         return result
 
 
-class ARBOLB:
-    def __init__(self,orden):
+class BTree:
+    def __init__(self,orden=5):
         self.raiz = None
         self.orden = orden
 
@@ -138,4 +138,15 @@ class ARBOLB:
         medio.izq = izq
         medio.der = der
         return medio
+
+nwB = BTree()
+nwB.insertar(3)
+nwB.insertar(5)
+nwB.insertar(7)
+nwB.insertar(9)
+nwB.insertar(2)
+nwB.insertar(1)
+nwB.insertar(77)
+
+
 
