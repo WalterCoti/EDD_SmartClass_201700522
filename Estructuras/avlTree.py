@@ -112,7 +112,7 @@ class AVLTree:
                # nodo.Nder = tmp.Nder
                 #nodo.Nizq = self.delete_Nodo(aux.carnet,tmp.Nizq)
                 tmp = aux
-                nodo.Nizq = self.delete_Nodo(nodo.carnet, nodo.Nizq)
+                nodo.Nizq = self.delete_Nodo(aux.carnet, tmp.Nizq)
 
             elif nodo.Nizq is None and nodo.Nder is None:
                 return None

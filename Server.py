@@ -65,6 +65,12 @@ def verStudent():
     std = main.verStudent(editSTD['carnet'])
     return jsonify(carnet=std.carnet,dpi = std.dpi, nombre=std.nombre, carrera = std.carrera, correo = std.correo, password = std.passw, creditos = std.credito, edad= std.edad )
 
+@app.route('/estudiante', methods=['DELETE'])
+def Delete_Student():
+    delStudent = request.get_json(force=True)
+    main.currentAVL.delete(delStudent['carnet'])
+    return jsonify(Estudiante="Eliminado exitosamente")
+
 #----------------------------------------------CRUD RECORDATORIO----------------------------------------------
 @app.route('/recordatorios', methods=['POST'])
 def crear_Recordatorio():
