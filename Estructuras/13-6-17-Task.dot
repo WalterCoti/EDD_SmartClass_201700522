@@ -1,0 +1,8 @@
+digraph d {
+rankdir = LR
+	 node [style="rounded,filled" shape=rectangle fillcolor = darkgray , color=white];
+	147337727519[label="Carne: 1 \n Nombre: Prueba1 \n Descripcion: prueba descripcion 1 \n Materia: Materia 1 \n Fecha: 12/5/2021\n Hora: 8:00\n Estado: Finalizado"]; 
+	147337727519 -> 147337727507	147337727507[label="Carne: 2 \n Nombre: Prueba2 \n Descripcion: prueba descripcion 2 \n Materia: Materia 2 \n Fecha: 12/5/2021\n Hora: 8:00\n Estado: Finalizado"]; 
+	147337727507 -> 147337727504	147337727504[label="Carne: 3 \n Nombre: Prueba3 \n Descripcion: prueba descripcion 3 \n Materia: Materia 3 \n Fecha: 12/5/2021\n Hora: 8:00\n Estado: Finalizado"]; 
+	147337727504 -> 147337727501	147337727501[label="Carne: 4 \n Nombre: Prueba4 \n Descripcion: prueba descripcion 4 \n Materia: Materia 4 \n Fecha: 12/5/2021\n Hora: 8:00\n Estado: Finalizado"]; 
+}

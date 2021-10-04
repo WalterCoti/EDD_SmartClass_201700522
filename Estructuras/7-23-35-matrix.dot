@@ -1,0 +1,14 @@
+digraph Matrix {
+	node [style="rounded,filled" shape=rectangle fillcolor = chartreuse2 , color=white];
+	HEAD[ label = "H\\D",  fillcolor = firebrick1, group = 0 color=red];
+	94697848796[label = "1" , fillcolor = orange, group = 0 ];
+	94697848796 -> 94697848793
+	{rank = same;94697848796; 94697848793 ; }
+	{rank = same; HEAD 94697848799 ; }
+	94697848799[label = "1" , fillcolor = orange, group =1 ];
+	94697848793[label = "1" , group = 1 ];
+	94697848793 -> 94697848796
+	94697848793 -> 94697848799
+	94697848799 -> 94697848793
+	 HEAD -> 94697848799
+	 HEAD -> 94697848796}
