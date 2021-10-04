@@ -42,23 +42,55 @@ def reportes():
         pass
     else:
         return jsonify({"notification":"Tipo de reporte no definido"})
+    return jsonify(Grafica="Grafica generada exitosamente")
 
 
 #----------------------------------------------CRUD ESTUDIANTE----------------------------------------------
 
 @app.route('/estudiante', methods=['POST'])
 def set_student():
-    student = request.get_json(force=True)
-    print(student['carnet'])
-    print(student['DPI'])
-    return jsonify({"finalizado":"fin del mensaje cargado"})
+    nw_std = request.get_json(force=True)
+    main.Crear_Estudiante(nw_std['carnet'], nw_std['DPI'], nw_std['nombre'], nw_std['carrera'], nw_std['correo'], nw_std['password'], int(nw_std['creditos']), int(nw_std['edad']))
+    return jsonify(Estudiante="Creado exitosamente")
+
+@app.route('/estudiante', methods=['PUT'])
+def edit_Estudent():
+    editSTD = request.get_json(force=True)
+    main.editar_Estudiante(editSTD['carnet'], editSTD['DPI'], editSTD['nombre'], editSTD['carrera'], editSTD['correo'], editSTD['password'], int(editSTD['creditos']), int(editSTD['edad']))
+    return jsonify(Estudiante="Editado exitosamente")
+
+@app.route('/estudiante', methods=['GET'])
+def verStudent():
+    editSTD = request.get_json(force=True)
+    std = main.verStudent(editSTD['carnet'])
+    return jsonify(carnet=std.carnet,dpi = std.dpi, nombre=std.nombre, carrera = std.carrera, correo = std.correo, password = std.passw, creditos = std.credito, edad= std.edad )
 
 #----------------------------------------------CRUD RECORDATORIO----------------------------------------------
+@app.route('/recordatorios', methods=['POST'])
+def crear_Recordatorio():
+    rec = request.get_json(force=True)
+    main.create_Task(rec['Carnet'], rec['Nombre'], rec['Descripcion'], rec['Materia'], rec['Fecha'], rec['Hora'], rec['Estado'])
+    return jsonify(Recordatorio="Creado exitosamente")
 
+@app.route('/recordatorios', methods=['PUT'])
+def editar_Recordatorio():
+    editRec = request.get_json(force=True)
+    main.update_Task(editRec['Carnet'], editRec['Nombre'], editRec['Descripcion'], editRec['Materia'], editRec['Fecha'], editRec['Hora'], editRec['Estado'],editRec['Posicion'])
+    return jsonify(Recordatorio="Editado exitosamente")
 
-#----------------------------------------------CARGA MASIVA----------------------------------------------
+@app.route('/recordatorios', methods=['GET'])
+def info_Recordatorio():
+    infoTask = request.get_json(force=True)
+    Task_N = main.info_Task(infoTask['Carnet'],infoTask['Fecha'],infoTask['Hora'],infoTask['Posicion'])
+    return jsonify(carnet=Task_N.carnet, Nombre=Task_N.name_task, Descripcion=Task_N.desc_task, Materia=Task_N.materia, Fecha=Task_N.fecha, Hora=Task_N.hora, Estado=Task_N.estado)
 
-#----------------------------------------------CARGA MASIVA----------------------------------------------
+@app.route('/recordatorios', methods=['DELETE'])
+def delete_Recordatorio():
+    delTask = request.get_json(force=True)
+    main.info_Task(delTask['Carnet'], delTask['Fecha'], delTask['Hora'], delTask['Posicion'])
+    return jsonify(Eliminado="Recordatorio Eliminado")
+
+#----------------------------------------------CARGA MASIVA CURSOS----------------------------------------------
 
 
 if __name__ == "__main__":

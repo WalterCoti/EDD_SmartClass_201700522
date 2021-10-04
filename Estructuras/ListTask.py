@@ -8,8 +8,6 @@ class List_Task:
         self.head = None
         self.size = 0
 
-
-
     def addTask(self,nodo_Task_):
         if self.head is None:
             nodo_Task_.sig = self.head

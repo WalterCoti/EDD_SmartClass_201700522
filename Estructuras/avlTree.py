@@ -28,7 +28,6 @@ class AVLTree:
         return -1
 
     def insert(self, Stdcarnet_, StdNodpi_, Stdnombre_, Stdcarrera_, Stdemail_, Stdpassw_, Stdcredit_, Stdedad_):
-
         self.raiz = self.insertar_inter(Stdcarnet_, StdNodpi_, Stdnombre_, Stdcarrera_, Stdemail_, Stdpassw_, Stdcredit_, Stdedad_, self.raiz)
 
     def insertar_inter(self, ncarnet_, dpi_, nombre_, carrera_, correo_, passw_, credit_, edad_, raiz_):
