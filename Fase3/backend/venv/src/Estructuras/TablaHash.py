@@ -1,0 +1,205 @@
+class Nodohash:
+    def __init__(self, carnet_):
+        self.carnet = carnet_
+        self.lista_notas = None
+    
+    def getcarnet(self):
+        return self.carnet
+
+class NodoNota:
+    def __init__(self,carnet_, titulo_, contenido_):
+        self.id = None
+        self.carnet = carnet_
+        self.titulo = titulo_
+        self.contenido = contenido_
+        self.sig = None
+
+class ListNotas:
+    def __init__(self):
+        self.size = 0
+        self.head = None
+
+    def getNote(self,carnet_):
+        ntmp = self.head
+        while ntmp:
+            if ntmp.carnet == carnet_:
+                return ntmp
+            ntmp = ntmp.sig
+        return None
+
+
+    def addNote(self,carnet_, titulo_, contenido_):
+        nwNodo = NodoNota(carnet_, titulo_, contenido_)
+        if self.head is None:
+            nwNodo.sig = self.head
+            self.head = nwNodo
+        else:
+            tmp = self.head
+            while tmp.sig is not None:
+                tmp = tmp.sig
+            nwNodo.sig = tmp.sig
+            tmp.sig = nwNodo
+        self.size += 1
+
+    def deletenote(self, position_):
+        tmpPos = 0
+        current = self.head
+        ante = None
+        if position_ < self.size:
+            while current:
+                if current.sig is None and tmpPos == position_:
+                    if ante:
+                        ante.sig = None
+                    else:
+                        self.head = None
+                        self.size = 0
+                elif tmpPos == position_:
+                    if tmpPos == 0:
+                        self.head = current.sig
+                        self.size -= 1
+                        return
+                    else:
+                        ante.sig = current.sig
+                        self.size -= 1
+                        return
+                tmpPos += 1
+                ante = current
+                current = current.sig
+        else:
+            print("La posicion \"" + str(position_) + "\" es nula no se puede eliminar")
+
+    def updateNotes(self, nwNota,position):
+        current = self.head
+        tmpPos = 0
+        ante = None
+        if position < self.size:
+            while current:
+                if tmpPos == position:
+                    nwNota.sig = current.sig
+                    ante.sig = nwNota
+                    return
+                tmpPos += 1
+                ante = current
+                current = current.sig
+        else:
+            print("La posicion \"" + str(position) + "\" es nula no puede editarse")
+
+
+
+    def imprimir(self):
+        tmp = self.head
+        if self.head is None:
+            print("lista vacia")
+        else:
+            while tmp:
+                if tmp is not None:
+                    print(str(tmp.carnet))
+                tmp = tmp.sig
+
+
+class HashTable:
+    def __init__(self):
+        self.tabla = [None] * 7
+    
+    def getnextprimo(self,numero_):
+        listnum = [7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211]
+        for i in range(len(listnum)-1):
+            if listnum[i] == numero_:
+                return listnum[i+1]
+
+    # Función hash
+    def func_hash(self, value):
+        return value % len(self.tabla)
+
+    def exp_cuadratic(self, numero_,tamanio_,cont_): # Metodo para verificar nueva celda
+        return (self.func_hash(numero_) + cont_*cont_) % tamanio_
+
+    def getpersentuse(self):
+        cont = 0
+        for i in range(len(self.tabla)):
+            if self.tabla[i] is not None:
+                cont += 1
+        total = cont/len(self.tabla)
+        return total
+
+    def find_index(self,carnet_):
+        hash = self.func_hash(carnet_)
+        if self.tabla[hash] is None:
+            return hash
+        else:               #inicio exploracion cuadratica
+            cont = 1
+            while True:
+                tmphash = (hash + cont*cont) % len(self.tabla)
+                if self.tabla[tmphash].carnet == carnet_:
+                    return tmphash
+                else:
+                    cont += 1
+
+    
+    def addNota(self,carnet_,titulo_,contenido_):
+        hash = 0
+        nwNodo = Nodohash(carnet_)
+        hash = self.func_hash(carnet_)
+        if self.tabla[hash] is None:
+            self.tabla[hash] = nwNodo
+            nlist = ListNotas()
+            nlist.addNote(carnet_,titulo_,contenido_)
+            nwNodo.lista_notas = nlist
+        elif self.tabla[hash].carnet == carnet_:
+            self.tabla[hash].lista_notas.addNote(carnet_,titulo_,contenido_)
+        else:
+            conteo = 1
+            while True:
+                hash = self.exp_cuadratic(carnet_,len(self.tabla),conteo)
+                if self.tabla[hash] is None:
+                    self.tabla[hash] = nwNodo
+                    nlist = ListNotas()
+                    nlist.addNote(carnet_,titulo_,contenido_)
+                    nwNodo.lista_notas = nlist
+                    break
+                elif self.tabla[hash].carnet == carnet_:
+                    self.tabla[hash].lista_notas.addNote(carnet_,titulo_,contenido_)
+                    break
+                conteo += 1
+        self.rehashtable()
+
+    def rehashtable(self):
+        if self.getpersentuse() >=0.5:
+            old_table = self.tabla.copy()
+            nwLenght = self.getnextprimo(len(self.tabla))
+            self.tabla = [None] * nwLenght
+            for pos in range(len(old_table)):
+                if old_table[pos] is not None:
+                    nhash = self.func_hash(old_table[pos].carnet)
+                    if self.tabla[nhash] is None:
+                        self.tabla[nhash] = old_table[pos]
+                    else:
+                        conteo = 1
+                        while True:
+                            nhash = self.exp_cuadratic(old_table[pos].carnet,len(self.tabla),conteo)
+                            if self.tabla[nhash] is None:
+                                self.tabla[nhash] = old_table[pos]
+                                break
+                            conteo += 1
+                
+    def getNotas(self,carnet_): # Metodo para buscar elementos
+        while True:
+            hash = self.func_hash(carnet_)
+            if self.tabla[hash].carnet == carnet_:
+                print("si esta")
+                return self.tabla[hash]
+                
+    def graficar():
+        pass
+
+        
+nwHastab = HashTable()
+nwHastab.addNota(201812453,"Titulo 1","Contenido 1")
+nwHastab.addNota(201912462,"Titulo 2","Contenido 2")
+nwHastab.addNota(201545212,"Titulo 3","Contenido 3")
+nwHastab.addNota(201952219,"Titulo 4","Contenido 4")
+nwHastab.addNota(201700124,"Titulo 5","Contenido 5")
+nwHastab.addNota(201812453,"Titulo 6","Contenido 6")
+nwHastab.addNota(202012545,"Titulo 7","Contenido 7")
+print(nwHastab.getNotas(201952219).carnet)
+
