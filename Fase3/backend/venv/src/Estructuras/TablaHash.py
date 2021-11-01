@@ -1,3 +1,6 @@
+import time
+from datetime import datetime
+from os import system
 class Nodohash:
     def __init__(self, carnet_):
         self.carnet = carnet_
@@ -188,18 +191,83 @@ class HashTable:
             if self.tabla[hash].carnet == carnet_:
                 print("si esta")
                 return self.tabla[hash]
-                
-    def graficar():
-        pass
+
+    def graficarTabla(self):
+        timenow = datetime.now().time()
+        nameFile = str(timenow.hour) + "-" + str(timenow.minute) + "-" + str(timenow.second)
+        self.graph_dot(nameFile)
+
+        # generar archivo.dota
+
+    def graph_dot(self, nombre):
+        file = open(nombre + "-TabHash.dot", "w")
+        file.write("digraph tabhash {\n")
+        file.write("\t nodesep=.05;\n \trankdir=LR;")
+        file.write("\tnode [shape=record,width=.1,height=.1, style=\"rounded,filled\"  fillcolor = firebrick3 , color=black, fontcolor=white];\n")
+        # Graficar tabla
+        contTAblahash =""
+        for i in range(0,len(self.tabla)-1):
+            if self.tabla[i] is not None:
+                contTAblahash = contTAblahash + "<f" + str(i)+ "> " + str(self.tabla[i].carnet)+"|"+ "\n"
+            else:
+                contTAblahash = contTAblahash + "<f" + str(i)+ ">---------|"+ "\n"
+        if self.tabla[-1] is not None:
+            contTAblahash = contTAblahash +  "<f" + str(len(self.tabla)-1)+ "> " + str(self.tabla[-1].carnet)
+        else:
+            contTAblahash = contTAblahash + "<f" + str(i)+ ">---------"+ "\n"
+            
+        file.write("\t nodohash[label = \"" + contTAblahash + "\" , fillcolor = midnightblue height= " + str(len(self.tabla)) +" ];\n")
+        for pos in range(len(self.tabla)):
+            if self.tabla[pos] is not None:
+                tmp = self.tabla[pos].lista_notas.head
+                while tmp:
+                    if tmp is not None:
+                         file.write("\t" + str(hash(tmp)) + "[label = \"" + tmp.titulo + "\"];\n")
+                    if tmp.sig is not None:
+                        file.write("\t" + str(hash(tmp)) + " -> " + str(hash(tmp.sig)) + "\n")
+                    
+                    tmp = tmp.sig
+                file.write("\t nodohash:f"+str(pos)+ " -> " + str(hash(self.tabla[pos].lista_notas.head)) + "\n") 
+        file.write("}")
+        file.close()
+        try:
+            time.sleep(1)
+            executecmd = "dot -Tpng " + nombre + "-TabHash.dot -o " + nombre + "-TabHash.png"
+            system(executecmd)
+            system("start " + nombre + "-TabHash.png ")
+        except:
+            print("Error al abrir la imagen")
+
 
         
-nwHastab = HashTable()
-nwHastab.addNota(201812453,"Titulo 1","Contenido 1")
-nwHastab.addNota(201912462,"Titulo 2","Contenido 2")
-nwHastab.addNota(201545212,"Titulo 3","Contenido 3")
-nwHastab.addNota(201952219,"Titulo 4","Contenido 4")
-nwHastab.addNota(201700124,"Titulo 5","Contenido 5")
-nwHastab.addNota(201812453,"Titulo 6","Contenido 6")
-nwHastab.addNota(202012545,"Titulo 7","Contenido 7")
-print(nwHastab.getNotas(201952219).carnet)
+# nwHastab = HashTable()
+# nwHastab.addNota(201812453,"Titulo 1","Contenido 1")
+# nwHastab.addNota(201912462,"Titulo 2","Contenido 2")
+# nwHastab.addNota(201545212,"Titulo 3","Contenido 3")
+# nwHastab.addNota(201545212,"Titulo 4","Contenido 4")
+# nwHastab.addNota(201912462,"Titulo 5","Contenido 5")
+# nwHastab.addNota(201812453,"Titulo 6","Contenido 6")
+# nwHastab.addNota(201812453,"Titulo 7","Contenido 7")
+# nwHastab.addNota(201812234,"Titulo 8","Contenido 8")
+# nwHastab.addNota(206665456,"Titulo 9","Contenido 9")
+# nwHastab.addNota(201545345,"Titulo 10","Contenido 10")
+# nwHastab.addNota(201545212,"Titulo 11","Contenido 11")
+# nwHastab.addNota(201712462,"Titulo 12","Contenido 12")
+# nwHastab.addNota(201712346,"Titulo 13","Contenido 13")
+# nwHastab.addNota(201353456,"Titulo 14","Contenido 14")
+# nwHastab.addNota(201812453,"Titulo 15","Contenido 15")
+# nwHastab.addNota(201912462,"Titulo 16","Contenido 16")
+# nwHastab.addNota(201545212,"Titulo 17","Contenido 17")
+# nwHastab.addNota(201545212,"Titulo 18","Contenido 18")
+# nwHastab.addNota(201912462,"Titulo 19","Contenido 19")
+# nwHastab.addNota(201812453,"Titulo 20","Contenido 20")
+# nwHastab.addNota(201812453,"Titulo 21","Contenido 21")
+# nwHastab.addNota(201812234,"Titulo 22","Contenido 22")
+# nwHastab.addNota(206665456,"Titulo 23","Contenido 23")
+# nwHastab.addNota(201545345,"Titulo 24","Contenido 24")
+# nwHastab.addNota(201545212,"Titulo 25","Contenido 25")
+# nwHastab.addNota(201712462,"Titulo 26","Contenido 26")
+# nwHastab.addNota(201712346,"Titulo 27","Contenido 27")
+# nwHastab.addNota(201353456,"Titulo 28","Contenido 28")
+# nwHastab.graficarTabla()
 

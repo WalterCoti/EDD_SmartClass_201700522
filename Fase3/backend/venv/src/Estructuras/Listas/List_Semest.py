@@ -1,8 +1,8 @@
-
+from Estructuras.arboles import BTreeCur
 class NodoSemestre:
     def __init__(self,Nsemestre_):
         self.semestre = Nsemestre_
-        self.Cursos = None
+        self.cursos = None
         self.sig = None
 
 
@@ -10,16 +10,27 @@ class ListSemestre:
     def __init__(self):
         self.head = None
         self.size = 0
-    def existe(self,semestre_):
+        
+    def getSemestre(self,semestre_):
         aux = self.head
         while aux is not None:
             if aux.semestre == semestre_:
-                return True
+                return aux
             aux = aux.sig
-        return False
+        return None
 
-    def addSemestre(self,semestre_):
+    def add_curso_semestre(self,semestre_,codigo_,nombre_,creditos_,prereq_,obligatorio_):
+        tmp = self.getSemestre(semestre_)
+        if tmp:
+            tmp.cursos.addCurso(codigo_, nombre_, creditos_, prereq_, obligatorio_)
+        else:
+            self.addSemestre(semestre_,codigo_,nombre_,creditos_,prereq_,obligatorio_)
+            
+
+    def addSemestre(self,semestre_,codigo_,nombre_,creditos_,prereq_,obligatorio_):
         nwSemestre = NodoSemestre(semestre_)
+        nwSemestre.cursos = BTreeCur.ArbolB_Cursos()
+        nwSemestre.cursos.addCurso(codigo_, nombre_, creditos_, prereq_, obligatorio_)
         if self.size < 2:
             if nwSemestre.semestre > 0 and nwSemestre.semestre < 3:
                 if self.head == None:
@@ -30,7 +41,9 @@ class ListSemestre:
                         self.head = nwSemestre
                     else:
                         self.head.sig = nwSemestre
+
                 self.size += 1
+               
             else:
                 print("El numero de semestre no es valido: " + str(semestre_))
         else:
@@ -42,9 +55,3 @@ class ListSemestre:
             print("Semestre" + str(aux.semestre))
             aux = aux.sig
 
-#
-# nwList = ListSemestre()
-# nwList.addSemestre(2)
-# nwList.addSemestre(2)
-# nwList.addSemestre(3)
-# nwList.printlist()

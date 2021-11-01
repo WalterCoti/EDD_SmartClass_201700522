@@ -1,8 +1,9 @@
 import time
-from Estructuras.Listas import ListYear
+from Estructuras.Listas import List_Year
 from os import system
 from datetime import datetime
 from fernet import Fernet
+
 
 
 class NodoStd:
@@ -35,7 +36,7 @@ class AVLTree:
     def insertar_inter(self, ncarnet_, dpi_, nombre_, carrera_, correo_, passw_, credit_, edad_, raiz_):
         if raiz_ is None:
             nwNodoSt = NodoStd(ncarnet_, dpi_, nombre_, carrera_, correo_, passw_, credit_, edad_)
-            nwlstYear = ListYear()
+            nwlstYear = List_Year.ListYear()
             nwNodoSt.yearlist = nwlstYear
             return  nwNodoSt
         else:
@@ -211,10 +212,16 @@ class AVLTree:
             return self.getStudentNode(raiz_.Nizq,carnet_)
         return None
 
-    def add_task_listyear(self,carnet_, NodoTask, year_, mes_, dia_, hora_):
+    # def add_task_listyear(self,carnet_, NodoTask, year_, mes_, dia_, hora_):
+    #     nodo = self.getStudentNode(self.raiz,carnet_)
+    #     if nodo is not None:
+    #         nodo.yearlist.add_task_year(NodoTask, year_, mes_, dia_, hora_)
+    #     else:
+    #         print("el estudiante no se encuentra registrado "  + str(carnet_))
+
+    def add_cursos(self,carnet_,year_,semestre_,codigo_,nombre_,creditos_,prereq_,obligatorio_):
         nodo = self.getStudentNode(self.raiz,carnet_)
         if nodo is not None:
-            nodo.yearlist.add_task_year(NodoTask, year_, mes_, dia_, hora_)
+            nodo.yearlist.add_Curso(year_,semestre_,codigo_, nombre_,creditos_,prereq_,obligatorio_)
         else:
             print("el estudiante no se encuentra registrado "  + str(carnet_))
-
