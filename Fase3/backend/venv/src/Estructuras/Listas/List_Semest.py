@@ -1,4 +1,6 @@
-from Estructuras.arboles import BTreeCur
+import sys
+sys.path.append('D:\\Segundo_Semestre\\EDD\\Lab\\Fase3\\backend\\venv\\src\\Estructuras\\')
+from Listas.List_Cursos import Lista_cursos
 class NodoSemestre:
     def __init__(self,Nsemestre_):
         self.semestre = Nsemestre_
@@ -29,7 +31,7 @@ class ListSemestre:
 
     def addSemestre(self,semestre_,codigo_,nombre_,creditos_,prereq_,obligatorio_):
         nwSemestre = NodoSemestre(semestre_)
-        nwSemestre.cursos = BTreeCur.ArbolB_Cursos()
+        nwSemestre.cursos = Lista_cursos()
         nwSemestre.cursos.addCurso(codigo_, nombre_, creditos_, prereq_, obligatorio_)
         if self.size < 2:
             if nwSemestre.semestre > 0 and nwSemestre.semestre < 3:

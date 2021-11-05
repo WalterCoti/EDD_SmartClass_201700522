@@ -1,33 +1,67 @@
 from Estructuras.arboles.avlTree import AVLTree
-from Estructuras.arboles.BTreeCur import ArbolB_Cursos
-from analizador.Syntactic import parser
-from analizador.Syntactic import user_list,task_list
-#from Estructuras.NodoTask import NodoTask
+from Estructuras.Listas.List_Cursos import Lista_cursos
+from Estructuras.otrasestruct.grafo_curso import grafo
+
+import hashlib
 import json
+import base64
+
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 currentAVL = AVLTree()
-treBpensum = ArbolB_Cursos
-# ------------------------ CARGA MASIVA -----------------------------
-def openfile(pathFile_):
-    #try:
-        f = open(pathFile_, 'r',encoding="utf-8")
-        data_File = f.read()
-        f.close()
-        parser.parse(data_File)
-        realizarCarga()
-   # except:
-       # print("Error al leer el archivo")
+listCursos = Lista_cursos()
 
-def realizarCarga():
-    nlst = user_list.getList()
-    while nlst is not None:
-        currentAVL.insert(nlst.Carnet,nlst.DPI,nlst.Nombre,nlst.Carrera,nlst.Correo,nlst.Password,nlst.Creditos,nlst.Edad)
-        nlst = nlst.Next
- #   tasklst = task_list.getList()
-    # while tasklst is not None:
-    #     nwtask = NodoTask(tasklst.Carnet,tasklst.Nombre,tasklst.Descripcion,tasklst.Materia,tasklst.Fecha,tasklst.Hora,tasklst.Estado)
-    #     currentAVL.add_task_listyear(tasklst.Carnet,nwtask,getDatoFecha(tasklst.Fecha,"y"),getDatoFecha(tasklst.Fecha,"m"),getDatoFecha(tasklst.Fecha,"d"),getHora(tasklst.Hora))
-    #     tasklst = tasklst.Next
+
+#======================================================ENCRIPTACION======================================================
+
+def getkeyencript(password_):
+    kdf = PBKDF2HMAC(algorithm=hashes.SHA256(),length=32,salt=b'123',iterations=100000,)
+    keyh = base64.urlsafe_b64encode(kdf.derive(password_.encode()))
+    return keyh.decode()
+
+#string a string
+def encriptar(key_,token_str):
+    fkey = Fernet(key_.encode())
+    token = fkey.encrypt(token_str.encode())
+    return token.decode()
+
+def desencriptar(key_,token_):
+    fkey = Fernet(key_.encode())
+    desen = fkey.decrypt(token_.encode())
+    return desen.decode()
+
+#encriptar sha256
+def encriptsha(cadena_):
+    tmpencrip = str(hashlib.sha256(bytes(cadena_,'utf-8')).hexdigest())
+    return tmpencrip
+
+
+
+#======================================================ADMIN======================================================
+# ------------------------ CARGA MASIVA -----------------------------
+def readJsonFile(filename):
+    f = open(filename, 'r',encoding="utf-8")
+    dataread = json.loads(f.read())
+    return dataread
+
+# ESTUDIANTES
+
+def carga_estudiantes(phatFile_,passKey_):
+    key = getkeyencript(passKey_)
+    datafile = readJsonFile(phatFile_)
+    for student in datafile['estudiantes']:
+        carnet = student['carnet']
+        dpi = encriptar(key,str(student['DPI']))
+        nombre = encriptar(key,student['nombre'])
+        carrera = key,student['carrera']
+        correo = encriptar(key,student['correo'])
+        passwr = encriptsha(student['password'])
+        edad= encriptar(key,str(student['edad']))
+        #encriptacion sha256
+        currentAVL.insert(carnet,dpi,nombre,carrera,correo,passwr,0,edad)
+        
 
 def getDatoFecha(Fecha, dato_):
     DateSpl = Fecha.split("/")
@@ -42,12 +76,13 @@ def getHora(Hora):
     horacl = Hora.split(":")
     return int(horacl[0])
 
-def readJsonEstd(phatFile_):
+def carga_cursos(phatFile_):
     estudiante = False
     f = open(phatFile_, 'r',encoding="utf-8")
     dataread = json.loads(f.read())
+
     for line in dataread:
-        if 'Estudiante' in line:
+        if 'Estudiantes' in line:
             estudiante = True
             break
     if estudiante:
@@ -65,7 +100,14 @@ def readJsonEstd(phatFile_):
                         obligatorio_ = curses['Obligatorio']
                         addCursoEstudiante(carnet,int(anio),int(semestre_),int(codigo_),nombre_,int(creditos_),prerequisitos_,obligatorio_)
     else:
-        print("si lo lee pero con esto")   
+         
+        for curses in dataread['Cursos']:
+            codigo_ = curses['Codigo']
+            nombre_ = curses['Nombre']
+            creditos_ = curses['Creditos']
+            prerequisitos_ = curses['Prerequisitos']
+            obligatorio_ = curses['Obligatorio']
+            listCursos.addCurso(codigo_,nombre_,creditos_,prerequisitos_,obligatorio_)
 # ============================== ADD CURSO PENSUM/ ESTUDIANTE ===============================
 def addCursoEstudiante(carnet_,anio_,semestre_,codigo_,nombre_,creditos_,prerequisitos_,obligatorio_):
     estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
@@ -74,6 +116,10 @@ def addCursoEstudiante(carnet_,anio_,semestre_,codigo_,nombre_,creditos_,prerequ
     else:
         print("Estudiante \"" + str(carnet_) + "\" no registrado")
         
+
+def addCursoPensum():
+    listCursos
+#======================================================USUARIO======================================================
 
 #-------------------------CRUD ESTUDIANTES----------------------------
 def Crear_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,creditos_,edad_):
@@ -96,44 +142,7 @@ def editar_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,creditos_,edad
 def verStudent(carnet_):
     STDtmp = currentAVL.getStudentNode(currentAVL.raiz,carnet_)
     return STDtmp
-# ------------------------CRUD TAREAS --------------------------------
-def create_Task(carnet_,nombre_,descripcion_,materia_ , fecha_, hora_, estado_):
-    nwNodo = NodoTask(carnet_,nombre_,descripcion_,materia_ , fecha_, hora_, estado_)
-    currentAVL.add_task_listyear(carnet_,nwNodo,getDatoFecha(fecha_,"y"),getDatoFecha(fecha_,"m"),getDatoFecha(fecha_,"d"),getHora(hora_))
 
-def info_Task(carnet_,fecha_, hora_,posicion_):
-    estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
-    if estudiante:
-        year = estudiante.yearlist.getYear(getDatoFecha(fecha_,"y"))
-        if year:
-            mes = year.mes.getMes(getDatoFecha(fecha_,"m"))
-            if mes:
-                nodoMatrix = mes.tareas.existeNod(getDatoFecha(fecha_,"d"), getHora(hora_))
-                if nodoMatrix:
-                    lstTask = nodoMatrix.lstTareas
-                    return lstTask.getinfo(posicion_)
-    return None
-
-def update_Task(carnet_,nombre_,descripcion_,materia_ , fecha_, hora_, estado_,posicion_):
-    nwNodo = NodoTask(carnet_, nombre_, descripcion_, materia_, fecha_, hora_, estado_)
-    estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
-    if estudiante:
-        year = estudiante.yearlist.getYear(getDatoFecha(fecha_,"y"))
-        if year:
-            mes = year.mes.getMes(getDatoFecha(fecha_,"m"))
-            if mes:
-                nodoMatrix = mes.tareas.existeNod(getDatoFecha(fecha_,"d"), getHora(hora_))
-                if nodoMatrix:
-                    lstTask = nodoMatrix.lstTareas
-                    lstTask.updateTask(nwNodo,posicion_)
-                else:
-                    print("Nodo no existe")
-        else:
-            print("año \"" + str(year) + "\" no registrado")
-    else:
-        print("Estudiante \"" + str(carnet_) + "\" no registrado")
-
-def delete_Task(carnet_,fecha_, hora_,posicion_):
     estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
     if estudiante:
         year = estudiante.yearlist.getYear(getDatoFecha(fecha_, "y"))
@@ -152,38 +161,6 @@ def delete_Task(carnet_,fecha_, hora_,posicion_):
         print("Estudiante \"" + str(carnet_) + "\" no registrado")
 
 # ------------------------ REPORTES -------------------------------
-def graph_List_Task(carnet_, year_, mes_,dia_, hora_):
-    estudiante = currentAVL.getStudentNode(currentAVL.raiz,carnet_)
-    if estudiante:
-        year = estudiante.yearlist.getYear(year_)
-        if year:
-            mes = year.mes.getMes(mes_)
-            if  mes:
-                nodoMatrix = mes.tareas.existeNod(dia_, hora_)
-                if nodoMatrix:
-                    lstTask = nodoMatrix.lstTareas
-                    lstTask.graficar()
-                else:
-                    print("Nodo no existe")
-        else:
-            print("año \"" + str(year) + "\" no registrado")
-    else:
-        print("Estudiante \"" + str(carnet_) + "\" no registrado")
-
-def graph_Matrix(carnet_, year_, mes_):
-    estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
-    if estudiante:
-        year = estudiante.yearlist.getYear(year_)
-        if year:
-            mes = year.mes.getMes(mes_)
-            if mes:
-                mes.tareas.graficarMatriz()
-            else:
-                print("Mes \"" + str(mes_) + "\" no registrado")
-        else:
-            print("Año \"" + str(year) + "\" no registrado")
-    else:
-        print("Estudiante \"" + str(carnet_) + "\" no registrado")
 
 def graph_BTreeStudent(carnet_, year_, semestre_):
     estudiante = currentAVL.getStudentNode(currentAVL.raiz,carnet_)
@@ -204,3 +181,12 @@ def graph_BTreeStudent(carnet_, year_, semestre_):
 
 def graph_BTreePensum():
     pass
+
+def damegrafo(codigo_curso):
+    nwGrafo = grafo()
+    nwGrafo.getgrafo(codigo_curso,listCursos)
+    nwGrafo.graficarGrafo()
+
+
+
+

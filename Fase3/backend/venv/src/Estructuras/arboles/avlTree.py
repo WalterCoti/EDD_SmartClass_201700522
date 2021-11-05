@@ -1,11 +1,27 @@
 import time
-from Estructuras.Listas import List_Year
+import sys
+sys.path.append('D:\\Segundo_Semestre\\EDD\\Lab\\Fase3\\backend\\venv\\src\\Estructuras\\')
+from Listas.List_Year import ListYear
+#import Listas.List_Year
 from os import system
 from datetime import datetime
-from fernet import Fernet
+import base64
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
+def getkeyencript(password_):
+    kdf = PBKDF2HMAC(algorithm=hashes.SHA256(),length=32,salt=b'123',iterations=100000,)
+    keyh = base64.urlsafe_b64encode(kdf.derive(password_.encode()))
+    return keyh.decode()
 
+
+def desencriptar(key_,token_):
+    fkey = Fernet(key_.encode())
+    desen = fkey.decrypt(token_.encode())
+    return desen.decode()
+    
 class NodoStd:
     def __init__(self,ncarnet_, dpi_, nombre_, carrera_, correo_, passw_, credit_, edad_ ):
         self.carnet = ncarnet_
@@ -36,7 +52,7 @@ class AVLTree:
     def insertar_inter(self, ncarnet_, dpi_, nombre_, carrera_, correo_, passw_, credit_, edad_, raiz_):
         if raiz_ is None:
             nwNodoSt = NodoStd(ncarnet_, dpi_, nombre_, carrera_, correo_, passw_, credit_, edad_)
-            nwlstYear = List_Year.ListYear()
+            nwlstYear = ListYear()
             nwNodoSt.yearlist = nwlstYear
             return  nwNodoSt
         else:
@@ -151,45 +167,60 @@ class AVLTree:
         else:
             return self.maximo(nodo.Nder)
 
-    #tupla [raiz, nodo izquierdo, nodo derecho]
+    #tupla [raiz, nodo izquierdo, nodo derecho,carnet,nombre,dpi,correo,edad]
     def recorrer_arbol(self,nodo,listNodos_):
         if nodo is not None:
             if nodo.Nizq is None and nodo.Nder is not None:
-                listNodos_.append([nodo.carnet, None , nodo.Nder.carnet,nodo.carnet,nodo.nombre,nodo.carrera])
+                listNodos_.append([nodo.carnet, None , nodo.Nder.carnet,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.edad])
                 self.recorrer_arbol(nodo.Nder, listNodos_)
             elif nodo.Nder is None and nodo.Nizq is not None:
-                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, None,nodo.carnet,nodo.nombre,nodo.carrera])
+                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, None,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.edad])
                 self.recorrer_arbol(nodo.Nizq, listNodos_)
             elif nodo.Nder is None and nodo.Nizq is  None:
-                listNodos_.append([nodo.carnet, None, None,nodo.carnet,nodo.nombre,nodo.carrera])
+                listNodos_.append([nodo.carnet, None, None,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.edad])
             else:
-                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, nodo.Nder.carnet, nodo.carnet, nodo.nombre, nodo.carrera])
+                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, nodo.Nder.carnet, nodo.carnet, nodo.nombre,nodo.dpi,nodo.correo,nodo.edad])
                 self.recorrer_arbol(nodo.Nizq, listNodos_)
                 self.recorrer_arbol(nodo.Nder, listNodos_)
 
-    def generarGraph(self):
+    def generarGraph(self,encript_,passKey_):
         timenow = datetime.now().time()
         nameFile = str(timenow.hour) + "-" + str(timenow.minute)  + "-" + str(timenow.second)
-        self.graphAVL(nameFile)
+        self.graphAVL(nameFile,encript_,passKey_)
 
     #generar archivo.dot
-    def graphAVL(self,nombre):
+    def graphAVL(self,nombre,encript_,passKey_):
         listNod = []
         file = open(nombre + "-avl.dot", "w")
         file.write("digraph d {\n")
         file.write("\tnode [shape = record, style=rounded];\n")
         self.recorrer_arbol(self.raiz,listNod)
-        for nodo in listNod:
-            file.write(str(nodo[0]) +"[label=\"" + str(nodo[3]) +" \\n " + str(nodo[4]) +" \\n " + str(nodo[5]) + "\"]; \n")
-            if nodo[1] is None and nodo[2] is not None:
-                file.write(str(nodo[0]) + "->"+ str(nodo[2])+";\n")
-            elif nodo[1] is not None and nodo[2] is None:
-                file.write(str(nodo[0]) + "->" + str(nodo[1])+";\n")
-            elif nodo[1] is  None and nodo[2] is None:
-                pass
-            else:
-                file.write(str(nodo[0]) + "->" + str(nodo[1])+";\n")
-                file.write(str(nodo[0]) + "->" + str(nodo[2])+";\n")
+        if encript_:    
+            #tupla [carnetnodo raiz, nodo izquierdo, nodo derecho,carnet,nombre,dpi,correo,edad]
+            for nodo in listNod:
+                file.write(str(nodo[0]) +"[label=\"Carnet: " + str(nodo[3]) +" \\n Nombre: " + nodo[4][0:20] +" \\n DPI: " + nodo[5][0:20] +" \\n Correo: " + nodo[6][0:20] +" \\n Edad:  " + str(nodo[7])[0:20] + "\"]; \n")
+                if nodo[1] is None and nodo[2] is not None:
+                    file.write(str(nodo[0]) + "->"+ str(nodo[2])+";\n")
+                elif nodo[1] is not None and nodo[2] is None:
+                    file.write(str(nodo[0]) + "->" + str(nodo[1])+";\n")
+                elif nodo[1] is  None and nodo[2] is None:
+                    pass
+                else:
+                    file.write(str(nodo[0]) + "->" + str(nodo[1])+";\n")
+                    file.write(str(nodo[0]) + "->" + str(nodo[2])+";\n")
+        else:
+            key = getkeyencript(passKey_)
+            for nodo in listNod:
+                file.write(str(nodo[0]) +"[label=\"Carnet: " + str(nodo[3]) +" \\n Nombre: " + desencriptar(key,nodo[4]) +" \\n DPI: " + desencriptar(key,nodo[5]) +" \\n Correo: " + desencriptar(key,nodo[6]) +" \\n Edad:  " + desencriptar(key,str(nodo[7])) + "\"]; \n")
+                if nodo[1] is None and nodo[2] is not None:
+                    file.write(str(nodo[0]) + "->"+ str(nodo[2])+";\n")
+                elif nodo[1] is not None and nodo[2] is None:
+                    file.write(str(nodo[0]) + "->" + str(nodo[1])+";\n")
+                elif nodo[1] is  None and nodo[2] is None:
+                    pass
+                else:
+                    file.write(str(nodo[0]) + "->" + str(nodo[1])+";\n")
+                    file.write(str(nodo[0]) + "->" + str(nodo[2])+";\n")
 
         file.write("}")
         file.close()

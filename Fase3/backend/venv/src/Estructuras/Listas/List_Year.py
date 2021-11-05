@@ -48,7 +48,8 @@ class ListYear:
         if tmpNodo is not None:
             tmpNodo.semestre.add_curso_semestre(semestre_,codigo_, nombre_,creditos_,prerequisitos_,obligatorio_)
         else:
-            self.add_year_curso(year_,semestre_,codigo_, nombre_,creditos_,prerequisitos_,obligatorio_)
+            self.add_year_curso(year_,semestre_,codigo_, nombre_,creditos_,prerequisitos_,
+            )
 
     def add_year_curso(self,year_,semestre_,codigo_, nombre_,creditos_,prerequisitos_,obligatorio_):
         nw_nodo = NodoYear(year_)
