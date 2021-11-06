@@ -171,15 +171,15 @@ class AVLTree:
     def recorrer_arbol(self,nodo,listNodos_):
         if nodo is not None:
             if nodo.Nizq is None and nodo.Nder is not None:
-                listNodos_.append([nodo.carnet, None , nodo.Nder.carnet,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.edad])
+                listNodos_.append([nodo.carnet, None , nodo.Nder.carnet,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.passw,nodo.edad])
                 self.recorrer_arbol(nodo.Nder, listNodos_)
             elif nodo.Nder is None and nodo.Nizq is not None:
-                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, None,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.edad])
+                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, None,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.passw,nodo.edad])
                 self.recorrer_arbol(nodo.Nizq, listNodos_)
             elif nodo.Nder is None and nodo.Nizq is  None:
-                listNodos_.append([nodo.carnet, None, None,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.edad])
+                listNodos_.append([nodo.carnet, None, None,nodo.carnet,nodo.nombre,nodo.dpi,nodo.correo,nodo.passw,nodo.edad])
             else:
-                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, nodo.Nder.carnet, nodo.carnet, nodo.nombre,nodo.dpi,nodo.correo,nodo.edad])
+                listNodos_.append([nodo.carnet, nodo.Nizq.carnet, nodo.Nder.carnet, nodo.carnet, nodo.nombre,nodo.dpi,nodo.correo,nodo.passw,nodo.edad])
                 self.recorrer_arbol(nodo.Nizq, listNodos_)
                 self.recorrer_arbol(nodo.Nder, listNodos_)
 
@@ -196,9 +196,9 @@ class AVLTree:
         file.write("\tnode [shape = record, style=rounded];\n")
         self.recorrer_arbol(self.raiz,listNod)
         if encript_:    
-            #tupla [carnetnodo raiz, nodo izquierdo, nodo derecho,carnet,nombre,dpi,correo,edad]
+            #tupla [carnetnodo raiz, nodo izquierdo, nodo derecho,carnet,nombre,dpi,correo,passw,edad]
             for nodo in listNod:
-                file.write(str(nodo[0]) +"[label=\"Carnet: " + str(nodo[3]) +" \\n Nombre: " + nodo[4][0:20] +" \\n DPI: " + nodo[5][0:20] +" \\n Correo: " + nodo[6][0:20] +" \\n Edad:  " + str(nodo[7])[0:20] + "\"]; \n")
+                file.write(str(nodo[0]) +"[label=\"Carnet: " + str(nodo[3]) +" \\n Nombre: " + nodo[4][0:20] +" \\n DPI: " + nodo[5][0:20] +" \\n Correo: " + nodo[6][0:20] +" \\n Password:  " + str(nodo[7])[0:20] +" \\n Edad:  " + str(nodo[8])[0:20] + "\"]; \n")
                 if nodo[1] is None and nodo[2] is not None:
                     file.write(str(nodo[0]) + "->"+ str(nodo[2])+";\n")
                 elif nodo[1] is not None and nodo[2] is None:
@@ -211,7 +211,7 @@ class AVLTree:
         else:
             key = getkeyencript(passKey_)
             for nodo in listNod:
-                file.write(str(nodo[0]) +"[label=\"Carnet: " + str(nodo[3]) +" \\n Nombre: " + desencriptar(key,nodo[4]) +" \\n DPI: " + desencriptar(key,nodo[5]) +" \\n Correo: " + desencriptar(key,nodo[6]) +" \\n Edad:  " + desencriptar(key,str(nodo[7])) + "\"]; \n")
+                file.write(str(nodo[0]) +"[label=\"Carnet: " + str(nodo[3]) +" \\n Nombre: " + desencriptar(key,nodo[4]) +" \\n DPI: " + desencriptar(key,nodo[5]) +" \\n Correo: " + desencriptar(key,nodo[6]) + " \\n Password:  " + desencriptar(key,str(nodo[7])) +" \\n Edad:  " + desencriptar(key,str(nodo[8])) + "\"]; \n")
                 if nodo[1] is None and nodo[2] is not None:
                     file.write(str(nodo[0]) + "->"+ str(nodo[2])+";\n")
                 elif nodo[1] is not None and nodo[2] is None:

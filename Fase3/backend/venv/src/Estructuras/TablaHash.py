@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
 from os import system
+
 class Nodohash:
     def __init__(self, carnet_):
         self.carnet = carnet_

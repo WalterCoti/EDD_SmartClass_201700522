@@ -12,7 +12,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 currentAVL = AVLTree()
 listCursos = Lista_cursos()
-
+keyencript = "" 
 
 #======================================================ENCRIPTACION======================================================
 
@@ -50,32 +50,20 @@ def readJsonFile(filename):
 
 def carga_estudiantes(phatFile_,passKey_):
     key = getkeyencript(passKey_)
+    keyencript = key
     datafile = readJsonFile(phatFile_)
     for student in datafile['estudiantes']:
         carnet = student['carnet']
         dpi = encriptar(key,str(student['DPI']))
         nombre = encriptar(key,student['nombre'])
-        carrera = key,student['carrera']
+        carrera = student['carrera']
         correo = encriptar(key,student['correo'])
-        passwr = encriptsha(student['password'])
+        #encriptacion simetrica( encriptacion sha256)
+        passwr = encriptar(key,encriptsha(student['password']))
         edad= encriptar(key,str(student['edad']))
-        #encriptacion sha256
-        currentAVL.insert(carnet,dpi,nombre,carrera,correo,passwr,0,edad)
         
-
-def getDatoFecha(Fecha, dato_):
-    DateSpl = Fecha.split("/")
-    if dato_ == "d":
-        return  int(DateSpl[0])
-    elif dato_ == "m":
-        return int(DateSpl[1])
-    elif dato_ =="y":
-        return int(DateSpl[2])
-
-def getHora(Hora):
-    horacl = Hora.split(":")
-    return int(horacl[0])
-
+        currentAVL.insert(carnet,dpi,nombre,carrera,correo,passwr,0,edad)
+     
 def carga_cursos(phatFile_):
     estudiante = False
     f = open(phatFile_, 'r',encoding="utf-8")
@@ -98,9 +86,8 @@ def carga_cursos(phatFile_):
                         creditos_ = curses['Creditos']
                         prerequisitos_ = curses['Prerequisitos']
                         obligatorio_ = curses['Obligatorio']
-                        addCursoEstudiante(carnet,int(anio),int(semestre_),int(codigo_),nombre_,int(creditos_),prerequisitos_,obligatorio_)
+                        addCursoEstudiante(carnet,int(anio),int(semestre_),codigo_,nombre_,int(creditos_),prerequisitos_,obligatorio_)
     else:
-         
         for curses in dataread['Cursos']:
             codigo_ = curses['Codigo']
             nombre_ = curses['Nombre']
@@ -108,6 +95,8 @@ def carga_cursos(phatFile_):
             prerequisitos_ = curses['Prerequisitos']
             obligatorio_ = curses['Obligatorio']
             listCursos.addCurso(codigo_,nombre_,creditos_,prerequisitos_,obligatorio_)
+
+
 # ============================== ADD CURSO PENSUM/ ESTUDIANTE ===============================
 def addCursoEstudiante(carnet_,anio_,semestre_,codigo_,nombre_,creditos_,prerequisitos_,obligatorio_):
     estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
@@ -117,13 +106,19 @@ def addCursoEstudiante(carnet_,anio_,semestre_,codigo_,nombre_,creditos_,prerequ
         print("Estudiante \"" + str(carnet_) + "\" no registrado")
         
 
+
 def addCursoPensum():
     listCursos
 #======================================================USUARIO======================================================
 
 #-------------------------CRUD ESTUDIANTES----------------------------
-def Crear_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,creditos_,edad_):
-    currentAVL.insert(carnet_,DPI_,nombre_,carrera_,correo_,pass_,creditos_,edad_)
+def Crear_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,edad_):
+    dpi = encriptar(keyencript,DPI_)
+    nombre = encriptar(keyencript,nombre_)
+    correo = encriptar(keyencript,correo_)
+    pasw = encriptar(keyencript,encriptsha(pass_))
+    edad = encriptar(keyencript,edad_)
+    currentAVL.insert(carnet_,dpi,nombre,carrera_,correo,pasw,0,edad)
 
 def editar_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,creditos_,edad_):
     tmPNodo = currentAVL.getStudentNode(currentAVL.raiz,carnet_)
@@ -162,15 +157,15 @@ def verStudent(carnet_):
 
 # ------------------------ REPORTES -------------------------------
 
-def graph_BTreeStudent(carnet_, year_, semestre_):
+def graph_cursos_std(carnet_, year_, semestre_):
     estudiante = currentAVL.getStudentNode(currentAVL.raiz,carnet_)
     if estudiante:
         year = estudiante.yearlist.getYear(year_)
         if year:
             semester = year.semestre.getSemestre(semestre_)
             if  semester:
-                treeBCurses = semester.cursos
-                treeBCurses.graficar()
+                listaCursos = semester.cursos
+                listaCursos.graficar()
             else:
                print("semestre \"" + str(semester.semestre) + "\" no registrado") 
         else:
@@ -179,13 +174,11 @@ def graph_BTreeStudent(carnet_, year_, semestre_):
         print("Estudiante \"" + str(carnet_) + "\" no registrado")
 
 
-def graph_BTreePensum():
-    pass
-
 def damegrafo(codigo_curso):
     nwGrafo = grafo()
     nwGrafo.getgrafo(codigo_curso,listCursos)
     nwGrafo.graficarGrafo()
+
 
 
 

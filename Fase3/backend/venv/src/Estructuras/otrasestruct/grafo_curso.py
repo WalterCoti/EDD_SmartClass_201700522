@@ -138,13 +138,29 @@ class grafo:
                 lstpre = tmp.pre_codigo.split(',')
                 for cod in lstpre:
                     if cod == "":
-                        return
+                        pass
                     else:
                         self.getgrafo(str(cod),listacursos_)
                         self.linkgraph(str(cod),nodoCu.codigo)
                         
                 break
             tmp = tmp.sig
+
+    def getgrafopensum(self,listacursos_):
+            tmp  = listacursos_.getlist()
+            while tmp is not None:
+                lstcursos = Lista()
+                nodoCu = Nodograph(tmp.codigo,tmp.nombre,tmp.creditos,lstcursos)
+                self.addnodo(nodoCu)
+                lstpre = tmp.pre_codigo.split(',')
+                for cod in lstpre:
+                    if cod == "":
+                        pass
+                    else:
+                        self.getgrafo(str(cod),listacursos_)
+                        self.linkgraph(str(cod),nodoCu.codigo)
+                tmp = tmp.sig
+
 
     def graficarGrafo(self):
         timenow = datetime.now().time()
@@ -162,7 +178,7 @@ class grafo:
         # Graficar grafo
         tmp = self.head
         while tmp:
-            file.write(str(tmp.codigo) +"[label=\"Codigo: " + str(tmp.codigo) +" \\n Nombre: " + tmp.nombre + "\"]; \n")
+            file.write(str(tmp.codigo) +"[label=\"" + str(tmp.codigo) +" \\n" + tmp.nombre + "\"]; \n")
             aux = tmp.list.head
             while aux:
                 file.write(str(tmp.codigo) +" -> " + str(aux.codigo) + "[label=\"" + str(tmp.creditos) + "\"]; \n")
