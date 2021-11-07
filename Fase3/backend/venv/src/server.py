@@ -19,11 +19,10 @@ def masiveStudent():
         main.carga_estudiantes(nwpath,passwEncri)
         return jsonify(notificacion="Datos Cargados a memoria")
     elif tipo_Carga == "nota":
-        
+        main.cargarapunte(nwpath)
         return jsonify({"notification":"Tipo de carga recordatorio"})
     elif tipo_Carga == "curso":
         main.carga_cursos(nwpath)
-        
         return jsonify({"notification": "Tipo de carga Cursos"})
     else:
         return jsonify({"notification":"Tipo de carga no definido"})
@@ -39,12 +38,11 @@ def reportes():
         main.currentAVL.generarGraph(encript,passkey)      #genera grafica AVL
         return jsonify(Estudiante="Avl Estudiantes")
     elif typereport == 1:
-      #reporte cursos grafo
         main.grafopensum()
         return jsonify(Estudiante="Grafo de pensum creado exitosamente")
     elif typereport == 2:
-      #tabla hash
-        pass
+        main.tabnotas.graficarTabla()
+        return jsonify({"Reporte Tabla Hash":"Reporte Creado exitosamente"})
     else:
         return jsonify({"notification":"Tipo de reporte no definido"})
    
@@ -76,34 +74,36 @@ def Delete_Student():
     main.currentAVL.delete(delStudent['carnet'])
     return jsonify(Estudiante="Eliminado exitosamente")
 
-#----------------------------------------------CARGA MASIVA CURSOS----------------------------------------------
-@app.route('/cursosEstudiante', methods=['POST'])
-def addCurso_Est():
-    contentFile = request.get_json(force=True)
-    main.readJsonEstd(contentFile)
-    return jsonify(Estudiante="exitosamente")
-
-
-@app.route('/cursosPensum', methods=['POST'])
-def addCurso_Pensm():
-    contentFile = request.get_json(force=True)
-    main.addCursoPensum()
-    return jsonify(Estudiante="exitosamente")
-    
-
 
 #======================================================USUARIO======================================================
-@app.route('/crearnota', methods=['POST'])
+@app.route('/Anotacion', methods=['POST'])
 def crearnota():
-    pass
+    data = request.get_json(force=True)
+    carnet = data['carnet']
+    titulo = data['titulo']
+    content = data['contenido']
+    main.addNota_User(carnet,titulo, content)
+    return jsonify("Nota agregada con exito")
+    
 
 @app.route('/vernotas', methods=['GET'])
-def grafopensum():
-    pass
+def verAnotaciones():
+    data = request.get_json(force=True)
+    carnet = data['carnet']
+    main.vernotas(carnet)
+    return jsonify("Anotaciones")
 
 
+@app.route('/asignaciones', methods=['POST'])
+def addcurso():
+    dataread = request.get_json(force=True)
+    carnet = dataread['carnet']
+    year = dataread['año']
+    semestre = dataread['semestre']
+    codigo = dataread['codigo']
+    main.addCursoaEstudiante(carnet,year,semestre,codigo)
 
-@app.route('/cursosprevios', methods=['GET'])
+@app.route('/prev_cursos', methods=['GET'])
 def grafopensum():
     graficar = request.get_json(force=True)
     codigocurso = graficar['codigo']
@@ -116,7 +116,7 @@ def cur_asign():
     carnet = dataread['carnet']
     year = dataread['año']
     semestre = dataread['semestre']
-    main.graph_cursos_std(carnet, year, semestre)
+    main.graph_cursos_std(int(carnet),int(year), int(semestre))
     return jsonify(Estudiante="Grafica cursos asignados " + str(carnet) + " creado exitosamente")
 
 

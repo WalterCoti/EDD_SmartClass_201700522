@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
 from os import system
+import os
 
 # import sys
 # sys.path.append('D:\\Segundo_Semestre\\EDD\\Lab\\Fase3\\backend\\venv\\src\\Estructuras\\')
@@ -170,7 +171,13 @@ class grafo:
         # generar archivo.dota
 
     def graph_dot(self, nombre):
-        file = open(nombre + "-grafo.dot", "w")
+        directorio = 'C:\\Users\\GustavC\\Desktop\\Reportes_F3'
+        if not os.path.isdir(directorio):
+            os.mkdir(directorio)
+        path_desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop','Reportes_F3')
+        nwpath = path_desktop +"\\"+ nombre 
+        openphat = nwpath.replace('\\','\\\\')
+        file = open(openphat + "-grafo.dot", "w")
         file.write("digraph grafo {\n")
         file.write("\t\trankdir=LR;")
         file.write("\tnode [shape = record, style=rounded];\n")
@@ -188,9 +195,9 @@ class grafo:
         file.close()
         try:
             time.sleep(1)
-            executecmd = "dot -Tpng " + nombre + "-grafo.dot -o " + nombre + "-grafo.png"
+            executecmd = "dot -Tpng " + openphat + "-grafo.dot -o " + openphat + "-grafo.png"
             system(executecmd)
-            system("start " + nombre + "-grafo.png ")
+            system("start " + nwpath + "-grafo.png ")
         except:
             print("Error al abrir la imagen")
 

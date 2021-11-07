@@ -1,6 +1,7 @@
 from Estructuras.arboles.avlTree import AVLTree
 from Estructuras.Listas.List_Cursos import Lista_cursos
 from Estructuras.otrasestruct.grafo_curso import grafo
+from Estructuras.TablaHash import HashTable
 
 import hashlib
 import json
@@ -12,7 +13,9 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 currentAVL = AVLTree()
 listCursos = Lista_cursos()
+tabnotas = HashTable()
 keyencript = "" 
+
 
 #======================================================ENCRIPTACION======================================================
 
@@ -86,7 +89,7 @@ def carga_cursos(phatFile_):
                         creditos_ = curses['Creditos']
                         prerequisitos_ = curses['Prerequisitos']
                         obligatorio_ = curses['Obligatorio']
-                        addCursoEstudiante(carnet,int(anio),int(semestre_),codigo_,nombre_,int(creditos_),prerequisitos_,obligatorio_)
+                        addCursoEstudiante(int(carnet),int(anio),int(semestre_),codigo_,nombre_,int(creditos_),prerequisitos_,obligatorio_)
     else:
         for curses in dataread['Cursos']:
             codigo_ = curses['Codigo']
@@ -96,20 +99,38 @@ def carga_cursos(phatFile_):
             obligatorio_ = curses['Obligatorio']
             listCursos.addCurso(codigo_,nombre_,creditos_,prerequisitos_,obligatorio_)
 
+def cargarapunte(phatFile_):
+    datafile = readJsonFile(phatFile_)
+    for usuario in datafile['usuarios']:
+        carnet = usuario['carnet']
+        for apunte in usuario['apuntes']:
+            titulo = apunte['Título']
+            content = apunte['Contenido']
+            addNota_User(carnet,titulo,content)
 
-# ============================== ADD CURSO PENSUM/ ESTUDIANTE ===============================
-def addCursoEstudiante(carnet_,anio_,semestre_,codigo_,nombre_,creditos_,prerequisitos_,obligatorio_):
-    estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
-    if estudiante:
-        estudiante.yearlist.add_Curso(anio_,semestre_,codigo_, nombre_,creditos_,prerequisitos_,obligatorio_)
-    else:
-        print("Estudiante \"" + str(carnet_) + "\" no registrado")
-        
+#--------------------------------REPORTES------------------
+def graphtaablehash():
+    tabnotas.graficarTabla()
+
+def grafopensum():
+    nwGrafo = grafo()
+    tmp = listCursos.head
+    while tmp:
+        nwGrafo.getgrafo(tmp.codigo,listCursos)
+        tmp = tmp.sig
+    nwGrafo.graficarGrafo()
 
 
-def addCursoPensum():
-    listCursos
 #======================================================USUARIO======================================================
+#--------------------------------NOTAS
+def addNota_User(carnet_,titulo_,contenido_):
+    tabnotas.addNota(carnet_, titulo_ ,contenido_)
+
+def vernotas(carnet):
+    lstnotas = tabnotas.getNotas(carnet)
+    lstnotas.getListNotas()
+
+
 
 #-------------------------CRUD ESTUDIANTES----------------------------
 def Crear_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,edad_):
@@ -155,6 +176,29 @@ def verStudent(carnet_):
     else:
         print("Estudiante \"" + str(carnet_) + "\" no registrado")
 
+# ============================== ADD CURSO PENSUM/ ESTUDIANTE ===============================
+def addCursoEstudiante(carnet_,anio_,semestre_,codigo_,nombre_,creditos_,prerequisitos_,obligatorio_):
+    estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
+    if estudiante:
+        estudiante.yearlist.add_Curso(anio_,semestre_,codigo_, nombre_,creditos_,prerequisitos_,obligatorio_)
+    else:
+        print("Estudiante \"" + str(carnet_) + "\" no registrado")
+        
+
+def addCursoaEstudiante(carnet_,year_,semestre_,codigo_):
+    estudiante = currentAVL.getStudentNode(currentAVL.raiz, carnet_)
+    if estudiante:
+        infcurso = listCursos.getCurso(codigo_)
+        if infcurso:
+            nombre = infcurso.nombre
+            creditos = infcurso.creditos
+            prerequisitos = infcurso.pre_codigo
+            obligatorio = infcurso.obligatorio
+            estudiante.yearlist.add_Curso(year_,semestre_,codigo_, nombre,creditos,prerequisitos,obligatorio)
+        else:
+            print("Curso " + str(codigo_) + "no registrado")
+    else:
+        print("Estudiante \"" + str(carnet_) + "\" no registrado")
 # ------------------------ REPORTES -------------------------------
 
 def graph_cursos_std(carnet_, year_, semestre_):
@@ -178,8 +222,6 @@ def damegrafo(codigo_curso):
     nwGrafo = grafo()
     nwGrafo.getgrafo(codigo_curso,listCursos)
     nwGrafo.graficarGrafo()
-
-
 
 
 

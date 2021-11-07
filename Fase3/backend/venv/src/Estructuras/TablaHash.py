@@ -1,6 +1,8 @@
 import time
 from datetime import datetime
 from os import system
+import os
+from pathlib import Path
 
 class Nodohash:
     def __init__(self, carnet_):
@@ -9,6 +11,8 @@ class Nodohash:
     
     def getcarnet(self):
         return self.carnet
+    def getApuntes():
+        return self.lista_notas
 
 class NodoNota:
     def __init__(self,carnet_, titulo_, contenido_):
@@ -23,12 +27,14 @@ class ListNotas:
         self.size = 0
         self.head = None
 
-    def getNote(self,carnet_):
+    def getNote(self,position_):
+        cont = 0
         ntmp = self.head
         while ntmp:
-            if ntmp.carnet == carnet_:
+            if cont == position_:
                 return ntmp
             ntmp = ntmp.sig
+            cont += 1
         return None
 
 
@@ -41,7 +47,6 @@ class ListNotas:
             tmp = self.head
             while tmp.sig is not None:
                 tmp = tmp.sig
-            nwNodo.sig = tmp.sig
             tmp.sig = nwNodo
         self.size += 1
 
@@ -88,17 +93,14 @@ class ListNotas:
         else:
             print("La posicion \"" + str(position) + "\" es nula no puede editarse")
 
-
-
-    def imprimir(self):
+    def getListNotas(self):
         tmp = self.head
-        if self.head is None:
-            print("lista vacia")
-        else:
-            while tmp:
-                if tmp is not None:
-                    print(str(tmp.carnet))
-                tmp = tmp.sig
+        while tmp:
+            print("___________________________")
+            print("Titulo: " + tmp.titulo)
+            print("Contenido: " + tmp.contenido)
+            tmp = tmp.sig
+
 
 
 class HashTable:
@@ -187,11 +189,28 @@ class HashTable:
                             conteo += 1
                 
     def getNotas(self,carnet_): # Metodo para buscar elementos
-        while True:
-            hash = self.func_hash(carnet_)
-            if self.tabla[hash].carnet == carnet_:
-                print("si esta")
-                return self.tabla[hash]
+        hash = self.func_hash(carnet_)
+        if self.tabla[hash] is None:
+            return None
+        elif self.tabla[hash].carnet == carnet_: 
+            #print("si esta")
+            return self.tabla[hash].lista_notas
+        else:
+            tam = len(self.tabla)
+            conteo = 1
+            while True:
+                if  conteo <= tam:
+                    nhash = self.exp_cuadratic(carnet_,tam,conteo)
+                    if self.tabla[nhash] is None:
+                        pass
+                    elif self.tabla[nhash].carnet == carnet_:
+                        return self.tabla[nhash].lista_notas
+                    conteo += 1
+                else:
+                    print("carnet no existe")
+                    break
+            return None
+                               
 
     def graficarTabla(self):
         timenow = datetime.now().time()
@@ -199,9 +218,15 @@ class HashTable:
         self.graph_dot(nameFile)
 
         # generar archivo.dota
-
+        
     def graph_dot(self, nombre):
-        file = open(nombre + "-TabHash.dot", "w")
+        directorio = 'C:\\Users\\GustavC\\Desktop\\Reportes_F3'
+        if not os.path.isdir(directorio):
+            os.mkdir(directorio)
+        path_desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop','Reportes_F3')
+        nwpath = path_desktop +"\\"+ nombre 
+        openphat = nwpath.replace('\\','\\\\')
+        file = open(openphat + '-TabHash.dot', "w")
         file.write("digraph tabhash {\n")
         file.write("\t nodesep=.05;\n \trankdir=LR;")
         file.write("\tnode [shape=record,width=.1,height=.1, style=\"rounded,filled\"  fillcolor = firebrick3 , color=black, fontcolor=white];\n")
@@ -233,9 +258,9 @@ class HashTable:
         file.close()
         try:
             time.sleep(1)
-            executecmd = "dot -Tpng " + nombre + "-TabHash.dot -o " + nombre + "-TabHash.png"
+            executecmd = "dot -Tpng " + openphat + "-TabHash.dot -o " + openphat + "-TabHash.png"
             system(executecmd)
-            system("start " + nombre + "-TabHash.png ")
+            system("start " + nwpath + "-TabHash.png ")
         except:
             print("Error al abrir la imagen")
 
@@ -271,4 +296,9 @@ class HashTable:
 # nwHastab.addNota(201712346,"Titulo 27","Contenido 27")
 # nwHastab.addNota(201353456,"Titulo 28","Contenido 28")
 # nwHastab.graficarTabla()
+# tmp = nwHastab.getNotas(201545212)
+# print(tmp)
+# aver = tmp.getApuntes()
+# print(aver)
+# aver.getListNotas()
 

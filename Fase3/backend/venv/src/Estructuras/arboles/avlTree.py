@@ -1,5 +1,6 @@
 import time
 import sys
+import os
 sys.path.append('D:\\Segundo_Semestre\\EDD\\Lab\\Fase3\\backend\\venv\\src\\Estructuras\\')
 from Listas.List_Year import ListYear
 #import Listas.List_Year
@@ -191,7 +192,13 @@ class AVLTree:
     #generar archivo.dot
     def graphAVL(self,nombre,encript_,passKey_):
         listNod = []
-        file = open(nombre + "-avl.dot", "w")
+        directorio = 'C:\\Users\\GustavC\\Desktop\\Reportes_F3'
+        if not os.path.isdir(directorio):
+            os.mkdir(directorio)
+        path_desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop','Reportes_F3')
+        nwpath = path_desktop +"\\"+ nombre 
+        openphat = nwpath.replace('\\','\\\\')
+        file = open(openphat + "-avl.dot", "w")
         file.write("digraph d {\n")
         file.write("\tnode [shape = record, style=rounded];\n")
         self.recorrer_arbol(self.raiz,listNod)
@@ -226,9 +233,9 @@ class AVLTree:
         file.close()
         try:
             time.sleep(1)
-            executecmd = "dot -Tpng " + nombre + "-avl.dot -o " + nombre + "-avl.png"
+            executecmd = "dot -Tpng " + openphat + "-avl.dot -o " + openphat + "-avl.png"
             system(executecmd)
-            system("start " + nombre + "-avl.png ")
+            system("start " + nwpath + "-avl.png ")
         except:
             print("Error al abrir la imagen")
 

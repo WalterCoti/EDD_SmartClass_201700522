@@ -1,4 +1,5 @@
 from os import system
+import os
 import time
 from datetime import datetime
 import base64
@@ -47,7 +48,13 @@ class Lista_cursos:
         self.creardot(nameFile)
 
     def creardot(self,nombre):
-        file = open(nombre + "-cursos.dot", "w")
+        directorio = 'C:\\Users\\GustavC\\Desktop\\Reportes_F3'
+        if not os.path.isdir(directorio):
+            os.mkdir(directorio)
+        path_desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop','Reportes_F3')
+        nwpath = path_desktop +"\\"+ nombre 
+        openphat = nwpath.replace('\\','\\\\')
+        file = open(openphat + "-cursos.dot", "w")
         file.write("digraph d {\n")
         file.write("rankdir = LR\n")
         file.write("\t node [style=\"rounded,filled\" shape=rectangle fillcolor = darkgray , color=white];\n")
@@ -61,9 +68,9 @@ class Lista_cursos:
         file.close()
         try:
             time.sleep(1)
-            executecmd = "dot -Tpng " + nombre + "-cursos.dot -o " + nombre + "-cursos.png"
+            executecmd = "dot -Tpng " + openphat + "-cursos.dot -o " + openphat + "-cursos.png"
             system(executecmd)
-            system("start " + nombre + "-cursos.png ")
+            system("start " + nwpath + "-cursos.png ")
         except:
             print("Error al abrir la imagen")
 
