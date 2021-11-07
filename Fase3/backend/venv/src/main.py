@@ -14,7 +14,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 currentAVL = AVLTree()
 listCursos = Lista_cursos()
 tabnotas = HashTable()
-keyencript = "" 
+keyencript = ""
 
 
 #======================================================ENCRIPTACION======================================================
@@ -52,8 +52,10 @@ def readJsonFile(filename):
 # ESTUDIANTES
 
 def carga_estudiantes(phatFile_,passKey_):
+    global keyencript
     key = getkeyencript(passKey_)
-    keyencript = key
+    keyencript = passKey_
+    print("keyglobal " + keyencript)
     datafile = readJsonFile(phatFile_)
     for student in datafile['estudiantes']:
         carnet = student['carnet']
@@ -134,11 +136,14 @@ def vernotas(carnet):
 
 #-------------------------CRUD ESTUDIANTES----------------------------
 def Crear_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,edad_):
-    dpi = encriptar(keyencript,DPI_)
-    nombre = encriptar(keyencript,nombre_)
-    correo = encriptar(keyencript,correo_)
-    pasw = encriptar(keyencript,encriptsha(pass_))
-    edad = encriptar(keyencript,edad_)
+    global keyencript
+    print(keyencript)
+    nkey = getkeyencript(keyencript)
+    dpi = encriptar(nkey,str(DPI_))
+    nombre = encriptar(nkey,nombre_)
+    correo = encriptar(nkey,correo_)
+    pasw = encriptar(nkey,encriptsha(pass_))
+    edad = encriptar(nkey,str(edad_))
     currentAVL.insert(carnet_,dpi,nombre,carrera_,correo,pasw,0,edad)
 
 def editar_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,creditos_,edad_):

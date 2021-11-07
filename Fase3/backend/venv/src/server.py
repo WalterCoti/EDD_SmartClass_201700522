@@ -50,10 +50,10 @@ def reportes():
 
 #----------------------------------------------CRUD ESTUDIANTE----------------------------------------------
 
-@app.route('/estudiante', methods=['POST'])
+@app.route('/registro', methods=['POST'])
 def set_student():
     nw_std = request.get_json(force=True)
-    main.Crear_Estudiante(nw_std['carnet'], nw_std['DPI'], nw_std['nombre'], nw_std['carrera'], nw_std['correo'], nw_std['password'], int(nw_std['creditos']), int(nw_std['edad']))
+    main.Crear_Estudiante(nw_std['carnet'], nw_std['DPI'], nw_std['nombre'], nw_std['carrera'], nw_std['correo'], nw_std['password'], int(nw_std['edad']))
     return jsonify(Estudiante="Creado exitosamente")
 
 @app.route('/estudiante', methods=['PUT'])
@@ -98,10 +98,11 @@ def verAnotaciones():
 def addcurso():
     dataread = request.get_json(force=True)
     carnet = dataread['carnet']
-    year = dataread['año']
+    year = dataread['anio']
     semestre = dataread['semestre']
     codigo = dataread['codigo']
     main.addCursoaEstudiante(carnet,year,semestre,codigo)
+    return jsonify(Estudiante="Curso " + str(codigo) + " asignado correctamente")
 
 @app.route('/prev_cursos', methods=['GET'])
 def grafopensum():
@@ -114,7 +115,7 @@ def grafopensum():
 def cur_asign():
     dataread = request.get_json(force=True)
     carnet = dataread['carnet']
-    year = dataread['año']
+    year = dataread['anio']
     semestre = dataread['semestre']
     main.graph_cursos_std(int(carnet),int(year), int(semestre))
     return jsonify(Estudiante="Grafica cursos asignados " + str(carnet) + " creado exitosamente")

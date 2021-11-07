@@ -1,4 +1,4 @@
-from Estructuras.Listas import List_Semest
+from Estructuras.Listas.List_Semest import ListSemestre
 class NodoYear:
     def __init__(self, year_):
         self.year = year_
@@ -52,7 +52,7 @@ class ListYear:
 
     def add_year_curso(self,year_,semestre_,codigo_, nombre_,creditos_,prerequisitos_,obligatorio_):
         nw_nodo = NodoYear(year_)
-        nw_nodo.semestre = List_Semest.ListSemestre()
+        nw_nodo.semestre = ListSemestre()
         nw_nodo.semestre.add_curso_semestre(semestre_,codigo_, nombre_,creditos_,prerequisitos_,obligatorio_)
         if self.head is None or self.head.year > nw_nodo.year:
             nw_nodo.sig = self.head
