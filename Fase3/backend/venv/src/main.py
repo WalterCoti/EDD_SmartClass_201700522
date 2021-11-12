@@ -59,7 +59,7 @@ def carga_estudiantes(phatFile_,passKey_):
     datafile = readJsonFile(phatFile_)
     for student in datafile['estudiantes']:
         carnet = student['carnet']
-        dpi = encriptar(key,str(student['DPI']))
+        dpi = encriptar(key,str(student['dpi']))
         nombre = encriptar(key,student['nombre'])
         carrera = student['carrera']
         correo = encriptar(key,student['correo'])
@@ -67,7 +67,7 @@ def carga_estudiantes(phatFile_,passKey_):
         passwr = encriptar(key,encriptsha(student['password']))
         edad= encriptar(key,str(student['edad']))
         
-        currentAVL.insert(carnet,dpi,nombre,carrera,correo,passwr,0,edad)
+        currentAVL.insert(int(carnet),dpi,nombre,carrera,correo,passwr,0,edad)
      
 def carga_cursos(phatFile_):
     estudiante = False
@@ -106,9 +106,9 @@ def cargarapunte(phatFile_):
     for usuario in datafile['usuarios']:
         carnet = usuario['carnet']
         for apunte in usuario['apuntes']:
-            titulo = apunte['Título']
-            content = apunte['Contenido']
-            addNota_User(carnet,titulo,content)
+            titulo = apunte['titulo']
+            content = apunte['contenido']
+            addNota_User(int(carnet),titulo,content)
 
 #--------------------------------REPORTES------------------
 def graphtaablehash():
@@ -144,7 +144,7 @@ def Crear_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,edad_):
     correo = encriptar(nkey,correo_)
     pasw = encriptar(nkey,encriptsha(pass_))
     edad = encriptar(nkey,str(edad_))
-    currentAVL.insert(carnet_,dpi,nombre,carrera_,correo,pasw,0,edad)
+    currentAVL.insert(int(carnet_),dpi,nombre,carrera_,correo,pasw,0,edad)
 
 def editar_Estudiante(carnet_,DPI_,nombre_,carrera_,correo_,pass_,creditos_,edad_):
     tmPNodo = currentAVL.getStudentNode(currentAVL.raiz,carnet_)

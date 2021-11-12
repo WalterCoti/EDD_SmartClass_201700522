@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import main
 app = Flask(__name__)
+CORS(app)
+
 
 #======================================================ADMIN======================================================
 #----------------------------------------------CARGA MASIVA, estudiantes, notas----------------------------------------------
@@ -48,7 +51,7 @@ def reportes():
    
 
 
-#----------------------------------------------CRUD ESTUDIANTE----------------------------------------------
+#----------------------------------------------REGISTRO ESTUDIANTE----------------------------------------------
 
 @app.route('/registro', methods=['POST'])
 def set_student():
@@ -101,7 +104,7 @@ def addcurso():
     year = dataread['anio']
     semestre = dataread['semestre']
     codigo = dataread['codigo']
-    main.addCursoaEstudiante(carnet,year,semestre,codigo)
+    main.addCursoaEstudiante(int(carnet),int(year),int(semestre),codigo)
     return jsonify(Estudiante="Curso " + str(codigo) + " asignado correctamente")
 
 @app.route('/prev_cursos', methods=['GET'])

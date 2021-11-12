@@ -218,7 +218,7 @@ class AVLTree:
         else:
             key = getkeyencript(passKey_)
             for nodo in listNod:
-                file.write(str(nodo[0]) +"[label=\"Carnet: " + str(nodo[3]) +" \\n Nombre: " + desencriptar(key,nodo[4]) +" \\n DPI: " + desencriptar(key,nodo[5]) +" \\n Correo: " + desencriptar(key,nodo[6]) + " \\n Password:  " + desencriptar(key,str(nodo[7])) +" \\n Edad:  " + desencriptar(key,str(nodo[8])) + "\"]; \n")
+                file.write(str(nodo[0]) +"[label=\"Carnet: " + str(nodo[3]) +" \\n Nombre: " + desencriptar(key,nodo[4]) +" \\n DPI: " + desencriptar(key,nodo[5]) +" \\n Correo: " + desencriptar(key,nodo[6]) + " \\n Password:  " + desencriptar(key,str(nodo[7]))[0:20] +" \\n Edad:  " + desencriptar(key,str(nodo[8])) + "\"]; \n")
                 if nodo[1] is None and nodo[2] is not None:
                     file.write(str(nodo[0]) + "->"+ str(nodo[2])+";\n")
                 elif nodo[1] is not None and nodo[2] is None:

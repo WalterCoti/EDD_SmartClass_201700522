@@ -14,10 +14,11 @@ class NodoAdy:
         self.ant = None
 
 class Nodograph:
-    def __init__(self, codigo_,nombre_,creditos_,list_):
+    def __init__(self, codigo_,nombre_,creditos_,obligatorio_,list_):
         self.codigo = codigo_
         self.nombre = nombre_
         self.creditos = creditos_
+        self.obligatorio = obligatorio_
         self.list = list_
         self.sig = None
         self.ant = None
@@ -134,7 +135,7 @@ class grafo:
         while tmp is not None:
             if tmp.codigo == codigo_:
                 lstcursos = Lista()
-                nodoCu = Nodograph(tmp.codigo,tmp.nombre,tmp.creditos,lstcursos)
+                nodoCu = Nodograph(tmp.codigo,tmp.nombre,tmp.creditos,tmp.obligatorio,lstcursos)
                 self.addnodo(nodoCu)
                 lstpre = tmp.pre_codigo.split(',')
                 for cod in lstpre:
@@ -143,24 +144,23 @@ class grafo:
                     else:
                         self.getgrafo(str(cod),listacursos_)
                         self.linkgraph(str(cod),nodoCu.codigo)
-                        
                 break
             tmp = tmp.sig
 
-    def getgrafopensum(self,listacursos_):
-            tmp  = listacursos_.getlist()
-            while tmp is not None:
-                lstcursos = Lista()
-                nodoCu = Nodograph(tmp.codigo,tmp.nombre,tmp.creditos,lstcursos)
-                self.addnodo(nodoCu)
-                lstpre = tmp.pre_codigo.split(',')
-                for cod in lstpre:
-                    if cod == "":
-                        pass
-                    else:
-                        self.getgrafo(str(cod),listacursos_)
-                        self.linkgraph(str(cod),nodoCu.codigo)
-                tmp = tmp.sig
+    # def getgrafopensum(self,listacursos_):
+    #         tmp  = listacursos_.getlist()
+    #         while tmp is not None:
+    #             lstcursos = Lista()
+    #             nodoCu = Nodograph(tmp.codigo,tmp.nombre,tmp.creditos,lstcursos)
+    #             self.addnodo(nodoCu)
+    #             lstpre = tmp.pre_codigo.split(',')
+    #             for cod in lstpre:
+    #                 if cod == "":
+    #                     pass
+    #                 else:
+    #                     self.getgrafopensum(str(cod),listacursos_)
+    #                     self.linkgraph(str(cod),nodoCu.codigo)
+    #             tmp = tmp.sig
 
 
     def graficarGrafo(self):
@@ -185,7 +185,10 @@ class grafo:
         # Graficar grafo
         tmp = self.head
         while tmp:
-            file.write(str(tmp.codigo) +"[label=\"" + str(tmp.codigo) +" \\n" + tmp.nombre + "\"]; \n")
+            color = "black"
+            if tmp.obligatorio:
+                color = "green"
+            file.write(str(tmp.codigo) +"[label=\"" + str(tmp.codigo) +" \\n" + tmp.nombre + "\" color="+color+"]; \n")
             aux = tmp.list.head
             while aux:
                 file.write(str(tmp.codigo) +" -> " + str(aux.codigo) + "[label=\"" + str(tmp.creditos) + "\"]; \n")
@@ -201,7 +204,7 @@ class grafo:
         except:
             print("Error al abrir la imagen")
 
-# #codigo_, nombre_, creditos_, pre_codigo_, obligatorio_):
+#codigo_, nombre_, creditos_, pre_codigo_, obligatorio_):
 # nwList = Lista_cursos()
 # nwList.addCurso(1,"Prueba1",3,"12,3",True)
 # nwList.addCurso(2,"Prueba2",2,"10",False)
